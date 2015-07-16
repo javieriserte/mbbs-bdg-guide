@@ -1,0 +1,14 @@
+#TeXlipse project settings
+#Wed Jul 15 14:13:18 ART 2015
+markTmpDer=true
+builderNum=2
+outputDir=
+makeIndSty=
+bibrefDir=
+outputFormat=pdf
+tempDir=tmp
+mainTexFile=GuiaDeTrabajos.tex
+outputFile=GuiaDeTrabajos.pdf
+langSpell=es
+markDer=true
+srcDir=
