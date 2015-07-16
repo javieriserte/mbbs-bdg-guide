@@ -1,0 +1,542 @@
+\documentclass[a4paper, twoside]{article}%
+%Options -- Point size:  10pt (default), 11pt, 12pt
+%        -- Paper size:  letterpaper (default), a4paper, a5paper, b5paper
+%                        legalpaper, executivepaper
+%        -- Orientation  (portrait is the default)
+%                        landscape
+%        -- Print size:  oneside (default), twoside
+%        -- Quality      final(default), draft
+%        -- Title page   notitlepage, titlepage(default)
+%        -- Columns      onecolumn(default), twocolumn
+%        -- Equation numbering (equation numbers on the right is the default)
+%                        leqno
+%        -- Displayed equations (centered is the default)
+%                        fleqn (equations start at the same distance from the right side)
+%        -- Open bibliography style (closed is the default)
+%                        openbib
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Lista de Paquetes
+\usepackage{pifont}             % Maneja Fuentes 
+%\usepackage{PTSans}            % Maneja Fuentes Sans Serif
+%\usepackage{skak}              % simbolos de ajedrez
+\usepackage[T1]{fontenc}        % Texto de alta calidad en pdfs
+\usepackage{ae,aecompl}         % Texto de alta calidad en pdfs
+\usepackage{pslatex}            % Texto de alta calidad en pdfs
+\usepackage{textcomp}           % Cosas de Texto
+\usepackage{multicol}           % Para manejar multiples columnas
+\usepackage[ansinew]{inputenc}  % Para poner acentos
+\usepackage[spanish]{babel}     % Para separar palabras al fin de los renglones.
+\usepackage{amsmath}            % Para hacer matemÃ¡tica
+\usepackage{amsfonts}           % Para hacer matemÃ¡tica
+\usepackage{amssymb}            % Para hacer matemÃ¡tica
+\usepackage{enumerate}          % Para Manehar Enumeraciones
+\usepackage{vwcol}              % para manejar multiples columas
+\usepackage{graphicx}           % Para manejar los grÃ¡ficos
+\usepackage{fancyhdr}           % Para manejar encabezados y pie de pÃ¡ginas
+\usepackage{lastpage}           % Crea una referencia a la Ãºltima pÃ¡gina. Util
+                                % para numerar pÃ¡ginas de la forma "pÃ¡gina x de y"
+%\usepackage[final]{ps4pdf}     % para incluir archivos eps dentro del documento pdf
+\usepackage{array}
+\usepackage{soul}
+\usepackage{boolexpr}
+\usepackage[hyphens]{url}   % Typeset urls
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Configuración de página
+\textwidth 15cm               
+\textheight 25.7cm            
+\oddsidemargin 1cm           
+\evensidemargin 0cm          
+\topmargin -1.5cm             
+\headheight 0cm               
+\headsep 10pt                 
+\marginparwidth 0cm
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BibliografÃ­a
+\bibliographystyle{alpha}      
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Titulo
+\newcommand{\s}{\the\textwidth}
+\newcommand{\materiaName}{Bases de datos genomicas}
+\newcommand{\seminarioName}{Guia de trabajos practicos}
+\newcommand{\fecha}{Julio de 2015}
+\newcommand{\titulo}{
+  \begin{center}
+  \vspace*{-22pt}\large\textbf{\materiaName}\\
+  \vspace{2pt}\normalsize{\seminarioName}\\
+  \vspace{2pt}\small{Maestría en bioinformática y biología de sistemas}\\
+  \vspace{-6pt}\rule{\textwidth}{0.4pt}
+  \end{center}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Encabezado y Pie de PÃ¡gina
+ \headheight=14pt
+ \renewcommand{\headrulewidth}{0.4pt}                                 
+ \renewcommand{\footrulewidth}{0.4pt}                                 
+ \pagestyle{fancy}                                                   
+ \fancyfoot{}
+ \lfoot{\footnotesize{Página \thepage\ de \pageref{LastPage}}}        
+ \lhead{\footnotesize{\materiaName}}
+ \rhead{\footnotesize{\fecha\  - \seminarioName}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Fuentes
+%\renewcommand{\familydefault}{\sfdefault} % Cambia todas las fuentes a sans 
+                                           % Serif
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+                                 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Enumeraciones
+\renewcommand{\theenumi}{\alph{enumi}}
+\renewcommand{\labelenumi}{\textbf{\theenumi}}
+\renewcommand{\theenumii}{\arabic{enumii}}
+\renewcommand{\labelenumii}{\theenumii}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Fin del preludio
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\titulo
+ 
+\section{Bases de datos primarias de nucleotidos}
+
+\subsection{DNA Data Bank of Japan - DDBJ}
+La base de datos DDBJ ofrece, además de la interfaz web, el acceso por FTP y
+una API web llamada WABI (Web API for Biology). Estos dos son los recursos que
+permiten el acceso programático a esta base de datos.
+
+\subsubsection{Formato del registro}
+\small{}
+\begin{verbatim} 
+LOCUS       JUNSRNA                 3412 bp    RNA     linear   VRL 06-MAR-2004
+DEFINITION  Junin virus GPC, N genes for glycoproteins, nucleocapsid protein,
+            complete cds.
+ACCESSION   D10072
+VERSION     D10072.2
+KEYWORDS    .
+SOURCE      Junin virus
+  ORGANISM  Junn mammarenavirus
+            Viruses; ssRNA viruses; ssRNA negative-strand viruses;
+            Arenaviridae; Mammarenavirus.
+REFERENCE   1  (bases 1 to 3412)
+  AUTHORS   Romanowski,V.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (10-DEC-1991) to the DDBJ/EMBL/GenBank databases.
+            Contact:Victor Romanowski
+            Universidad Nacional de La Plata, Instituto de Bioquimica y
+            Biologia Molecular, Facultad de Ciencias Exactas; calle 49 y 115,
+            La Plata 1900, Argentina
+REFERENCE   2
+  AUTHORS   Ghiringhelli,P.D., Rivera Pomar,R.V., Baro,N.I., Rosas,M.F.,
+            Grau,O. and Romanowski,V.
+  TITLE     Nucleocapsid protein gene of Junin arenavirus (cDNA sequence)
+  JOURNAL   Nucleic Acids Res. 17, 8001 (1989)
+REFERENCE   3  (bases 1 to 3400)
+  AUTHORS   Ghiringhelli,P.D., Rivera-Pomar,R.V., Lozano,M.E., Grau,O. and
+            Romanowski,V.
+  TITLE     Molecular organization of Junin virus S RNA: complete nucleotide
+            sequence, relationship with other members of the Arenaviridae and
+            unusual secondary structures
+  JOURNAL   J. Gen. Virol. 72, 2129-2141 (1991)
+COMMENT     
+FEATURES             Location/Qualifiers
+     source          1..3412
+                     /cell_line="grown in BHK-21 cells"
+                     /clone="pJUN[63,42,433,58]"
+                     /clone_lib="pUC19"
+                     /db_xref="taxon:11619"
+                     /mol_type="genomic RNA"
+                     /organism="Junin virus"
+                     /segment="S"
+                     /strain="MC2"
+     CDS             88..1545
+                     /codon_start=1
+                     /gene="GPC"
+                     /product="glycoprotein precursor"
+                     /protein_id="BAA00964.2"
+                     /translation="MGQFISFMQEIPTFLQEALNIALVAVSLIAIIKGVVNLYKSGLF
+...
+                   RGEACPLPHRLNSLGGCRCGKYPNLKKPTVWRRGH"
+     sig_peptide     88..261
+     mat_peptide     262..837
+                     /product="G1 protein"
+     misc_feature    837..838
+                     /note="pot. cleavage site of glycoproteins"
+     mat_peptide     838..1542
+                     /product="G2 protein"
+     CDS             complement(1637..3331)
+                     /codon_start=1
+                     /gene="N"
+                     /product="nucleocapsid protein"
+                     /protein_id="BAA00965.1"
+                     /translation="MAHSKEVPSFRWTQSLRRGLSQFTQTVKSDVLKDAKLIADSIDF
+...
+                     KRDKDAPFKLASSEPHCALLDCIMFQSVLDGKLYEEELTPLLPPSLLFLPKAAYAL"
+BASE COUNT          907 a          813 c          716 g          976 t
+ORIGIN      
+        1 tgcagtaagg ggatcctagg cgattttggt aacgctataa gttgttactg ctttctattt
+...
+     3361 aaaaaattgc tcagtgaaag tgttagacac tatgcctagg atccactgtg cg
+//
+\end{verbatim}
+\normalsize{}
+\subsubsection{Acceso FTP}
+
+\subsubsection{Acceso por Web API}
+DDBJ ofrece API para tres servicios diferentes:
+\begin{description}
+  \item WABI BLAST - Busquedas de secuencias con Blast.
+  \item getentry WebAPI - Recuperación de registro por número de acceso.
+  \item ARSA WebAPI.
+\end{description}
+
+\paragraph{WABI BLAST}
+\paragraph{WABI BLAST}
+
+\paragraph{ARSA WebAPI.} Está diseñada para ser usada con un navegador web. Los
+navegadores compatibles son Firefox y Chrome, IE versiones 9 y 10; y Safari
+version 5 y posteriores.
+
+Arsa recupera información de las siguientes bases de datos:
+\begin{itemize}
+  \item DDBJ Release
+  \item DDBJ New (daily updates)
+  \item Amino Acid Patent Sequence data submitted from JPO
+  \item Amino Acid Patent Sequence data submitted from KIPO.
+\end{itemize}
+
+La URL base para la búsqueda es \url{http://ddbj.nig.ac.jp/arsa/search}. Los 
+resultados pueden ser recuperados en idioma inglés o japonés. Para definir el
+idioma es necesario agregar a la dirección base el el capo 'lang' con valor 
+'en'. De esta forma la URL se convierte en: 
+\url{http://ddbj.nig.ac.jp/arsa/search?lang=en}.
+
+Hay dos condiciones de búsqueda, la búsqueda rápida (\textit{Quick Search}) y la
+búsqueda avanzada (\textit{Advanced Search}). La condición de búsqueda se define
+en el campo 'cond', sus posibles valores son: 'quick\_search' y 'advanced\_search'.
+El campo 'query' define el texto que se desea buscar. Existen varios opciones
+para refinar la búsqueda. Los valores que corresponden a valores booleanos
+('AND', 'OR', 'NOT') deben ser escritos en mayúsculas. Para separar dos o más
+palabras, en lugar de usar un espacio, se debe usar el signo '+'. 
+
+Las opciones de la búsqueda rápida son las siguientes:
+\begin{description}
+  \item[Coincidencia por conjunción] Búsquedas que contienen todas las palabras clave 
+  dadas. Se debe usar el campo 'operator' con el valor 'AND'. Por ejemplo, la
+  búsqueda '\url{http://ddbj.nig.ac.jp/arsa/search?lang=en&cond=quick_search&query=brain+phosphatidylethanolamine&operator=AND}'\\  
+  recupera todos los registros que contienen las palabras 'brain' y
+  'phosphatidylethanolamine', aunque se encuentren en lugares diferentes en el
+  registro. El primer resultado de la búsqueda del ejemplo es un registro que
+  contiene la palabra 'brain' en la definición del registro (título principal)
+  y la palabra 'phosphatidylethanolamine' en el título de una de las referencias
+  bibliográficas que aparecen en ese registro.
+  \item[Coincidencia por disyunción] Búsquedas que contienen al menos una de 
+  las palabras clave dadas. Se indican en el campo 'operator' y con el valor 
+  'OR'. Por ejemplo, la búsqueda '\url{http://ddbj.nig.ac.jp/arsa/search?lang=en&cond=quick_search&query=tinea+versicolor&operator=OR}'\\
+  recupera registros de 'Tinea versicolor', 'Trametes versicolor' y 'Tinea pellionella'.
+  \item[Negación] Búsquedas que contienen una o más palabras clave y que carecen
+  de otras que son dadas explicitamente. Se indican con la palabra clave 'NOT'
+  dentro del campo 'query', la palabra clave que se encuentra  a su derecha es 
+  la que debe estar ausente. Por ejemplo, la búsqueda
+  '\url{http://ddbj.nig.ac.jp/arsa/search?lang=en&cond=quick_search&query=homo+NOT+sapiens&operator=AND}'\\
+  recupera los registros que contiene la palabros 'homo' pero no 'sapiens'.
+  \item[Coincidencia parcial] Búsquedas que contienen parte de una palabra. Se
+  indica en el campo 'query'. Al final del término buscado se agrega el
+  símbolo '*'. Por ejemplo, la búsqueda '\url{http://ddbj.nig.ac.jp/arsa/search?lang=en&cond=quick_search&query=candid*}'\\
+  recupera registros de '\textit{Candida dubliniensis}', '\textit{Candidatus Phytoplasma}',
+  'Junin virus strain candid1', entre otros.
+  \item[Coincidencia de frases] Búsquedas que contienen varios términos en el orden
+  dado. Se indican encerrando entre comillas los términos. Dependiendo de la 
+  herramienta que se utilice, puede ser necesario reemplazar
+  las comillas por '\%22'. Por ejemplo, la búsqueda 
+  '\url{http://ddbj.nig.ac.jp/arsa/search?lang=en&cond=quick_search&query=%22mouse+brain%22&operator=AND
+  }'\\
+  recupera los registro que contengan la frase 'mouse brain'.
+  \item[Búsquedas en campos] Búsquedas que deben coincidir en un campo 
+  particular del registro. Se indican nombrando el campo en el que se debe 
+  hacer la búsqueda antes de la palabra clave buscada y separados por el 
+  símbolo ':' (o su código de escape '\%3A'). Por ejemplo, la búsqueda
+  '\url{http://ddbj.nig.ac.jp/arsa/search?lang=en&cond=quick_search&query=df:``homo+sapiens"&operator=AND}' \\
+  recupera registros que tienen la frase 'homo sapiens' en su definición (título principal).
+  \item[Búsqueda por expresiones regulares] Algúnas búsquedas en campos permiten
+  usar expresiones regulares. Deben encerrarse con el símbolo '/' (o '\%2F'). 
+  En la tabla \ref{DDBJ_ARSA_regex} se muestran las expresiones regulares 
+  permitidas.
+  \item[Búsqueda por rango de valores] Algunas búsquedas en campos permiten 
+  indicar un rango de valores para la coincidencia. Deben encerrarse entre 
+  corchetes. La palabra clave 'TO' debe estar presente entre el valor
+  mínimo y el máximo del rango. Por ejemplo, la búsqueda 
+  '\url{http://ddbj.nig.ac.jp/arsa/search?lang=en&cond=quick_search&query=pa:[GL000000+TO+GL000010]&operator=AND}' \\
+  recupera los registros existentes cuyo número de acceso primario sea 
+  'GL000001', 'GL000002',  \ldots y 'GL000010'.  
+\end{description}
+
+
+\begin{table}
+\small{}
+\begin{center}
+\begin{tabular}{lrp{7cm}}
+Nombre del campo        & Abr. & Description  \\ \hline
+PrimaryAccessionNumber  & pa   & Primer número de acceso en ACCESSION \\
+AccessionNumber         & an   & Números de acceso en ACCESSION \\
+Division                & dv   & Division en LOCUS (ej. VRL=virus) \\
+SequenceLength          & sl   & Longitud de secuencia en LOCUS \\
+MolecularType           & mt   & Tipo de molecula in LOCUS (ej. RNA) \\
+MolecularForm           & mf   & Estructura molecular (ej. linear) \\
+Date                    & dt   & Última fecha de publicación en LOCUS  \\
+Definition              & df   & Texto en DEFINITION \\
+Comment                 & cm   & Texto en COMMENT \\
+Keyword                 & kw   & Texto en KEYWORDS \\
+Organism                & og   & Texto en el organismo de ORGANISM \\
+Lineage                 & ln   & Texto en el linaje de ORGANISM \\
+ReferenceAuthor         & ra   & Texto en AUTHORS de REFERENCE \\
+ReferenceTitle          & rt   & Texto en TITLE de REFERENCE \\
+ReferenceJournal        & rj   & Texto en JOURNAL de REFERENCE \\
+ReferencePubmedID       & rp   & Texto en PUBMED de REFERENCE \\
+Feature                 & fe   & Texto en FEATURES \\
+\end{tabular}
+\end{center}
+\normalsize{}
+\caption{Campos de búsqueda disponibles en DDBJ}
+\label{tab:DDBJ_fields}
+\end{table}
+
+\begin{table}
+\begin{center}
+\small
+\begin{tabular}{p{4cm}lp{8cm}}
+Significado                             & Simbolo   & Ejemplo \\ \hline
+Cualquier caracter individual           & .         & /ho.o/ coincide con 'homo' y con 'Rhodococcus'. \\
+Cualquier caracter cero o más veces     & *         & /XX1*/ coincide con 'XX', 'XX1', 'XX11', etc \\
+Cualquier caracter cero o una vez       & ?         & /XY?123/ coincide con 'XY123' and 'X123' \\
+Cualquier caracter una o más veces      & +         & /XY1*/ coincide con 'XY1', 'XY11',etc, pero no con 'XY' \\
+Cualquier caracter en un grupo          & [abc]     & /ho[dm]o/ coincide con 'homo' y con 'Rhodococcus', pero no con 'Achoropsyche' \\
+Cualquier caracter excepto algunos      & [\^{}abc] & /ho[\^{}d]o/ coincide con 'homo'y con 'Achoropsyche', pero no con 'Rhodococcus' \\
+Cualquier caracter en un rango          & [a-z0-9]  & /XY[1-9]00/ coincide con 'XY100', 'XY200', etc, 'XYA00', 'XYB00', etc \\
+Cualquier caracter exactamente n vences & \{n\}     & /XY1{2}/ coincide con 'XY11' pero no con 'XY0' o 'XY000' \\
+Cualquier caracter n o más veces        & \{n,\}    & /XY1{2,}/ coincide con 'XY11' y 'XY111', pero no con 'XY1' \\
+Cualquier caracter n hasta m veces      & \{n,m\}   & /XY1{2,3}/ coincide con 'XY11' y con 'XY111', pero no con 'XY1' o 'XY1111' \\
+\end{tabular}
+\normalsize{}
+\end{center}
+\caption{tablecaption}
+\label{tablelabel}
+\end{table}
+
+Las opciones de la búsqueda rápida son en prinicipio similares a las de la 
+búsqueda rápida, sin embargo se permite un mayor flexibilidad para construir
+criterios de selección más complejos. Se permite hacer búsquedas con operadores
+de disyunción ('OR'), conjunción ('AND') y negación ('NOT') simultáneamente en 
+un mismo campo. También, se permite agrupar criterios entre paréntesis. En esta
+condición de búsqueda, el campo 'query' en la \textit{url} de la búsqueda ya no
+se utiliza, en cambio cada campo de búsqueda tiene uno que le corresponde en 
+la \textit{url} de búsqueda. Por ejemplo, la búsqueda rápida 
+'\url{http://ddbj.nig.ac.jp/arsa/search?lang=en&cond=quick_search&query=df:homo&operator=AND}'
+se convierte en '\url{http://ddbj.nig.ac.jp/arsa/search?lang=en&cond=advanced_search&df=homo&op=AND}'.
+
+Por ejemplo la búsqueda
+'\url{http://ddbj.nig.ac.jp/arsa/search?lang=&cond=advanced_search&df=(virus+NOT+Junin)&ln=Arenaviridae&op=AND}'
+recupera los registros que en su linaje posea la palabra 'Arenaviridae' y que en
+la defición posea la palabra 'virus' y que no posea la palabra 'Junin'. Otro 
+ejemplo más, la búsqueda 
+'\url{http://ddbj.nig.ac.jp/arsa/search?lang=&cond=advanced_search&df=((virus+AND+Junin)+NOT+segment)&op=AND}'
+recupera los registro que posean las palabras 'virus' y 'junín' en la definición 
+y que no contengan la palabra 'segment'.
+
+% Advanced Search
+% 
+% Basic search Enter the search keyword to the search box of the field which you want to search.
+% 
+%     Example: Enter human into "Definition" column,
+%     The result contains for example,ã€€
+% 
+%         example: "~ Human parvovirus ~" in DEFINITION.
+% 
+% "OR" search for the single search field Search keywords should be connected by a space.
+% 
+%     Example: Enter stomach gastric into "Definition" column,
+%     The result contains for example,
+% 
+%         example: "~ human gastric lipase ~" toDEFINITION.
+%         example: "~ related to stomach cancer ~" to DEFINITION.
+% 
+% "AND" search for the single search fieldEnter the keywords to the search box of the field which you want to search. Keywords are connected by AND.
+%     Example: Enter stomach AND gastric into "Definition" column,
+%     The result contains for example,
+% 
+%         example: "~ male stomach cDNA ~ polypeptide, gastric specific ~" to DEFINITION.
+% 
+% "OR" search for the plural search fieldsSearch by selecting the OR.
+% 
+%     Example:Enter human into "Definition" column, Enter human into "Reference Title" column, and choose "OR" at "Combine Searches with", the result is obtained.
+%     The result contains for example,
+% 
+%         example: "~ Human metapneumovirus ~" to DEFINITION.
+%         example: "~ human cDNA project ~" to REFERENCE TITLE.
+% 
+% "AND" search for the plural search fieldsSearch by selecting the AND
+% 
+%     Example:Enter human into "Definition" column, Enterhuman into "Reference Title" column, and choose "AND" at "Combine Searches with", The result is obtained.
+% 
+%     example: "~ Human glucocerebrosidase ~" to the DEFINITION
+%     example: "~ expression of human ~" in the REFERENCE TITLE
+% 
+% Partial match search of Feature/Qualifier Search by Feature Key, Qualifier Name,Qualifier Value.
+% 
+%     Example:Enter CDS into "Feature Key" column in "Features",translation into "Qualifier Name" column, and AAA*CC into "Qualifier Value" column,
+%     The result contains for example,
+% 
+%         example: "/translation="ï½žAAAï½žCCï½ž"" to CDS of FEATURES.
+% 
+%     Example: Enter CDS into "Feature Key" column in "Features", gene into "Qualifier Name" column, and p53 into "Qualifier Value" column,
+%     The result contains for example,
+% 
+%         example: One which has been described as "/gene="p53"" to CDS of FEATURES.
+%         example: One which has been described as "/gene="p53R2"" to CDS of FEATURES.
+% 
+% Details of the search field
+% 
+% Reference: "Available Fields"
+% 
+
+% 
+% Format of the search keyword
+% 
+% Specification of the search field
+% 
+%         (Search field name or Short name) + ':' + (Search keyword)
+% 
+% Boolean operator ("AND", "OR", "NOT" search)
+% 
+%         (Search keyword) + ' AND ' + (Search keyword)
+%         (Search keyword) + ' && ' + (Search keyword)
+%         (Search keyword) + ' +' + (Search keyword)
+%         (Search keyword) + ' OR ' + (Search keyword)
+%         (Search keyword) + ' || ' + (Search keyword)
+%         (Search keyword) + ' NOT ' + (Search keyword)
+%         (Search keyword) + ' -' + (Search keyword)
+% 
+% Grouping
+% 
+%         '(' + (Search keyword) + (Logical operator) + (Search keyword) + ')'
+% 
+% Range search
+% 
+%         (Search field name or Short name) + ':[' + (Start value or '*') + ' TO ' + (End value or '*') + ']'
+%         Including start value, end value
+%         (Search field name or Short name) + ':{' + (Start value or '*') + ' TO ' + (End value or '*') + '}'
+%         Not including start value, end value
+% 
+% Wild card search
+% 
+%         (Search keyword) + '*'
+%         '*' + (Search keyword)
+%         (Search keyword) + '*' + (Search keyword)
+%         '*' matches any texts more than 0 characters
+%         (Search keyword) + '?' + (Search keyword)
+%         '?' match in any one character
+% 
+% Phrase search
+%     Search in sequence the search keyword. Or search characters that have special meaning.
+% 
+%         "' + (Search keyword) + '"'
+% 
+% Regular expression search
+% 
+%         '/' + (Search keyword) + '/'
+% 
+%     Example of the regular expression
+% 
+%         . (any single character)
+%         example : /Homini.ae/ matches the for example 'Hominidae' and 'Homininae'.
+%         * (a letter more than 0)
+%         example : /AB0*/ matches the for example 'AB', 'AB0', 'AB00', 'AB000'
+%         .* (zero or more of the preceding element)
+%         example : /AB.*/ matches the for example 'AB', 'AB0', 'AB789' , 'ABXYZ'
+%         ? (Previous character is 0 or 1)
+%         example : /AB?00000/ matches 'AB000000' and 'A000000'
+%         + (Previous character is 1 or more)
+%         example : /AB0*/ matches the for example 'AB0', 'AB00', 'AB000' , but does not match 'AB'
+%         [abc] (character 'a' , 'b' or 'c')
+%         example : /Homini[dn]ae/ matches 'Hominidae' and 'Homininae'
+%         [^abc] (except character 'a' , 'b' , 'c')
+%         example : /Homini[^d]ae/ matches 'Homininae' but does not match 'Hominidae'
+%         [a-z0-9] (character 'a' ï½ž 'z' or '0' ï½ž '9')
+%         example : /AA[0-9]00000/ matches the for example 'AA100000'
+%         { n } (Previous character occurs n times exactly)
+%         example : /AB0{2}/ matches 'AB00' but does not match 'AB0' and 'AB000'
+%         { n ,} (Previous character occurs n times or more)
+%         example : /AB0{2,}/ matches the for example 'AB00' , 'AB000' , but does not match 'AB0'
+%         { n , m } (Previous character occurs at least n and not more than m times
+%         example : /AB0{2,4}/ matches the for example 'AB00' , 'AB0000' but does not match 'AB0' and 'AB00000'
+% 
+% Fuzzy Search
+%     Search for a word of spelling similar to the search keyword
+% 
+%         ':' + (Search keyword) + '~' + (Distance of the search term. Numerical value of 0.0 or more and less than 1.0. Close to the search keyword closer to 1.)
+% 
+% Proximity Search
+%     The words contained in a phrase search what is indicated in the neighborhood.
+% 
+%         ':' + (Phrase) + '~' + (Distance of the search term. Number of words.)
+% 
+% Weighting Search
+% 
+%         (Search keyword) + '^' + (Positive relative weight. Positive number. Default is 1.0.)
+% 
+% Character with a special meaning
+%     These characters have a special meaning.
+% 
+%     + - && || ! ( ) { } [ ] ^ " ~ * ? : /
+% 
+%     When you search these characters, use phrase search, or cancel the special meaning by prefixing the ''\''
+% 
+% Search results screen
+% In the browser
+% 
+%         Selecting the results you want to view, click the "View selected" button. You can view the full text of the flat file that was selected. (1,000,000 upper limit)
+% 
+% Download
+% 
+%         To download the all flat files, click the "Download All" button (1,000,000 upper limit).
+%         To download the selected files, check the box you want to download and click the "Download selected" button (1,000,000 upper limit).
+% 
+%     When your result is over the upper limit, refine your search condition.
+% 
+% Filter the search results
+%     If you click the "Facet", you can filter your search results by the following condition.
+%     Kind of filters
+% 
+%         Division
+%         Organism
+% 
+% "Search Settints" of "Advanced Search".
+% 
+% Specifiction of the following seach conditions are also available at the "Search Settints" of "Advanced Search".
+% 
+% Sort condition
+%     You can select a search field or search score for sorting.
+% Display field of the search results
+%     Check the box(es) you want to display on the search results.
+
+ 
+
+% \subsection{European Nucleotide Archive - API}
+% 
+% 
+% \subsection{National Center of Biotechnology Information - API}
+
+
+\end{document}
