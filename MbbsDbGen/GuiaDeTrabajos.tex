@@ -195,15 +195,29 @@ ORIGIN
 \subsubsection{Acceso FTP}
 
 \subsubsection{Acceso por Web API}
-DDBJ ofrece API para tres servicios diferentes:
-\begin{description}
-  \item WABI BLAST - Busquedas de secuencias con Blast.
-  \item getentry WebAPI - Recuperación de registro por número de acceso.
-  \item ARSA WebAPI.
-\end{description}
+DDBJ ofrece API para tres servicios diferentes. El servicio WABI BLAST, que 
+permite la búsqueda usando Blast. El servicio 'getentry WebAPI' que permite la
+recuperar registros de la base de dato por número de acceso y el servicio ARSA 
+WebAPI, que permite la búsqueda de registros por su contenido textual (no de 
+secuencia. Los tres servicios usan una arquitectura REST 
+(\textit{Representational state transfer}) sobre http para las consultas. 
 
 \paragraph{WABI BLAST}
-\paragraph{WABI BLAST}
+
+\paragraph{Getentry WebAPI}
+El servicio getentry permite recuperar registro de una de las bases de data de 
+DDBJ por su número de acceso. Las consultas se pueden hacer mediante el método
+HTML GET o usando una URL semántica. En ambos casos, la URL base es la misma:
+'\url{http://getentry.ddbj.nig.ac.jp/getentry}'. La síntaxis para especificar 
+una consulta usando el método GET es '\url{http://getentry.ddbj.nig.ac.jp/getentry?database=nombre_de_la_base_de_datos&accession_number=número_de_acceso}' \\
+por ejemplo, la consulta '\url{http://getentry.ddbj.nig.ac.jp/getentry?database=ddbj&accession_number=KP177965}' \\
+recupera el registro con el número de acceso KP177965. 
+La síntaxis para hacer una consulta mediante una URL semántica
+La misma consulta, usando
+una URL semántica es '\url{http://getentry.ddbj.nig.ac.jp/getentry/ddbj/KP177965}.
+
+DDBJ Amino Acid Sequence Database
+
 
 \paragraph{ARSA WebAPI.} Está diseñada para ser usada con un navegador web. Los
 navegadores compatibles son Firefox y Chrome, IE versiones 9 y 10; y Safari
@@ -217,16 +231,25 @@ Arsa recupera información de las siguientes bases de datos:
   \item Amino Acid Patent Sequence data submitted from KIPO.
 \end{itemize}
 
-La URL base para la búsqueda es \url{http://ddbj.nig.ac.jp/arsa/search}. Los 
+La URL base para la búsqueda es '\url{http://ddbj.nig.ac.jp/arsa/search}'. Los 
 resultados pueden ser recuperados en idioma inglés o japonés. Para definir el
 idioma es necesario agregar a la dirección base el el capo 'lang' con valor 
 'en'. De esta forma la URL se convierte en: 
-\url{http://ddbj.nig.ac.jp/arsa/search?lang=en}.
+\url{http://ddbj.nig.ac.jp/arsa/search?lang=en}. El formato de respuesta es HTML,
+porque está pensado para ser mostrado en un navegador como una página web.
+Si se desea, obtener esta información en un formato que pueda ser fácilmente 
+manipulado se tienen dos opciones. Ambas implican usar una URL base diferente. 
+Una de las opciones es descargar el contenido de todos los registros en formato
+plano, para ello, hay que cambiar a la URL '\url{http://ddbj.nig.ac.jp/arsa/downloadAll?lang=en}'.
+La otra opción es recuperar los identificadores de cada registro y luego 
+descargar cada uno de ellos, invididualmente con el servicio 'getentry', para 
+ello, se debe cambiar la URL base a '\url{http://ddbj.nig.ac.jp/arsa/searchAllIds?lang=en}'. 
 
 Hay dos condiciones de búsqueda, la búsqueda rápida (\textit{Quick Search}) y la
 búsqueda avanzada (\textit{Advanced Search}). La condición de búsqueda se define
 en el campo 'cond', sus posibles valores son: 'quick\_search' y 'advanced\_search'.
-El campo 'query' define el texto que se desea buscar. Existen varios opciones
+Sin embargo, en esta guía se trabajará solamente con la condición de búsqueda 
+simple. El campo 'query' define el texto que se desea buscar. Existen varios opciones
 para refinar la búsqueda. Los valores que corresponden a valores booleanos
 ('AND', 'OR', 'NOT') deben ser escritos en mayúsculas. Para separar dos o más
 palabras, en lugar de usar un espacio, se debe usar el signo '+'. 
@@ -277,10 +300,12 @@ Las opciones de la búsqueda rápida son las siguientes:
   \item[Búsqueda por rango de valores] Algunas búsquedas en campos permiten 
   indicar un rango de valores para la coincidencia. Deben encerrarse entre 
   corchetes. La palabra clave 'TO' debe estar presente entre el valor
-  mínimo y el máximo del rango. Por ejemplo, la búsqueda 
+  mínimo y el máximo del rango. Se puede usar el símbolo '*' para indicar un 
+  valor de inicio o final del rango desconocido. Por ejemplo, la búsqueda 
   '\url{http://ddbj.nig.ac.jp/arsa/search?lang=en&cond=quick_search&query=pa:[GL000000+TO+GL000010]&operator=AND}' \\
   recupera los registros existentes cuyo número de acceso primario sea 
-  'GL000001', 'GL000002',  \ldots y 'GL000010'.  
+  'GL000001', 'GL000002',  \ldots y 'GL000010'. Otro ejemplo,  '\url{http://ddbj.nig.ac.jp/arsa/search?lang=en&cond=quick_search&query=sl:[0+TO+100]&operator=AND}' \\
+  recupera todos los registros cuya longitud de secuencia sea 100 o menos.
 \end{description}
 
 
@@ -335,201 +360,30 @@ Cualquier caracter n hasta m veces      & \{n,m\}   & /XY1{2,3}/ coincide con 'X
 \label{tablelabel}
 \end{table}
 
-Las opciones de la búsqueda rápida son en prinicipio similares a las de la 
-búsqueda rápida, sin embargo se permite un mayor flexibilidad para construir
-criterios de selección más complejos. Se permite hacer búsquedas con operadores
-de disyunción ('OR'), conjunción ('AND') y negación ('NOT') simultáneamente en 
-un mismo campo. También, se permite agrupar criterios entre paréntesis. En esta
-condición de búsqueda, el campo 'query' en la \textit{url} de la búsqueda ya no
-se utiliza, en cambio cada campo de búsqueda tiene uno que le corresponde en 
-la \textit{url} de búsqueda. Por ejemplo, la búsqueda rápida 
-'\url{http://ddbj.nig.ac.jp/arsa/search?lang=en&cond=quick_search&query=df:homo&operator=AND}'
-se convierte en '\url{http://ddbj.nig.ac.jp/arsa/search?lang=en&cond=advanced_search&df=homo&op=AND}'.
-
-Por ejemplo la búsqueda
-'\url{http://ddbj.nig.ac.jp/arsa/search?lang=&cond=advanced_search&df=(virus+NOT+Junin)&ln=Arenaviridae&op=AND}'
-recupera los registros que en su linaje posea la palabra 'Arenaviridae' y que en
-la defición posea la palabra 'virus' y que no posea la palabra 'Junin'. Otro 
-ejemplo más, la búsqueda 
-'\url{http://ddbj.nig.ac.jp/arsa/search?lang=&cond=advanced_search&df=((virus+AND+Junin)+NOT+segment)&op=AND}'
-recupera los registro que posean las palabras 'virus' y 'junín' en la definición 
-y que no contengan la palabra 'segment'.
-
-% Advanced Search
-% 
-% Basic search Enter the search keyword to the search box of the field which you want to search.
-% 
-%     Example: Enter human into "Definition" column,
-%     The result contains for example,ã€€
-% 
-%         example: "~ Human parvovirus ~" in DEFINITION.
-% 
-% "OR" search for the single search field Search keywords should be connected by a space.
-% 
-%     Example: Enter stomach gastric into "Definition" column,
-%     The result contains for example,
-% 
-%         example: "~ human gastric lipase ~" toDEFINITION.
-%         example: "~ related to stomach cancer ~" to DEFINITION.
-% 
-% "AND" search for the single search fieldEnter the keywords to the search box of the field which you want to search. Keywords are connected by AND.
-%     Example: Enter stomach AND gastric into "Definition" column,
-%     The result contains for example,
-% 
-%         example: "~ male stomach cDNA ~ polypeptide, gastric specific ~" to DEFINITION.
-% 
-% "OR" search for the plural search fieldsSearch by selecting the OR.
-% 
-%     Example:Enter human into "Definition" column, Enter human into "Reference Title" column, and choose "OR" at "Combine Searches with", the result is obtained.
-%     The result contains for example,
-% 
-%         example: "~ Human metapneumovirus ~" to DEFINITION.
-%         example: "~ human cDNA project ~" to REFERENCE TITLE.
-% 
-% "AND" search for the plural search fieldsSearch by selecting the AND
-% 
-%     Example:Enter human into "Definition" column, Enterhuman into "Reference Title" column, and choose "AND" at "Combine Searches with", The result is obtained.
-% 
-%     example: "~ Human glucocerebrosidase ~" to the DEFINITION
-%     example: "~ expression of human ~" in the REFERENCE TITLE
-% 
-% Partial match search of Feature/Qualifier Search by Feature Key, Qualifier Name,Qualifier Value.
-% 
-%     Example:Enter CDS into "Feature Key" column in "Features",translation into "Qualifier Name" column, and AAA*CC into "Qualifier Value" column,
-%     The result contains for example,
-% 
-%         example: "/translation="ï½žAAAï½žCCï½ž"" to CDS of FEATURES.
-% 
-%     Example: Enter CDS into "Feature Key" column in "Features", gene into "Qualifier Name" column, and p53 into "Qualifier Value" column,
-%     The result contains for example,
-% 
-%         example: One which has been described as "/gene="p53"" to CDS of FEATURES.
-%         example: One which has been described as "/gene="p53R2"" to CDS of FEATURES.
-% 
-% Details of the search field
-% 
-% Reference: "Available Fields"
-% 
-
-% 
-% Format of the search keyword
-% 
-% Specification of the search field
-% 
-%         (Search field name or Short name) + ':' + (Search keyword)
-% 
-% Boolean operator ("AND", "OR", "NOT" search)
-% 
-%         (Search keyword) + ' AND ' + (Search keyword)
-%         (Search keyword) + ' && ' + (Search keyword)
-%         (Search keyword) + ' +' + (Search keyword)
-%         (Search keyword) + ' OR ' + (Search keyword)
-%         (Search keyword) + ' || ' + (Search keyword)
-%         (Search keyword) + ' NOT ' + (Search keyword)
-%         (Search keyword) + ' -' + (Search keyword)
-% 
-% Grouping
-% 
-%         '(' + (Search keyword) + (Logical operator) + (Search keyword) + ')'
-% 
-% Range search
-% 
-%         (Search field name or Short name) + ':[' + (Start value or '*') + ' TO ' + (End value or '*') + ']'
-%         Including start value, end value
-%         (Search field name or Short name) + ':{' + (Start value or '*') + ' TO ' + (End value or '*') + '}'
-%         Not including start value, end value
-% 
-% Wild card search
-% 
-%         (Search keyword) + '*'
-%         '*' + (Search keyword)
-%         (Search keyword) + '*' + (Search keyword)
-%         '*' matches any texts more than 0 characters
-%         (Search keyword) + '?' + (Search keyword)
-%         '?' match in any one character
-% 
-% Phrase search
-%     Search in sequence the search keyword. Or search characters that have special meaning.
-% 
-%         "' + (Search keyword) + '"'
-% 
-% Regular expression search
-% 
-%         '/' + (Search keyword) + '/'
-% 
-%     Example of the regular expression
-% 
-%         . (any single character)
-%         example : /Homini.ae/ matches the for example 'Hominidae' and 'Homininae'.
-%         * (a letter more than 0)
-%         example : /AB0*/ matches the for example 'AB', 'AB0', 'AB00', 'AB000'
-%         .* (zero or more of the preceding element)
-%         example : /AB.*/ matches the for example 'AB', 'AB0', 'AB789' , 'ABXYZ'
-%         ? (Previous character is 0 or 1)
-%         example : /AB?00000/ matches 'AB000000' and 'A000000'
-%         + (Previous character is 1 or more)
-%         example : /AB0*/ matches the for example 'AB0', 'AB00', 'AB000' , but does not match 'AB'
-%         [abc] (character 'a' , 'b' or 'c')
-%         example : /Homini[dn]ae/ matches 'Hominidae' and 'Homininae'
-%         [^abc] (except character 'a' , 'b' , 'c')
-%         example : /Homini[^d]ae/ matches 'Homininae' but does not match 'Hominidae'
-%         [a-z0-9] (character 'a' ï½ž 'z' or '0' ï½ž '9')
-%         example : /AA[0-9]00000/ matches the for example 'AA100000'
-%         { n } (Previous character occurs n times exactly)
-%         example : /AB0{2}/ matches 'AB00' but does not match 'AB0' and 'AB000'
-%         { n ,} (Previous character occurs n times or more)
-%         example : /AB0{2,}/ matches the for example 'AB00' , 'AB000' , but does not match 'AB0'
-%         { n , m } (Previous character occurs at least n and not more than m times
-%         example : /AB0{2,4}/ matches the for example 'AB00' , 'AB0000' but does not match 'AB0' and 'AB00000'
-% 
-% Fuzzy Search
-%     Search for a word of spelling similar to the search keyword
-% 
-%         ':' + (Search keyword) + '~' + (Distance of the search term. Numerical value of 0.0 or more and less than 1.0. Close to the search keyword closer to 1.)
-% 
-% Proximity Search
-%     The words contained in a phrase search what is indicated in the neighborhood.
-% 
-%         ':' + (Phrase) + '~' + (Distance of the search term. Number of words.)
-% 
-% Weighting Search
-% 
-%         (Search keyword) + '^' + (Positive relative weight. Positive number. Default is 1.0.)
-% 
-% Character with a special meaning
-%     These characters have a special meaning.
-% 
-%     + - && || ! ( ) { } [ ] ^ " ~ * ? : /
-% 
-%     When you search these characters, use phrase search, or cancel the special meaning by prefixing the ''\''
-% 
-% Search results screen
-% In the browser
-% 
-%         Selecting the results you want to view, click the "View selected" button. You can view the full text of the flat file that was selected. (1,000,000 upper limit)
-% 
-% Download
-% 
-%         To download the all flat files, click the "Download All" button (1,000,000 upper limit).
-%         To download the selected files, check the box you want to download and click the "Download selected" button (1,000,000 upper limit).
-% 
-%     When your result is over the upper limit, refine your search condition.
-% 
-% Filter the search results
-%     If you click the "Facet", you can filter your search results by the following condition.
-%     Kind of filters
-% 
-%         Division
-%         Organism
-% 
-% "Search Settints" of "Advanced Search".
-% 
-% Specifiction of the following seach conditions are also available at the "Search Settints" of "Advanced Search".
-% 
-% Sort condition
-%     You can select a search field or search score for sorting.
-% Display field of the search results
-%     Check the box(es) you want to display on the search results.
+% Las opciones de la búsqueda rápida son, en principio, similares a las de la 
+% búsqueda rápida, sin embargo se permite un mayor flexibilidad para construir
+% criterios de selección más complejos. Se permite hacer búsquedas con operadores
+% de disyunción ('OR'), conjunción ('AND') y negación ('NOT') simultáneamente en 
+% un mismo campo. También, se permite agrupar criterios entre paréntesis. En esta
+% condición de búsqueda, el campo 'query' en la \textit{url} de la búsqueda ya no
+% se utiliza, en cambio cada campo de búsqueda tiene uno que le corresponde en 
+% la \textit{url} de búsqueda. Por ejemplo, la búsqueda rápida 
+% '\url{http://ddbj.nig.ac.jp/arsa/search?lang=en&cond=quick_search&query=df:homo&operator=AND}'
+% se convierte en '\url{http://ddbj.nig.ac.jp/arsa/search?lang=en&cond=advanced_search&df=homo&op=AND}'.
+% Por ejemplo la búsqueda
+% '\url{http://ddbj.nig.ac.jp/arsa/search?lang=&cond=advanced_search&df=(virus+NOT+Junin)&ln=Arenaviridae&op=AND}'
+% recupera los registros que en su linaje posea la palabra 'Arenaviridae' y que en
+% la defición posea la palabra 'virus' y que no posea la palabra 'Junin'. Otro 
+% ejemplo más, la búsqueda 
+% '\url{http://ddbj.nig.ac.jp/arsa/search?lang=&cond=advanced_search&df=((virus+AND+Junin)+NOT+segment)&op=AND}'
+% recupera los registros que poseen las palabras 'virus' y 'junín' en la definición 
+% y que no contengan la palabra 'segment'.
+% Otro ejemplo, la búsqueda 
+% '\url{http://ddbj.nig.ac.jp/arsa/search?lang=&cond=advanced_search&df=((virus+AND+Junin)+OR+(virus+AND+Tacaribe))&op=AND}'
+% recupera los que poseen los registros que contienen las palabras 'Junin' o 
+% 'Tacaribe', pero no 'virus'.
+% Todos los campos de búsqueda disponibles están en la tabla
+% \ref{tab:DDBJ_fields}.  
 
  
 
