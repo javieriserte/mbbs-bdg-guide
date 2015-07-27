@@ -27,7 +27,8 @@
 \usepackage{textcomp}           % Cosas de Texto
 \usepackage{multicol}           % Para manejar multiples columnas
 \usepackage[ansinew]{inputenc}  % Para poner acentos
-\usepackage[spanish]{babel}     % Para separar palabras al fin de los renglones.
+\usepackage[spanish,es-tabla]{babel}     % Para separar palabras al fin de los
+% renglones.
 \usepackage{amsmath}            % Para hacer matemÃ¡tica
 \usepackage{amsfonts}           % Para hacer matemÃ¡tica
 \usepackage{amssymb}            % Para hacer matemÃ¡tica
@@ -42,6 +43,7 @@
 \usepackage{soul}
 \usepackage{boolexpr}
 \usepackage[hyphens]{url}   % Typeset urls
+\usepackage[pdfborder={0 0 0 [3 3]}]{hyperref}       % Hipervísnculos en las url
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -110,7 +112,94 @@
 \begin{document}
 \titulo
  
-\section{Bases de datos primarias de nucleotidos}
+\section{Bases de datos primarias de nucleótidos}
+
+
+\subsection{European Nucleotide Archive - ENA}
+La base de datos ENA ofrece varios servicios para la búsqueda y descarga de 
+registros programaticamente usando una interface REST. Además da acceso FTP para
+descargar sus datos.
+
+De todos los servicios que ofrece, se discutirán el servicio de recuperación de
+datos, el de búsqueda por texto y el acceso por FTP.
+
+\subsubsection{Recuperación de datos - \textit{Data retrieval}}
+La URL base de este servicio es '\url{http://www.ebi.ac.uk/ena/data/view/}'.
+El uso más sencillo es la búsqueda por el código de identificación del
+registro que se quiere recuperar. Por ejemplo, la búsqueda
+'\url{http://www.ebi.ac.uk/ena/data/view/KP718916}, recupera el registro
+`KP718916'. Es posible, la búsqueda por rango separando dos códigos de
+identificación con el símbolo `-'.
+
+Otra opción, es la búsqueda por nombre taxonómico. Este tipo de búsqueda acepta
+nombres comunes, nombres científicos y números de identificación de taxa.
+En este tipo de búsqueda la URL base es
+'\url{http://www.ebi.ac.uk/ena/data/view/Taxon:}' Por ejemplo, la búsquedas que
+se muestra debajo recuperan los registros asociados a una especie de laucha.
+\begin{itemize}
+  \item \url{http://www.ebi.ac.uk/ena/data/view/Taxon:calomys laucha}
+  \item \url{http://www.ebi.ac.uk/ena/data/view/Taxon:small vesper mouse}
+  \item \url{http://www.ebi.ac.uk/ena/data/view/Taxon:56211}
+\end{itemize}
+
+Además, es posible obtener información acerca de proyectos de secuenciación.
+Para ello, se necesita el número de identificación del proyecto (project\_id) o
+el código de acceso del estudio (study\_accession). La URL para estas búsquedas
+se muestran debajo.
+\begin{itemize}
+  \item http://www.ebi.ac.uk/ena/data/view/study\_accession
+  \item Ejemplo: \url{http://www.ebi.ac.uk/ena/data/view/PRJDB1793}
+  \item http://www.ebi.ac.uk/ena/data/view/Project:project\_id
+  \item Ejemplo: \url{http://www.ebi.ac.uk/ena/data/view/Project:254551}
+\end{itemize}
+
+El formato de descarga de los datos es por omisión HTML, sin embargo, esta no 
+es la mejor opción si se desea hacer consulta programáticas. ENA ofrece otros
+formatos para descargar los datos. Para ello, se utiliza la opción 
+\emph{display} en el URL de búsqueda. En la tabla \ref{tab:ena_fmt} se muestran
+los formatos aceptados.
+
+\begin{table}[!h]
+\begin{center}
+\small{}
+\begin{tabular}{lp{5cm}p{7cm}}
+Opción & Descripción & Ejemplo \\ \hline
+html   & Valor por omisión. Muestra los resultados en formato html. Disponible
+para todos los tipos de datos &
+\url{http://www.ebi.ac.uk/ena/data/view/KP718916&display=html} \\
+xml    & Muestra los resultados en formato Xml. Disponible para todos los tipos
+de datos & \url{http://www.ebi.ac.uk/ena/data/view/KP718916&display=xml} \\
+text   & Muestra los datos en formato de texto plano. Disponible solo para
+secuencias con anotación y ensambladas &
+\url{http://www.ebi.ac.uk/ena/data/view/KP718916&display=text} \\
+fasta  & Muestra los datos en formato fasta. Disponible solo para
+secuencias con anotación, ensambladas y \textit{trace} & 
+\url{http://www.ebi.ac.uk/ena/data/view/KP718916&display=fasta} \\ 
+fastq  & Muestra los datos en formato fastq. Solo disponible para \textit{trace}
+& \url{http://www.ebi.ac.uk/ena/data/view/TI1&display=fastq} \\
+\end{tabular}
+\normalsize{}
+\end{center}
+\caption{Formatos disponibles en ENA}
+\label{tab:ena_fmt}
+\end{table}
+
+Además de poder especificar el formato del contenido, se puede definir si se
+desea que la descarga sea un archivo de texto plano o un archivo comprimido.
+Para ello, se usa la opción \emph{download}. Los valores permitidos son
+\emph{txt} y \emph{gzip}.
+
+Este sistema de descarga limita la cantidad de descargas a 100 000 registros por
+consulta. Este límite es para evitar la descarga no intencional de un gran
+cantidad de datos. Si, es necesario descargar más registros se utiliza la 
+opción \emph{lentgh}, cuyo valor es el nuevo número de límite que se desea. Otra
+opción importante es \emph{offset} que establece cual es el primer registro que
+se descargará. Esto es útil para hacer descargar fragmentadas.
+
+ 
+
+\subsubsection{Búsqueda por texto}
+
 
 \subsection{DNA Data Bank of Japan - DDBJ}
 La base de datos DDBJ ofrece, además de la interfaz web, el acceso por FTP y
@@ -118,81 +207,126 @@ una API web llamada WABI (Web API for Biology). Estos dos son los recursos que
 permiten el acceso programático a esta base de datos.
 
 \subsubsection{Formato del registro}
-\small{}
+\scriptsize{}
 \begin{verbatim} 
-LOCUS       JUNSRNA                 3412 bp    RNA     linear   VRL 06-MAR-2004
-DEFINITION  Junin virus GPC, N genes for glycoproteins, nucleocapsid protein,
-            complete cds.
-ACCESSION   D10072
-VERSION     D10072.2
-KEYWORDS    .
-SOURCE      Junin virus
-  ORGANISM  Junn mammarenavirus
+LOCUS       AJ131281                 348 bp    RNA     linear   VRL 10-DEC-1999
+DEFINITION  Lymphocytic choriomeningitis virus z gene, partial, strain MX.
+ACCESSION   AJ131281
+VERSION     AJ131281.1  GI:3970751
+KEYWORDS    RING finger protein; z gene.
+SOURCE      Lymphocytic choriomeningitis mammarenavirus (LCMV)
+  ORGANISM  Lymphocytic choriomeningitis mammarenavirus
             Viruses; ssRNA viruses; ssRNA negative-strand viruses;
             Arenaviridae; Mammarenavirus.
-REFERENCE   1  (bases 1 to 3412)
-  AUTHORS   Romanowski,V.
+REFERENCE   1
+  AUTHORS   Gibadulinova,A., Zelnik,V., Reiserova,L., Zavodska,E.,
+            Zatovicova,M., Ciampor,F., Pastorekova,S. and Pastorek,J.
+  TITLE     Sequence and characterisation of the Z gene encoding ring finger
+            protein of the lymphocytic choriomeningitis virus MX strain
+  JOURNAL   Acta Virol. 42 (6), 369-374 (1998)
+   PUBMED   10358742
+REFERENCE   2  (bases 1 to 348)
+  AUTHORS   Pastorek,J.
   TITLE     Direct Submission
-  JOURNAL   Submitted (10-DEC-1991) to the DDBJ/EMBL/GenBank databases.
-            Contact:Victor Romanowski
-            Universidad Nacional de La Plata, Instituto de Bioquimica y
-            Biologia Molecular, Facultad de Ciencias Exactas; calle 49 y 115,
-            La Plata 1900, Argentina
-REFERENCE   2
-  AUTHORS   Ghiringhelli,P.D., Rivera Pomar,R.V., Baro,N.I., Rosas,M.F.,
-            Grau,O. and Romanowski,V.
-  TITLE     Nucleocapsid protein gene of Junin arenavirus (cDNA sequence)
-  JOURNAL   Nucleic Acids Res. 17, 8001 (1989)
-REFERENCE   3  (bases 1 to 3400)
-  AUTHORS   Ghiringhelli,P.D., Rivera-Pomar,R.V., Lozano,M.E., Grau,O. and
-            Romanowski,V.
-  TITLE     Molecular organization of Junin virus S RNA: complete nucleotide
-            sequence, relationship with other members of the Arenaviridae and
-            unusual secondary structures
-  JOURNAL   J. Gen. Virol. 72, 2129-2141 (1991)
-COMMENT     
+  JOURNAL   Submitted (02-DEC-1998) Pastorek J., Molecular Biology, Institute
+            of Virology, Slovak Academy of Sciences, Dubravska cesta 9, 842 46,
+            SLOVAK REPUBLIC
 FEATURES             Location/Qualifiers
-     source          1..3412
-                     /cell_line="grown in BHK-21 cells"
-                     /clone="pJUN[63,42,433,58]"
-                     /clone_lib="pUC19"
-                     /db_xref="taxon:11619"
+     source          1..348
+                     /organism="Lymphocytic choriomeningitis mammarenavirus"
                      /mol_type="genomic RNA"
-                     /organism="Junin virus"
-                     /segment="S"
-                     /strain="MC2"
-     CDS             88..1545
-                     /codon_start=1
-                     /gene="GPC"
-                     /product="glycoprotein precursor"
-                     /protein_id="BAA00964.2"
-                     /translation="MGQFISFMQEIPTFLQEALNIALVAVSLIAIIKGVVNLYKSGLF
-...
-                   RGEACPLPHRLNSLGGCRCGKYPNLKKPTVWRRGH"
-     sig_peptide     88..261
-     mat_peptide     262..837
-                     /product="G1 protein"
-     misc_feature    837..838
-                     /note="pot. cleavage site of glycoproteins"
-     mat_peptide     838..1542
-                     /product="G2 protein"
-     CDS             complement(1637..3331)
-                     /codon_start=1
-                     /gene="N"
-                     /product="nucleocapsid protein"
-                     /protein_id="BAA00965.1"
-                     /translation="MAHSKEVPSFRWTQSLRRGLSQFTQTVKSDVLKDAKLIADSIDF
-...
-                     KRDKDAPFKLASSEPHCALLDCIMFQSVLDGKLYEEELTPLLPPSLLFLPKAAYAL"
-BASE COUNT          907 a          813 c          716 g          976 t
+                     /strain="MX"
+                     /db_xref="taxon:11623"
+                     /lab_host="HeLa cells"
+     gene            <70..343
+                     /gene="z"
+     CDS             <70..343
+                     /gene="z"
+                     /experiment="experimental evidence, no additional details
+                     recorded"
+                     /codon_start=2
+                     /product="ring finger protein"
+                     /protein_id="CAA10342.1"
+                     /db_xref="GI:3970752"
+                     /translation="MGQGKSKEKKDTNTGDRAEILPDTTYLGPLNCKSCWQKFDSLVR
+                     CHDHYLCRHCLNLLLSVSDRCPLCKCPLPTKLKISTAPSPPPPYEE"
+     mat_peptide     <70..338
+                     /gene="z"
+                     /product="ring finger protein"
 ORIGIN      
-        1 tgcagtaagg ggatcctagg cgattttggt aacgctataa gttgttactg ctttctattt
-...
-     3361 aaaaaattgc tcagtgaaag tgttagacac tatgcctagg atccactgtg cg
+        1 cgtttagttg cgctgtttgg ttgaacagcc ttttcctgtg agagtacaga gacaaaccta
+ ...
+      301 gatatcaaca gccccaagcc caccacctcc ctacgaagag taacaccg
 //
 \end{verbatim}
 \normalsize{}
 \subsubsection{Acceso FTP}
+DDBJ permite descargas varias bases de datos. Nos enfocaremos en \emph{DDBJ}
+(nucleotidos), \emph{DAD} (aminoácidos) y \emph{wgs} (secuenciación de genomas
+completos). 
+La URL base para ellas son:
+\begin{description}
+  \item[ddbj] \url{ftp://ftp.ddbj.nig.ac.jp/ddbj_database/ddbj}
+  \item[ddbj - release notes]
+  \url{ftp://ftp.ddbj.nig.ac.jp/ddbj_database/release_note_archive/ddbj}
+  \item[dad]  \url{ftp://ftp.ddbj.nig.ac.jp/ddbj_database/dad}
+  \item[dad - release notes] 
+  \url{ftp://ftp.ddbj.nig.ac.jp/ddbj_database/release_note_archive/dad}
+  \item[wgs]  \url{ftp://ftp.ddbj.nig.ac.jp/ddbj_database/wgs}
+  \item[wgs - Lista de organismos]
+  \url{ftp://ftp.ddbj.nig.ac.jp/ddbj_database/wgs/WGS_ORGANISM_LIST.txt}
+\end{description}
+
+La información en las bases de datos \emph{ddbj} y \emph{dad} está organizada
+en diferentes categorías, según el origen de las secuencias. Los archivos de 
+datos que pueden ser descargados se corresponden con estas categorías y siguen
+una nomenclatura racional. En la tabla \ref{ddbj_ftp_categories} se detallan las
+categorías. El nombre de cada archivo está formado por un prefijo que 
+corresponde con alguna de las categorías, después un número de orden creciente y
+finalmente la extensión. El formato de los archivos es texto plano, comprimido.
+Para las bases de datos \emph{ddbj} y \emph{dad}, posible descargar archivos en 
+formato \texttt{fasta} y \texttt{XML}. Estos se encuentran en las
+subcarpetas \texttt{fasta/} y \texttt{xml/insdxml/v1.4} respectivamente.
+
+\begin{table}[h!tp]
+\begin{center}
+\begin{tabular}{llp{11cm}}
+Categoría  & Prefijo & Descripción \\ \hline
+HUM        & ddbjhum & Humano \\
+PRI        & ddbjpri & Primates (no humano) \\
+ROD        & ddbjrod & Roedores \\
+MAM        & ddbjmam & Mamiferos (no primates, ni roedores) \\
+VRT        & ddbjvrt & Vertebrados (no mamíferos) \\
+INV        & ddbjinv & Invertebrados \\
+PLN        & ddbjpln & Plantas, hongos, plastidos y otros eukariotas \\
+BCT        & ddbjbct & Bacterias y archaeas \\
+VRL        & ddbjvrl & Viruses \\
+PHG        & ddbjphg & Bacteriofagos \\
+ENV        & ddbjenv & Secuencias de muestras ambientales \\
+SYN        & ddbjsyn & Secuencias de cosntrucciones sintéticas \\
+EST        & ddbjest & \textit{Expressed sequence tags}. Secuencias cortas
+                       de cDNA \\
+GSS        & ddbjgss & \textit{Genome survey sequences}. Secuencias
+                       genómicas cortas \\
+TSA        & ddbjtsa & Ensamblados de transcriptómica (\textit{Transcriptome
+                       shhotgun assemblies}) \\
+HTC        & ddbjhtc & Secuencias de cDNA por métodos de alto rendimiento
+                       (\emph{high throughput} .
+                       Esta categoría incluye secuencias de cDNA no terminadas.
+                       Cuando la secuenciación se completa se mueve a la 
+                       categoría taxonómica que le corresponde \\
+HTG        & ddbjhtg & Secuencias genómicas por métodos de alto rendimiento
+                       (\emph{high throughput}) \\
+STS        & ddbjsts & \emph{Sequence tagged sites} \\
+PAT        & ddbjpat & Secuencias relacionadas con aplicaciones patentadas \\
+UNA        & ddbjuna & Secuencias no anotadas. \\
+CON        & ddbjcon & Rearmados en proyectos de secuenciación (Contigs) \\
+\end{tabular}
+\end{center}
+\caption{Categorías de las bases de datos de DDBJ}
+\label{ddbj_ftp_categories}
+\end{table}
+
 
 \subsubsection{Acceso por Web API}
 DDBJ ofrece API para tres servicios diferentes. El servicio WABI BLAST, que 
@@ -202,9 +336,9 @@ WebAPI, que permite la búsqueda de registros por su contenido textual (no de
 secuencia. Los tres servicios usan una arquitectura REST 
 (\textit{Representational state transfer}) sobre http para las consultas. 
 
-\paragraph{WABI BLAST}
 
-\paragraph{Getentry WebAPI}
+
+\subsubsection{Getentry WebAPI}
 El servicio getentry permite recuperar registro de una de las bases de data de 
 DDBJ por su número de acceso. Las consultas se pueden hacer mediante el método
 HTML GET o usando una URL semántica. En ambos casos, la URL base es la misma:
@@ -214,12 +348,93 @@ por ejemplo, la consulta '\url{http://getentry.ddbj.nig.ac.jp/getentry?database=
 recupera el registro con el número de acceso KP177965. 
 La síntaxis para hacer una consulta mediante una URL semántica
 La misma consulta, usando
-una URL semántica es '\url{http://getentry.ddbj.nig.ac.jp/getentry/ddbj/KP177965}.
+una URL semántica es
+'\url{http://getentry.ddbj.nig.ac.jp/getentry/nombre_de_la_base_de_datos/número_de_acceso/revision},
+donde 'revisión' es opcional. Los registros pueden ser actualizados en el 
+tiempo, cada nueva versión de un registro se carateriza por la fecha y hora de
+la actualización. Por ejemplo, la
+'\url{http://getentry.ddbj.nig.ac.jp/getentry/ddbj/AY646354/2010-02-26+14:07:01}'
+\\ recupera la revisión 2010-02-26 14:07:01 del registro. Para saber que 
+revisiones están disponibles para un registro particular se puese hacer una
+consulta a la '\url{http://getentry.ddbj.nig.ac.jp/gethistory}', con un formato
+similar a la de 'getentry'.
 
-DDBJ Amino Acid Sequence Database
+Los parámetros disponibles para las consultas son el \emph{número de acceso},
+\emph{base de datos}, \emph{revisión}, \emph{formato}, \emph{tipo de archivo},
+\emph{mostrar eliminados} y \emph{limite}.
 
 
-\paragraph{ARSA WebAPI.} Está diseñada para ser usada con un navegador web. Los
+Para especificar el número se acceso se utiliza la palabla clave
+\emph{accession\_number}. Se puede indicar el número de acceso solo (ej.
+AY646354), o el número de versión (AY646354.1). Se puede especificar varios 
+número de acceso en un sola consulta, separándolos con una coma. También se 
+puede indicar un rango de números de acceso, conectando dos número de accesos
+con un símbolo '-'. Este parámetros es el único obligatorio.
+
+Para especificar una base de datos se usa la palabra clave \emph{database}.
+Las báses de datos disponibles se muestran en la tabla \ref{tab:getentry_dbs}
+
+\begin{table}
+\begin{center}
+\begin{tabular}{llp{7cm}}
+Tipo    & Base de datos & Descripción\\ \hline
+DNA     & na            & Busca en todas las bases de datos dispoibles. Es la
+                          opción usada por defecto. \\
+        & ddbj          & Base de datos propioa de DDBJ. \\
+        & wgs           & Base de datos de proyectos de secuenciación de
+                          genomas completos (Whole genome sequences). \\
+        & mga           & Secuenciación masiva para anotación genómica (Mass
+                          sequence for Genome Annotation. \\ \hline
+Protein & aa            & Busca en todas las bases de datos disponibles. \\
+        & uniprot       & Base de datos Uniprot.\\
+        & dad           & Secuencias de aminoácidos de DDBJ. \\
+        & patent\_aa    & Secuencias derivadas de patentes. 
+
+El código de revisión se especifica con la palabra clave \emph{revision} y 
+consiste en la fecha y la hora con el formato \ttfamily{yyyy-MM-dd hh:mm:ss} o
+\ttfamily{yyyy-MM-dd hh:mm:ss release}.
+
+\end{tabular}
+\end{center}
+\caption{Bases de datos disponibles en \emph{gententry}}
+\label{tab:getentry_dbs}
+\end{table}
+
+Para especificar el formato de retorno de los datos se utiliza la palabra clave
+\emph{format}. En la tabla \ref{tab:getentry_fmts} se muestran los posibles 
+valores que puede tomar.
+
+\begin{table}
+\begin{center}
+\begin{tabular}{ll}
+Formato  & Descripción             \\ \hline
+flatfile & Formato de texto plano \\
+xml      & Formato INSDSeq-XML     \\
+fasta    & Secuencias de DNA o proteína en formato fasta \\
+trans    & Secuencia codificante traducida a proteínas (fasta) \\
+cds      & Secuencia codificante en nucleótidos (fasta)
+\end{tabular}
+\end{center}
+\caption{Formatos de retorno de \emph{getentry}.}
+\label{tab:getentry_fmts}
+\end{table}
+
+Para especificar que tipo de archivo en que se quiere recuperar los datos se 
+usa la palabra clave \emph{filetype}. Los valores posibles son \emph{html}, 
+\emph{text} y \emph{gz} (texto plano comprimido).
+
+Es posible recuperar información de registro viejos y que fueron eliminados de
+las versiones más recientes de las bases de datos. Para ello, se debe usar la
+palabra clave \emph{show\_suppressed}. Los valores posibles son \emph{true} y 
+\emph{false}. El valor por defecto es \emph{false}.
+
+Para limitar la cantidad de resultados que se desea recuperar se utiliza el
+parámetros \emph{limit}. Cuyo valor es el número máximo de registro que se 
+puede recuperar. El valor por defecto es 10. Si se especifica 0, se repueran
+todos los registros disponibles.
+
+
+\subsubsection{ARSA WebAPI.} Está diseñada para ser usada con un navegador web. Los
 navegadores compatibles son Firefox y Chrome, IE versiones 9 y 10; y Safari
 version 5 y posteriores.
 
@@ -360,6 +575,15 @@ Cualquier caracter n hasta m veces      & \{n,m\}   & /XY1{2,3}/ coincide con 'X
 \label{tablelabel}
 \end{table}
 
+\subsubsection{WABI BLAST}
+DDBJ ofrece una API web, e interface para hacer consultas con Java, perl y Ruby.
+Sin embargo, la documentación solo está disponible en japonés, por ello lo 
+dejaremos fuera de la discusión. Si se desea ver en detalle la documentación 
+disponible, visite la página
+'\url{http://www.ddbj.nig.ac.jp/search/help/wabi/wabi_blast_example-j.html}'.
+
+
+
 % Las opciones de la búsqueda rápida son, en principio, similares a las de la 
 % búsqueda rápida, sin embargo se permite un mayor flexibilidad para construir
 % criterios de selección más complejos. Se permite hacer búsquedas con operadores
@@ -387,7 +611,7 @@ Cualquier caracter n hasta m veces      & \{n,m\}   & /XY1{2,3}/ coincide con 'X
 
  
 
-% \subsection{European Nucleotide Archive - API}
+
 % 
 % 
 % \subsection{National Center of Biotechnology Information - API}
