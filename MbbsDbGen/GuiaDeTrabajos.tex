@@ -196,10 +196,148 @@ opción \emph{lentgh}, cuyo valor es el nuevo número de límite que se desea. Otra
 opción importante es \emph{offset} que establece cual es el primer registro que
 se descargará. Esto es útil para hacer descargar fragmentadas.
 
- 
-
 \subsubsection{Búsqueda por texto}
+La búsqueda por texto en ENA usa la URL base \url{http://www.ebi.ac.uk/ena/data/warehouse/search}.
+La búsqueda se realiza en particiones de las bases de datos denominadas \emph{domain} 
+y \emph{result}. La partición \emph{domain} es de mayor nivel de abstracción y 
+divide el contenido según su naturaleza. La partición \emph{result} es un 
+refinamiento de \emph{domain} que divide la información con algún criterio
+adiocional. Por ejemplo, el \emph{domain} `sequence' agrupa los registros que 
+contiene información de secuencias nucleotídicas. Para este \emph{domain} hay
+dos \emph{result} disponibles: `sequence\_release'  y `sequence\_update'. El 
+primero contiene todas las secuencias de la última versión publicada de la
+base de datos y el segundo tiene las secuencias que se agregaron o actualizaron
+desde esa última publicación. Este último conjunto suele ser mucho más pequeño.
+En la tabla \ref{tab:ena_domains_and_results} se muestran todos los \emph{domain} 
+y \emph{result} disponibles. 
 
+\begin{table}
+\begin{center}
+\begin{tabular}{llp{7cm}}
+       Domain &             Result &                                                Descripción \\ \hline
+     assembly &           assembly &                                        Genomas ensamblados \\
+     sequence &  sequence\_release &                        Secuencias de nucleótidos (release) \\
+     sequence &   sequence\_update &                         Secuencias de nucleótidos (Update) \\
+       coding &    coding\_release &                          Secuencias codificantes (Release) \\
+       coding &     coding\_update &                           Secuencias codificantes (Update) \\
+    noncoding & noncoding\_release &                       Secuencias no codificantes (Release) \\
+    noncoding &  noncoding\_update &                        Secuencias no codificantes (Update) \\
+         read &   read\_experiment &                  Lecturas crudas agrupadas por experimento \\
+         read &          read\_run &                                            Lecturas crudas \\
+         read &        read\_study &            Lecturas crudas agrupadas agrupadas por estudio \\
+     analysis &           analysis & Análisis de secuencias de nucleótidos a partir de lecturas \\
+     analysis &    analysis\_study & Análisis de secuencias de nucleótidos a partir de lecturas, agrupados por estudio \\
+        trace &        read\_trace &                                        Trazas de capilares \\
+        study &              study &                                                   Estudios \\
+        taxon &              taxon &                                   Clasificación taxonómica \\
+       sample &             sample &                                                   Muestras \\
+environmental &      environmental &                                       Muestras ambientales \\
+\end{tabular}
+\end{center}
+\caption{Particiones \emph{domain} y \emph{result} disponibles en ENA.}
+\label{tab:ena_domains_and_results}
+\end{table}
+
+Las búsqueda programáticas por texto, además del parámetro URL \emph{query},
+requieren de los parámetros \emph{domain} y \emph{result}. El contenido del 
+parámetro \emph{query} no es libre, es decir no es posible hacer una búsqueda 
+arbitraria de texto. El contenido del parámetro se construye por opciones de 
+filtrado unidos por operadores lógicos (\emph{AND}, \emph{OR}, \emph{NOT})). 
+Si se tienen varias opciones de filtrado, se pueden agrupar entre paréntesis.
+
+Las opciones de filtrado se aplican a los distintos campos que posee cada 
+registro. Los campos disponibles varian en cada \emph{domain} y \emph{result}.
+También, cada campo de búsqueda tienen valores de un tipo particular: \emph{booleano},
+\emph{Vocabulario restringido}, \emph{fecha}, \emph{númerico}, \emph{textual},
+\emph{geo-espacial} y \emph{taxonómico}. En la tabla \ref{tab:ena_search_fields}
+se muestran algunos de los campos de búsqueda más comunes para el \emph{domain=sequence}
+y \emph{result=sequence\_release}. Estos campos se comparan con operadores de 
+igualdad (`='), diferencia (`!='), mayor y menor (`>', `>=', `<=' y `<'), excepto
+los campos de ubicación geográfica y taxonomía. La búsqueda por estos campos
+requiere el uso de funciones particulares. En la tabla \ref{tab:ena_search_loc_and_taxon}
+se muestran algunas funciones que provee ENA para este tipo de búsqueda.
+
+\begin{table}[h!]
+\begin{center}
+\small
+\begin{tabular}{lp{5cm}p{4cm}l}
+Función   & Descripción & Parámetros & Ejemplo \\ \hline
+geo\_box1 & La ubicación se encuentra dentro de un cuadrado definido por la 
+            esquina superior derecha y la esquina inferior izquierda                              
+          & latitud suroeste, longitud suroeste, latitud noreste y longitud 
+            noreste
+          & geo\_box1(-20,10,20,50)\\
+geo\_circ & La unicación se encuentra dentro de un circulo definido por el 
+            centro y el radio 
+          & Latitud, longitud y radio (km) 
+          & geo\_circ(44,00,00) \\
+tax\_eq    & Registros que coinciden con un identificador de taxonomía del NCBI 
+          & Identificador de taxonomía de NCBI(numérico) 
+          & tax\_eq(9606) \\
+tax\_tree  & Registros que coinciden con un identificador de taxonomía del NCBI y
+            todos sus descendientes. 
+          & Identificador de taxonomía de NCBI(numérico) 
+          & tax\_tree(2759) \\
+\end{tabular}
+\normalsize{}
+\end{center}
+\caption{Funciones para la búsqueda por geolocalización y por taxonomía}
+\label{tab:ena_search_loc_and_taxon}
+\end{table}
+
+\begin{table}[h!]
+\begin{center}
+\small{}
+\begin{tabular}{lp{3cm}p{7cm}}
+            accession &                   Texto &                                         Número de acceso \\ \hline
+          base\_count &                  Número &                                Longitud de la secuencias \\
+           cell\_line &                   Texto &              línea celular de donde se obtuvo la muestra \\
+              country &                   Texto &        Ubicación de la muestra: País, región y localidad \\
+          description &                   Texto &                        Breve descripción de la secuencia \\
+environmental\_sample &                Booleano &  Especifíca si el material pertenece a muestra ambiental \\
+             keywords &                   Texto &                  Palabras clave asociadas a la secuencia \\
+        last\_updated &                   Fecha &                         Fecha de la última actualización \\
+%             location &      Latitud y longitud &  Ubicación geográfica de punto aislamiento de la muestra \\
+            mol\_type & Vocabulario restringido &           Tipo molecular de la molécula \textit{in vivo} \\
+\end{tabular}
+\normalsize{}
+\end{center}
+\caption{Lista de algunos de los campos de búsqueda ofrecidos por ENA.}
+\label{tab:ena_search_fields}
+\end{table}
+
+La búsqueda por texto ofrece las mismas opciones para manipular el formato de 
+los datos a recibir que la búsqueda por identificador que se discutió en la 
+primer sección. Se usan los parámetros \emph{display}, \emph{download}, \emph{length}
+y \emph{offset} ya vistos (ver la tabla \ref{tab:ena_fmt}). Este tipo de búsqueda
+ofrece una opción más para el parámetro \emph{display}, el valor `report'. Esta 
+opción permite descargar algunos campos de los registros y no el registro completo.
+Es útil para tener en un resumen de los registros que se desea descargar. Cuando
+se usa esta opción se requiere el uso del parámetro \emph{fields} para indicar 
+los campos que se desea obtener. Debajo se muestran 
+algunos de los campo más usuales para el \emph{domain} `sequence' y \emph{result}
+`sequence\_release'.
+
+\begin{multicols}{3}
+\begin{itemize}
+  \item accession
+  \item base\_count
+  \item cell\_line
+  \item description
+  \item environmental\_sample
+  \item host 
+  \item keywords 
+  \item last\_updated 
+  \item location 
+  \item mol\_type 
+  \item tax\_division
+  \item tax\_id 
+  \item scientific\_name
+\end{itemize}
+\end{multicols}
+
+La referencia completa de los campos de búsqueda y los campos disponibles para 
+los reportes se puede consultar en \url{http://www.ebi.ac.uk/ena/data/warehouse/usage}.
 
 \subsection{DNA Data Bank of Japan - DDBJ}
 La base de datos DDBJ ofrece, además de la interfaz web, el acceso por FTP y
