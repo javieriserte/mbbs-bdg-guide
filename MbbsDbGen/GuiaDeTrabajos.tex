@@ -334,7 +334,7 @@ secuencias de molecula de DNA, una cadena específica. Hay dos valores
 permitidos: `1' para la cadena positiva (o sentido) y `2' para la cadena 
 negativa (o antisentido). 
 
-Los parámetros \emph{seq_start} y \emph{seq_start} define la región de la secuencia
+Los parámetros \emph{seq\_start} y \emph{seq\_start} define la región de la secuencia
 que se desea recuperar. La primer base de la secuencia es la número `1'.
 
 El parámetro \emph{complexity} permite recuperar los registros con diferentes
@@ -342,10 +342,7 @@ grados de complejidad. Los valores permitidos son números del `0' al `4', que
 corresponden de mayor complejidad de los datos (`0') a menor complejidad (`4').
 Esta opción no está disponible para todas las bases de datos.
 
-
-  
-
-\begin{table}[h!]
+\begin{table}[b!]
 \begin{center}
 \begin{tabular}{lll}
 Tipo de registro                              & rettype       & retmode        \\ \arrayrulecolor{black}\hline
@@ -354,23 +351,23 @@ Document summary                              & docsum        & xml, default   \
 List of UIDs in XML                           & uilist        & xml            \\
 List of UIDs in plain text                    & uilist        & text           \\ \arrayrulecolor[rgb]{.8,.8,.8}\hline
 \multicolumn{3}{c}{Base de datos \emph{gene}}                                  \\
-text ASN.1                                    & null          & asn.1, default \\
+% text ASN.1                                    & null          & asn.1, default \\
 XML                                           & null          &xml             \\
-Gene table                                    & gene\_table   &text            \\
-Base de datos \emph{mesh}                                                      \\
-Full record                                   & full, default & text, default  \\ \hline
+Gene table                                    & gene\_table   &text            \\ \hline
+% \multicolumn{3}{c}{Base de datos \emph{mesh}}                                  \\
+% Full record                                   & full, default & text, default  \\ \hline
 \multicolumn{3}{c}{Bases de datos \emph{nuccore, nucest, nucgss, protein y popset}}   \\
-ASN.1 texto                                   & null          & text, default  \\
-ASN.1 binario                                 & null          & asn.1          \\
+% ASN.1 texto                                   & null          & text, default  \\
+% ASN.1 binario                                 & null          & asn.1          \\
 Full record in XML                            & native        & xml            \\
-Accession number(s)                           & acc           & text           \\
+% Accession number(s)                           & acc           & text           \\
 FASTA                                         & fasta         & text           \\
-TinySeq XML                                   & fasta         & xml            \\
-SeqID string                                  & seqid         & text           \\ \hline
+TinySeq XML                                   & fasta         & xml            \\ \hline
+% SeqID string                                  & seqid         & text           \\ \hline
 \multicolumn{3}{c}{Opciones adicionales para \emph{nuccore, nucest, nucgss y popset}} \\
 GenBank flat file                             & gb            & text           \\
-GBSeq XML                                     & gb            & xml            \\
-INSDSeq XML                                   & gbc           & xml            \\ \hline
+GBSeq XML                                     & gb            & xml            \\ \hline
+% INSDSeq XML                                   & gbc           & xml            \\ \hline
 \multicolumn{3}{c}{Opciones adicionales para \emph{nuccore y protein}}         \\
 Feature table                                 & ft            & text           \\ \hline
 \multicolumn{3}{c}{Opciones adicionales para \emph{nuccore}}                   \\
@@ -379,14 +376,14 @@ CDS nucleotide FASTA                          & fasta\_cds\_na  & text         \
 CDS protein FASTA                             & fasta\_cds\_aa  & text         \\ \hline
 \multicolumn{3}{c}{Opciones adicionales para \emph{protein}}                   \\
 GenPept flat file                             & gp            & text           \\
-GBSeq XML                                     & gp            & xml            \\
-INSDSeq XML                                   & gpc           & xml            \\
-Identical Protein XML                         & ipg           & xml            \\ \hline
+GBSeq XML                                     & gp            & xml            \\ \hline
+% INSDSeq XML                                   & gpc           & xml            \\
+% Identical Protein XML                         & ipg           & xml            \\ \hline
 \multicolumn{3}{c}{Base de datos \emph{pubmed}}                                \\
-text ASN.1                                    & null          & asn.1, default \\
+% text ASN.1                                    & null          & asn.1, default \\
 XML                                           & null          & xml            \\
-MEDLINE                                       & medline       & text           \\
-PMID list                                     & uilist        & text           \\
+% MEDLINE                                       & medline       & text           \\
+% PMID list                                     & uilist        & text           \\
 Abstract                                      & abstract      & text           \\
 \end{tabular}
 \end{center}
@@ -397,286 +394,63 @@ completa se puede visitar \url{http://www.ncbi.nlm.nih.gov/books/NBK25499/table/
 \label{tab:NCBI_rettype_retmode_options}
 \end{table}
 
+\subsubsection{Formato del registro}
+\small
+\begin{verbatim}
+LOCUS       AJ131281                 348 bp    RNA     linear   VRL 10-DEC-1999
+DEFINITION  Lymphocytic choriomeningitis virus z gene, partial, strain MX.
+ACCESSION   AJ131281
+VERSION     AJ131281.1  GI:3970751
+KEYWORDS    RING finger protein; z gene.
+SOURCE      Lymphocytic choriomeningitis mammarenavirus (LCMV)
+  ORGANISM  Lymphocytic choriomeningitis mammarenavirus
+            Viruses; ssRNA viruses; ssRNA negative-strand viruses;
+            Arenaviridae; Mammarenavirus.
+REFERENCE   1
+  AUTHORS   Gibadulinova,A., Zelnik,V., Reiserova,L., Zavodska,E.,
+            Zatovicova,M., Ciampor,F., Pastorekova,S. and Pastorek,J.
+  TITLE     Sequence and characterisation of the Z gene encoding ring finger
+            protein of the lymphocytic choriomeningitis virus MX strain
+  JOURNAL   Acta Virol. 42 (6), 369-374 (1998)
+   PUBMED   10358742
+REFERENCE   2  (bases 1 to 348)
+  AUTHORS   Pastorek,J.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (02-DEC-1998) Pastorek J., Molecular Biology, Institute
+            of Virology, Slovak Academy of Sciences, Dubravska cesta 9, 842 46,
+            SLOVAK REPUBLIC
+FEATURES             Location/Qualifiers
+     source          1..348
+                     /organism="Lymphocytic choriomeningitis mammarenavirus"
+                     /mol_type="genomic RNA"
+                     /strain="MX"
+                     /db_xref="taxon:11623"
+                     /lab_host="HeLa cells"
+     gene            <70..343
+                     /gene="z"
+     CDS             <70..343
+                     /gene="z"
+                     /experiment="experimental evidence, no additional details
+                     recorded"
+                     /codon_start=2
+                     /product="ring finger protein"
+                     /protein_id="CAA10342.1"
+                     /db_xref="UniProtKB/TrEMBL:Q9YJW6"
+                     /translation="MGQGKSKEKKDTNTGDRAEILPDTTYLGPLNCKSCWQKFDSLVR
+                     CHDHYLCRHCLNLLLSVSDRCPLCKCPLPTKLKISTAPSPPPPYEE"
+     mat_peptide     <70..338
+                     /gene="z"
+                     /product="ring finger protein"
+ORIGIN      
+        1 cgtttagttg cgctgtttgg ttgaacagcc ttttcctgtg agagtacaga gacaaaccta
+...
+      301 gatatcaaca gccccaagcc caccacctcc ctacgaagag taacaccg
+//
 
-% Go to:
-% ELink
-% Base URL
-% 
-% http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi
-% Functions
-% 
-%     Returns UIDs linked to an input set of UIDs in either the same or a different Entrez database
-%     Returns UIDs linked to other UIDs in the same Entrez database that match an Entrez query
-%     Checks for the existence of Entrez links for a set of UIDs within the same database
-%     Lists the available links for a UID
-%     Lists LinkOut URLs and attributes for a set of UIDs
-%     Lists hyperlinks to primary LinkOut providers for a set of UIDs
-%     Creates hyperlinks to the primary LinkOut provider for a single UID
-% 
-% Required Parameters
-% db
-% 
-% Database from which to retrieve UIDs. The value must be a valid Entrez database name (default = pubmed). This is the destination database for the link operation.
-% dbfrom
-% 
-% Database containing the input UIDs. The value must be a valid Entrez database name (default = pubmed). This is the origin database of the link operation. If db and dbfrom are set to the same database value, then ELink will return computational neighbors within that database. Please see the full list of Entrez links for available computational neighbors. Computational neighbors have linknames that begin with dbname_dbname (examples: protein_protein, pcassay_pcassay_activityneighbor).
-% cmd
-% 
-% ELink command mode. The command mode specified which function ELink will perform. Some optional parameters only function for certain values of &cmd (see below).
-% 
-% cmd=neighbor (default)
-% 
-% ELink returns a set of UIDs in db linked to the input UIDs in dbfrom.
-% 
-% Example: Link from protein to gene
-% 
-% http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=protein&db=gene&id=15718680,157427902
-% 
-% cmd=neighbor_score
-% 
-% ELink returns a set of UIDs within the same database as the input UIDs along with computed similarity scores.
-% 
-% Example: Find related articles to PMID 20210808
-% 
-% http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=pubmed&db=pubmed&id=20210808&cmd=neighbor_score
-% 
-% cmd=neighbor_history
-% 
-% ELink posts the output UIDs to the Entrez History server and returns a query_key and WebEnv corresponding to the location of the output set.
-% 
-% Example: Link from protein to gene and post the results on the Entrez History
-% 
-% http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=protein&db=gene&id=15718680,157427902&cmd=neighbor_history
-% 
-% cmd=acheck
-% 
-% ELink lists all links available for a set of UIDs.
-% 
-% Example: List all possible links from two protein GIs
-% 
-% http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=protein&id=15718680,157427902&cmd=acheck
-% 
-% Example: List all possible links from two protein GIs to PubMed
-% 
-% http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=protein&db=pubmed&id=15718680,157427902&cmd=acheck
-% 
-% cmd=ncheck
-% 
-% ELink checks for the existence of links within the same database for a set of UIDs. These links are equivalent to setting db and dbfrom to the same value.
-% 
-% Example: Check whether two nuccore sequences have "related sequences" links.
-% 
-% http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=nuccore&id=21614549,219152114&cmd=ncheck
-% ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-% cmd=lcheck
-% 
-% Elink checks for the existence of external links (LinkOuts) for a set of UIDs.
-% 
-% Example: Check whether two protein sequences have any LinkOut providers.
-% 
-% http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=protein&id=15718680,157427902&cmd=lcheck
-% 
-% cmd=llinks
-% 
-% For each input UID, ELink lists the URLs and attributes for the LinkOut providers that are not libraries.
-% 
-% Example: List the LinkOut URLs for non-library providers for two pubmed abstracts.
-% 
-% http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=pubmed&id=19880848,19822630&cmd=llinks
-% 
-% cmd=llinkslib
-% 
-% For each input UID, ELink lists the URLs and attributes for all LinkOut providers including libraries.
-% 
-% Example: List all LinkOut URLs for two PubMed abstracts.
-% 
-% http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=pubmed&id=19880848,19822630&cmd=llinkslib
-% 
-% cmd=prlinks
-% 
-% ELink lists the primary LinkOut provider for each input UID, or links directly to the LinkOut provider's web site for a single UID if retmode is set to ref.
-% 
-% Example: Find links to full text providers for two PubMed abstracts.
-% 
-% http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=pubmed&id=19880848,19822630&cmd=prlinks
-% 
-% Example: Link directly to the full text for a PubMed abstract at the provider's web site.
-% 
-% http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=pubmed&id=19880848&cmd=prlinks&retmode=ref
-% Required Parameter - Used only when input is from a UID list
-% id
-% 
-% UID list. Either a single UID or a comma-delimited list of UIDs may be provided. All of the UIDs must be from the database specified by dbfrom. There is no set maximum for the number of UIDs that can be passed to ELink, but if more than about 200 UIDs are to be provided, the request should be made using the HTTP POST method.
-% 
-% Link from protein to gene.
-% 
-% http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=protein&db=gene&id=15718680,157427902,119703751
-% 
-% Find related sequences (link from nuccore to nuccore).
-% 
-% http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=nuccore&db=nuccore&id=34577062
-% 
-% If more than one id parameter is provided, ELink will perform a separate link operation for the set of UIDs specified by each id parameter. This effectively accomplishes "one-to-one" links and preserves the connection between the input and output UIDs.
-% 
-% Find one-to-one links from protein to gene.
-% 
-% http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=protein&db=gene&id=15718680&id=157427902&id=119703751
-% Required Parameters - Used only when input is from the Entrez History server
-% query_key
-% 
-% Query key. This integer specifies which of the UID lists attached to the given Web Environment will be used as input to ELink. Query keys are obtained from the output of previous ESearch, EPost or ELInk calls. The query_key parameter must be used in conjunction with WebEnv.
-% WebEnv
-% 
-% Web Environment. This parameter specifies the Web Environment that contains the UID list to be provided as input to ELink. Usually this WebEnv value is obtained from the output of a previous ESearch, EPost or ELink call. The WebEnv parameter must be used in conjunction with query_key.
-% 
-% Link from protein to gene:
-% elink.fcgi?dbfrom=protein&db=gene&query_key=<key>&WebEnv=<webenv string>
-% 
-% Find related sequences (link from protein to protein):
-% elink.fcgi?dbfrom=protein&db=protein&query_key=<key>&WebEnv=
-% <webenv string>
-% 
-% Optional Parameters - Limiting the Output Set of Links
-% linkname
-% 
-% Name of the Entrez link to retrieve. Every link in Entrez is given a name of the form
-% 
-% dbfrom_db_subset.
-% 
-% The values of subset vary depending on the values of dbfrom and db. Many dbfrom/db combinations have no subset values. See the list of Entrez links for a listing of all available linknames. When linkname is used, only the links with that name will be retrieved.
-% 
-% The linkname parameter only functions when cmd is set to neighbor or neighbor_history.
-% 
-% Find all links from gene to snp.
-% 
-% http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=gene&db=snp&id=93986
-% 
-% Find snps with genotype data linked to genes.
-% 
-% http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=gene&db=snp&id=93986&linkname=gene_snp_genegenotype
-% term
-% 
-% Entrez query used to limit the output set of linked UIDs. The query in the term parameter will be applied after the link operation, and only those UIDs matching the query will be returned by ELink. The term parameter only functions when db and dbfrom are set to the same database value.
-% 
-% Find all related articles for a PMID.
-% 
-% http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=pubmed&db=pubmed&id=19879512
-% 
-% Find all related review articles published in 2008 for a PMID.
-% 
-% http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=pubmed&db=pubmed&id=19879512&term=review%5Bfilter%5D+AND+2008%5Bpdat%5Dh
-% holding
-% 
-% Name of LinkOut provider. Only URLs for the LinkOut provider specified by holding will be returned. The value provided to holding should be the abbreviation of the LinkOut provider's name found in the <NameAbbr> tag of the ELink XML output when cmd is set to llinks or llinkslib. The holding parameter only functions when cmd is set to llinks or llinkslib.
-% 
-% Find information for all LinkOut providers for a PMID.
-% 
-% http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=pubmed&cmd=llinkslib&id=16210666
-% 
-% Find information from clinicaltrials.gov for a PMID.
-% 
-% http://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi?dbfrom=pubmed&cmd=llinkslib&id=16210666&holding=CTgov
-% Optional Parameters - Dates
-% 
-% These parameters only function when cmd is set to neighbor or neighbor_history and dbfrom is pubmed.
-% datetype
-% 
-% Type of date used to limit a link operation. The allowed values vary between Entrez databases, but common values are 'mdat' (modification date), 'pdat' (publication date) and 'edat' (Entrez date). Generally an Entrez database will have only two allowed values for datetype.
-% reldate
-% 
-% When reldate is set to an integer n, ELink returns only those items that have a date specified by datetype within the last n days.
-% mindate, maxdate
-% 
-% Date range used to limit a link operation by the date specified by datetype. These two parameters (mindate, maxdate) must be used together to specify an arbitrary date range. The general date format is YYYY/MM/DD, and these variants are also allowed: YYYY, YYYY/MM.
-% Go to:
-% EGQuery
-% Base URL
-% 
-% http://eutils.ncbi.nlm.nih.gov/entrez/eutils/egquery.fcgi
-% Function
-% 
-% Provides the number of records retrieved in all Entrez databases by a single text query.
-% Required Parameter
-% term
-% 
-% Entrez text query. All special characters must be URL encoded. Spaces may be replaced by '+' signs. For very long queries (more than several hundred characters long), consider using an HTTP POST call. See the PubMed or Entrez help for information about search field descriptions and tags. Search fields and tags are database specific.
-% 
-% http://eutils.ncbi.nlm.nih.gov/entrez/eutils/egquery.fcgi?term=asthma
-% Go to:
-% ESpell
-% Base URL
-% 
-% http://eutils.ncbi.nlm.nih.gov/entrez/eutils/espell.fcgi
-% Function
-% 
-% Provides spelling suggestions for terms within a single text query in a given database.
-% Required Parameters
-% db
-% 
-% Database to search. Value must be a valid Entrez database name (default = pubmed).
-% term
-% 
-% Entrez text query. All special characters must be URL encoded. Spaces may be replaced by '+' signs. For very long queries (more than several hundred characters long), consider using an HTTP POST call. See the PubMed or Entrez help for information about search field descriptions and tags. Search fields and tags are database specific.
-% 
-% http://eutils.ncbi.nlm.nih.gov/entrez/eutils/espell.fcgi?db=pubmed&term=asthmaa+OR+alergies
-% Go to:
-% ECitMatch
-% Base URL
-% 
-% http://eutils.ncbi.nlm.nih.gov/entrez/eutils/ecitmatch.cgi
-% Function
-% 
-% Retrieves PubMed IDs (PMIDs) that correspond to a set of input citation strings.
-% Required Parameters
-% db
-% 
-% Database to search. The only supported value is `pubmed'.
-% rettype
-% 
-% Retrieval type. The only supported value is `xml'.
-% bdata
-% 
-% Citation strings. Each input citation must be represented by a citation string in the following format:
-% 
-% journal_title|year|volume|first_page|author_name|your_key|
-% 
-% Multiple citation strings may be provided by separating the strings with a carriage return character (%0D). The your_key value is an arbitrary label provided by the user that may serve as a local identifier for the citation, and it will be included in the output. Be aware that all spaces must be replaced by `+' symbols and that citation strings should end with a final vertical bar `|'.
-% 
-% http://eutils.ncbi.nlm.nih.gov/entrez/eutils/ecitmatch.cgi?db=pubmed&retmode=xml&bdata=proc+natl+acad+sci+u+s+a|1991|88|3248|mann+bj|Art1|%0Dscience|1987|235|182|palmenberg+ac|Art2|
-% Go to:
-% Release Notes
-% ESearch &sort; JSON output format: February 14, 2014
-% 
-%     ESearch now provides a supported sort parameter
-%     EInfo, ESearch and ESummary now provide output data in JSON format
-% 
-% ECitMatch, EInfo Version 2.0, EFetch: August 9, 2013
-% 
-%     ECitMatch is a new E-utility that serves as an API to the PubMed batch citation matcher
-%     EInfo has an updated XML output that includes two new fields: <IsTruncatable> and <IsRangeable>
-%     EFetch now supports the BioProject database.
-% 
-% EFetch Version 2.0. Target release date: February 15, 2012
-% 
-%     EFetch now supports the following databases: biosample, biosystems and sra
-%     EFetch now has defined default values for &retmode and &rettype for all supported databases (please see Table 1 for all supported values of these parameters)
-%     EFetch no longer supports &retmode=html; requests containing &retmode=html will return data using the default &retmode value for the specified database (&db)
-%     EFetch requests including &rettype=docsum return XML data equivalent to ESummary output
-% 
-% Release of new Genome database: November 9, 2011
-% 
-%     Entrez Genome has been completely redesigned, and database records now correspond to a species rather than an individual chromosome sequence. Please see full details of the change at www.ncbi.nlm.nih.gov/About/news/17Nov2011.html
-%     Old Genome IDs are no longer valid. A file is available on the NCBI FTP site that maps old Genome IDs to Nucleotide GIs: ftp.ncbi.nih.gov/genomes/old_genomeID2nucGI
-%     EFetch no longer supports retrievals from Genome (db=genome).
-%     The ESummary XML for Genome has been recast to reflect the new data model.
-%     To view the new search fields and links supported for the new Genome database, please see http://eutils.ncbi.nlm.nih.gov/entrez/eutils/einfo.fcgi?db=genome 
-% 
-% ESummary Version 2.0. November 4, 2011
-% 
-%     ESummary now supports a new, alternative XML presentation for Entrez document summaries (DocSums). The new XML is unique to each Entrez database and generally contains more extensive data about the record than the original DocSum XML.
-%     There are no plans at present to discontinue the original DocSum XML, so developers can continue to use this presentation, which will remain the default.
-%     Version 2.0 XML is returned when &version=2.0 is included in the ESummary URL.
+\end{verbatim}
+\normalsize{}
 
+\newpage
 \subsection{European Nucleotide Archive - ENA}
 La base de datos ENA ofrece varios servicios para la búsqueda y descarga de 
 registros programaticamente usando una interface REST. Además da acceso FTP para
@@ -959,6 +733,7 @@ SQ   Sequence 348 BP; 95 A; 100 C; 77 G; 76 T; 0 other;
 //
 \end{verbatim}
 \normalsize{}
+\newpage
 \subsection{DNA Data Bank of Japan - DDBJ}
 La base de datos DDBJ ofrece, además de la interfaz web, el acceso por FTP y
 una API web llamada WABI (Web API for Biology). Estos dos son los recursos que
@@ -1340,38 +1115,33 @@ dejaremos fuera de la discusión. Si se desea ver en detalle la documentación
 disponible, visite la página
 '\url{http://www.ddbj.nig.ac.jp/search/help/wabi/wabi_blast_example-j.html}'.
 
+\newpage
+\subsection{Bases de datos secundarias}
+
+\subsubsection{Uniprot}
+Uniprot es un conjunto de bases de datos que reune información sobre anotación
+de proteínas. Toma datos de protéinas de otras bases de datos y luego agrega
+y cura la anotación. Uniprot está compuesta de tres bases de datos, \emph{UniParc},
+\emph{UniProtKB} y \emph{Uniref}. \emph{UniParc} (\emph{Uniprot archive}) es una
+colección extensiva de practicamente todas las secuencias de proteínas disponibles
+en las bases de datos públicas, sin importar si están anotadas o no. \emph{UniprotKB}
+es una base de datos derivada de \emph{UniParc} que contiene solamente las proteínas
+que contienen anotaciones, manuales o generadas automáticamente. Esta subdividida 
+en otras dos bases de datos, \emph{Swiss-Prot} y \emph{TrEMBL}. \emph{Swiss-Prot}
+contiene las proteínas con anotaciones curadas de forma manual, mientras que 
+\emph{TrEMBL} contiene aquellas que fueron anotadas automáticamente. Cuando la  
+anotación de un miembros \emph{TrEMBL} se revisa, es pasada a \emph{Swiss-Prot}.
+El tamaño de \emph{Swiss-Prot} es cerca del 1\% de \emph{UniprotKB}. Por último,
+\emph{UniRef} contiene conjunto de proteínas (\emph{clusters}) con diferente 
+grado de identidad. \emph{UniRef} ofrece tres subconjuntos: 
+\begin{description}
+  \item [UniRef100] Contiene secuencias idénticas de tamaño total o menor.
+  \item [UniRef90]  Contiene secuencias con una identidad del 90\% o más y cubriendo 80\% de la longitud de la proteína de mayor tamaño en el conjunto.
+  \item [UniRef50]  Contiene secuencias con una identidad del 50\% o más y cubriendo 80\% de la longitud de la proteína de mayor tamaño en el conjunto.
+\end{description}  
 
 
-% Las opciones de la búsqueda rápida son, en principio, similares a las de la 
-% búsqueda rápida, sin embargo se permite un mayor flexibilidad para construir
-% criterios de selección más complejos. Se permite hacer búsquedas con operadores
-% de disyunción ('OR'), conjunción ('AND') y negación ('NOT') simultáneamente en 
-% un mismo campo. También, se permite agrupar criterios entre paréntesis. En esta
-% condición de búsqueda, el campo 'query' en la \textit{url} de la búsqueda ya no
-% se utiliza, en cambio cada campo de búsqueda tiene uno que le corresponde en 
-% la \textit{url} de búsqueda. Por ejemplo, la búsqueda rápida 
-% '\url{http://ddbj.nig.ac.jp/arsa/search?lang=en&cond=quick_search&query=df:homo&operator=AND}'
-% se convierte en '\url{http://ddbj.nig.ac.jp/arsa/search?lang=en&cond=advanced_search&df=homo&op=AND}'.
-% Por ejemplo la búsqueda
-% '\url{http://ddbj.nig.ac.jp/arsa/search?lang=&cond=advanced_search&df=(virus+NOT+Junin)&ln=Arenaviridae&op=AND}'
-% recupera los registros que en su linaje posea la palabra 'Arenaviridae' y que en
-% la defición posea la palabra 'virus' y que no posea la palabra 'Junin'. Otro 
-% ejemplo más, la búsqueda 
-% '\url{http://ddbj.nig.ac.jp/arsa/search?lang=&cond=advanced_search&df=((virus+AND+Junin)+NOT+segment)&op=AND}'
-% recupera los registros que poseen las palabras 'virus' y 'junín' en la definición 
-% y que no contengan la palabra 'segment'.
-% Otro ejemplo, la búsqueda 
-% '\url{http://ddbj.nig.ac.jp/arsa/search?lang=&cond=advanced_search&df=((virus+AND+Junin)+OR+(virus+AND+Tacaribe))&op=AND}'
-% recupera los que poseen los registros que contienen las palabras 'Junin' o 
-% 'Tacaribe', pero no 'virus'.
-% Todos los campos de búsqueda disponibles están en la tabla
-% \ref{tab:DDBJ_fields}.  
 
- 
-
-
-% 
-% 
 
 
 
