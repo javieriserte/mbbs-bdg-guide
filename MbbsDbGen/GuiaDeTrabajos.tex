@@ -112,16 +112,90 @@
 
 \begin{document}
 \titulo
- 
+
+\section{Conceptos generales}
+\subsection{Formatos de archivo}
+\subsubsection{Fasta}
+\subsubsection{Texto plano}
+\subsubsection{Tabular}
+\subsubsection{XML y similares}
+
+\subsection{Acceso programático}
+\subsubsection{Acceso REST}
+\subsubsection{Programas}
+\subsubsection{Lenguages de programación}
+
 \section{Bases de datos primarias de nucleótidos}
 
+\newpage
 \subsection{National Center of Biotechnology Information - NCBI}
-El NCBI ofrece un conjunto de herramientos para el acceso programático a sus 
+El NCBI ofrece un conjunto de herramientas para el acceso programático a sus 
 bases de datos que se llama NCBI E-utilities y se basa en una interface REST.
-Cada una de ellas, tiene una URL base particular y está destindada a ofrecer
-diferentes funciones. Es importante que NCBI, no solo ofrece acceso a base de 
-datos de secuencias, sino de otro tipo, como por ejemplo bibliográfico a 
-través de \emph{Pubmed}.
+Se puede accede a ellas con el sistema Entrez (\textit{Global Query 
+Cross-Database Search System}). 
+Cada una de estas herramientas, tiene una URL base particular y está destindada
+a ofrecer diferentes funciones. Es importante mencionar que Entrez, no solo ofrece acceso a
+base de datos de secuencias, sino de otro tipo, como por ejemplo bibliográfico, a 
+través de \emph{Pubmed}. Los servicios de Entrez que se discutirán son EInfo, 
+ESearch, ESummary y EFetch. Estos no son los únicos servicios disponibles, pero
+son los más relevantes.
+
+\subsubsection{Formato del registro}
+El formato de texto plano de NCBI tiene tres secciones principales. El 
+encabezado (Desde \emph{LOCUS} hasta \emph{JOURNAL}), una tabla de 
+características anotadas en la secuencia (\emph{FEATURES}) y la secuencia 
+propiamente (\emph{ORIGIN}). A continuación se muestra, como ejemplo, un 
+registro en este formato.  
+\begin{verbatim}
+LOCUS       AJ131281                 348 bp    RNA     linear   VRL 10-DEC-1999
+DEFINITION  Lymphocytic choriomeningitis virus z gene, partial, strain MX.
+ACCESSION   AJ131281
+VERSION     AJ131281.1  GI:3970751
+KEYWORDS    RING finger protein; z gene.
+SOURCE      Lymphocytic choriomeningitis mammarenavirus (LCMV)
+  ORGANISM  Lymphocytic choriomeningitis mammarenavirus
+            Viruses; ssRNA viruses; ssRNA negative-strand viruses;
+            Arenaviridae; Mammarenavirus.
+REFERENCE   1
+  AUTHORS   Gibadulinova,A., Zelnik,V., Reiserova,L., Zavodska,E.,
+            Zatovicova,M., Ciampor,F., Pastorekova,S. and Pastorek,J.
+  TITLE     Sequence and characterisation of the Z gene encoding ring finger
+            protein of the lymphocytic choriomeningitis virus MX strain
+  JOURNAL   Acta Virol. 42 (6), 369-374 (1998)
+   PUBMED   10358742
+REFERENCE   2  (bases 1 to 348)
+  AUTHORS   Pastorek,J.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (02-DEC-1998) Pastorek J., Molecular Biology, Institute
+            of Virology, Slovak Academy of Sciences, Dubravska cesta 9, 842 46,
+            SLOVAK REPUBLIC
+FEATURES             Location/Qualifiers
+     source          1..348
+                     /organism="Lymphocytic choriomeningitis mammarenavirus"
+                     /mol_type="genomic RNA"
+                     /strain="MX"
+                     /db_xref="taxon:11623"
+                     /lab_host="HeLa cells"
+     gene            <70..343
+                     /gene="z"
+     CDS             <70..343
+                     /gene="z"
+                     /experiment="experimental evidence, no additional details
+                     recorded"
+                     /codon_start=2
+                     /product="ring finger protein"
+                     /protein_id="CAA10342.1"
+                     /db_xref="UniProtKB/TrEMBL:Q9YJW6"
+                     /translation="MGQGKSKEKKDTNTGDRAEILPDTTYLGPLNCKSCWQKFDSLVR
+                     CHDHYLCRHCLNLLLSVSDRCPLCKCPLPTKLKISTAPSPPPPYEE"
+     mat_peptide     <70..338
+                     /gene="z"
+                     /product="ring finger protein"
+ORIGIN      
+        1 cgtttagttg cgctgtttgg ttgaacagcc ttttcctgtg agagtacaga gacaaaccta ...
+//
+
+\end{verbatim}
  
 \subsubsection{EInfo}
 La URL base de este servicio es `\url{http://eutils.ncbi.nlm.nih.gov/entrez/eutils/einfo.fcgi}'.
@@ -166,15 +240,19 @@ de los campos de búsqueda para la base de datos \emph{nuccore}.
 
 Ejemplos:
 \begin{itemize}
-  \item \href{http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=nuccore&term="complete+genome"[title]+AND+"Escherichia+coli"[Organism]}{\footnotesize{\texttt{esearch.fcgi?db=nuccore\&term="complete+genome"[title]+AND+"Escherichia+coli"[Organism]}}} \\
+  \item
+  \href{http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=nuccore&term="complete+genome"[title]+AND+"Escherichia+coli"[Organism]}{\textbf{esearch.fcgi?db=nuccore\&term="complete+genome"[title]+AND+"Escherichia+coli"[Organi\-sm]}}
+  \\
   Recupera los registros que corresponden al microrganismo 
   \textit{Escherichia coli} y que contengan la frase ``complete genome'' en el
   título.
-  \item \href{http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=nuccore&term="complete+genome"[title]+"Escherichia"[Organism]+NOT+"Escherichia+coli"[Organism]}{\footnotesize{\texttt{esearch.fcgi?db=nuccore\&term="complete+genome"[title]+"Escherichia"[Organism]+NOT+"Escherichia+coli\-"[Organism]}}} \\
+  \item
+  \href{http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=nuccore&term="complete+genome"[title]+"Escherichia"[Organism]+NOT+"Escherichia+coli"[Organism]}{\textbf{esearch.fcgi?db=nuccore\&term="complete+genome"[title]+"Escherichia"[Organism]+NOT+\-"Escherichia+coli\-"[Organism]}}
+  \\
   Recupera los registros de la base de datos \emph{nuccore} que corresponden a
   genomas completas de microrganismos del género \textit{Escherichia}, pero que
   no sean \textit{Escherichia coli}.
-  \item \href{http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=nuccore&term="Escherichia"[Organism]+OR+"Bacillus"[Organism]}{\footnotesize{\texttt{esearch.fcgi?db=nuccore\&term="Escherichia"[Organism]+OR+"Bacillus"[Organism]}}} \\
+  \item \href{http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=nuccore&term="Escherichia"[Organism]+OR+"Bacillus"[Organism]}{\textbf{esearch.fcgi?db=nuccore\&term="Escherichia"[Organism]+OR+"Bacillus"[Organism]}} \\
   Recupera los registros de la base de datos \emph{nuccore} que corresponden a
   los microrganismos del género \textit{Escherichia} o del género 
   \textit{Bacillus}
@@ -298,7 +376,7 @@ Ejemplos:
 ESummary acepta los parámetros \emph{retstart}, \emph{retmax} y \emph{retmode} 
 de la misma forma que ESearch.
 
-\subsubsection{EFectch}
+\subsubsection{EFetch}
 La URL base es \url{http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi}.
 La función de este servicio es la de descargar la información completa de un
 registro de una base de datos a partir de su número de identificación. También 
@@ -394,62 +472,6 @@ completa se puede visitar \url{http://www.ncbi.nlm.nih.gov/books/NBK25499/table/
 \label{tab:NCBI_rettype_retmode_options}
 \end{table}
 
-\subsubsection{Formato del registro}
-\small
-\begin{verbatim}
-LOCUS       AJ131281                 348 bp    RNA     linear   VRL 10-DEC-1999
-DEFINITION  Lymphocytic choriomeningitis virus z gene, partial, strain MX.
-ACCESSION   AJ131281
-VERSION     AJ131281.1  GI:3970751
-KEYWORDS    RING finger protein; z gene.
-SOURCE      Lymphocytic choriomeningitis mammarenavirus (LCMV)
-  ORGANISM  Lymphocytic choriomeningitis mammarenavirus
-            Viruses; ssRNA viruses; ssRNA negative-strand viruses;
-            Arenaviridae; Mammarenavirus.
-REFERENCE   1
-  AUTHORS   Gibadulinova,A., Zelnik,V., Reiserova,L., Zavodska,E.,
-            Zatovicova,M., Ciampor,F., Pastorekova,S. and Pastorek,J.
-  TITLE     Sequence and characterisation of the Z gene encoding ring finger
-            protein of the lymphocytic choriomeningitis virus MX strain
-  JOURNAL   Acta Virol. 42 (6), 369-374 (1998)
-   PUBMED   10358742
-REFERENCE   2  (bases 1 to 348)
-  AUTHORS   Pastorek,J.
-  TITLE     Direct Submission
-  JOURNAL   Submitted (02-DEC-1998) Pastorek J., Molecular Biology, Institute
-            of Virology, Slovak Academy of Sciences, Dubravska cesta 9, 842 46,
-            SLOVAK REPUBLIC
-FEATURES             Location/Qualifiers
-     source          1..348
-                     /organism="Lymphocytic choriomeningitis mammarenavirus"
-                     /mol_type="genomic RNA"
-                     /strain="MX"
-                     /db_xref="taxon:11623"
-                     /lab_host="HeLa cells"
-     gene            <70..343
-                     /gene="z"
-     CDS             <70..343
-                     /gene="z"
-                     /experiment="experimental evidence, no additional details
-                     recorded"
-                     /codon_start=2
-                     /product="ring finger protein"
-                     /protein_id="CAA10342.1"
-                     /db_xref="UniProtKB/TrEMBL:Q9YJW6"
-                     /translation="MGQGKSKEKKDTNTGDRAEILPDTTYLGPLNCKSCWQKFDSLVR
-                     CHDHYLCRHCLNLLLSVSDRCPLCKCPLPTKLKISTAPSPPPPYEE"
-     mat_peptide     <70..338
-                     /gene="z"
-                     /product="ring finger protein"
-ORIGIN      
-        1 cgtttagttg cgctgtttgg ttgaacagcc ttttcctgtg agagtacaga gacaaaccta
-...
-      301 gatatcaaca gccccaagcc caccacctcc ctacgaagag taacaccg
-//
-
-\end{verbatim}
-\normalsize{}
-
 \newpage
 \subsection{European Nucleotide Archive - ENA}
 La base de datos ENA ofrece varios servicios para la búsqueda y descarga de 
@@ -463,7 +485,7 @@ datos, el de búsqueda por texto y el acceso por FTP.
 La URL base de este servicio es '\url{http://www.ebi.ac.uk/ena/data/view/}'.
 El uso más sencillo es la búsqueda por el código de identificación del
 registro que se quiere recuperar. Por ejemplo, la búsqueda
-'\url{http://www.ebi.ac.uk/ena/data/view/KP718916}, recupera el registro
+'\url{http://www.ebi.ac.uk/ena/data/view/KP718916}, recupera el registrodatos
 `KP718916'. Es posible, la búsqueda por rango separando dos códigos de
 identificación con el símbolo `-'.
 
@@ -537,7 +559,7 @@ La búsqueda por texto en ENA usa la URL base \url{http://www.ebi.ac.uk/ena/data/
 La búsqueda se realiza en particiones de las bases de datos denominadas \emph{domain} 
 y \emph{result}. La partición \emph{domain} es de mayor nivel de abstracción y 
 divide el contenido según su naturaleza. La partición \emph{result} es un 
-refinamiento de \emph{domain} que divide la información con algún criterio
+refinamiento de \emph{domain} que divide la información con algún criteriodatos
 adiocional. Por ejemplo, el \emph{domain} `sequence' agrupa los registros que 
 contiene información de secuencias nucleotídicas. Para este \emph{domain} hay
 dos \emph{result} disponibles: `sequence\_release'  y `sequence\_update'. El 
@@ -612,7 +634,7 @@ tax\_eq    & Registros que coinciden con un identificador de taxonomía del NCBI
           & tax\_eq(9606) \\
 tax\_tree  & Registros que coinciden con un identificador de taxonomía del NCBI y
             todos sus descendientes. 
-          & Identificador de taxonomía de NCBI(numérico) 
+          & Identificador de taxonomía de NCBI(numérico) datos
           & tax\_tree(2759) \\
 \end{tabular}
 \normalsize{}
@@ -648,7 +670,7 @@ primer sección. Se usan los parámetros \emph{display}, \emph{download}, \emph{le
 y \emph{offset} ya vistos (ver la tabla \ref{tab:ena_fmt}). Este tipo de búsqueda
 ofrece una opción más para el parámetro \emph{display}, el valor `report'. Esta 
 opción permite descargar algunos campos de los registros y no el registro completo.
-Es útil para tener en un resumen de los registros que se desea descargar. Cuando
+Es útil para tener en un resumen de los registros que se desea descargar. Cuandodatos
 se usa esta opción se requiere el uso del parámetro \emph{fields} para indicar 
 los campos que se desea obtener. Debajo se muestran 
 algunos de los campo más usuales para el \emph{domain} `sequence' y \emph{result}
@@ -757,7 +779,7 @@ REFERENCE   1
   TITLE     Sequence and characterisation of the Z gene encoding ring finger
             protein of the lymphocytic choriomeningitis virus MX strain
   JOURNAL   Acta Virol. 42 (6), 369-374 (1998)
-   PUBMED   10358742
+   PUBMED   10358742datos
 REFERENCE   2  (bases 1 to 348)
   AUTHORS   Pastorek,J.
   TITLE     Direct Submission
@@ -781,7 +803,7 @@ FEATURES             Location/Qualifiers
                      /product="ring finger protein"
                      /protein_id="CAA10342.1"
                      /db_xref="GI:3970752"
-                     /translation="MGQGKSKEKKDTNTGDRAEILPDTTYLGPLNCKSCWQKFDSLVR
+                     /translation="MGQGKSKEKKDTNTGDRAEILPDTTYLGPLNCKSCWQKFDSLVRdatos
                      CHDHYLCRHCLNLLLSVSDRCPLCKCPLPTKLKISTAPSPPPPYEE"
      mat_peptide     <70..338
                      /gene="z"
@@ -829,10 +851,10 @@ HUM        & ddbjhum & Humano \\
 PRI        & ddbjpri & Primates (no humano) \\
 ROD        & ddbjrod & Roedores \\
 MAM        & ddbjmam & Mamiferos (no primates, ni roedores) \\
-VRT        & ddbjvrt & Vertebrados (no mamíferos) \\
+VRT        & ddbjvrt & Vertebrados (no mamíferos) \\datos
 INV        & ddbjinv & Invertebrados \\
 PLN        & ddbjpln & Plantas, hongos, plastidos y otros eukariotas \\
-BCT        & ddbjbct & Bacterias y archaeas \\
+BCT        & ddbjbct & Bacterias y archaeas \\datos
 VRL        & ddbjvrl & Viruses \\
 PHG        & ddbjphg & Bacteriofagos \\
 ENV        & ddbjenv & Secuencias de muestras ambientales \\
@@ -1116,9 +1138,9 @@ disponible, visite la página
 '\url{http://www.ddbj.nig.ac.jp/search/help/wabi/wabi_blast_example-j.html}'.
 
 \newpage
-\subsection{Bases de datos secundarias}
+\section{Bases de datos secundarias}
 
-\subsubsection{Uniprot}
+\subsection{Uniprot}
 Uniprot es un conjunto de bases de datos que reune información sobre anotación
 de proteínas. Toma datos de protéinas de otras bases de datos y luego agrega
 y cura la anotación. Uniprot está compuesta de tres bases de datos, \emph{UniParc},
@@ -1140,9 +1162,252 @@ grado de identidad. \emph{UniRef} ofrece tres subconjuntos:
   \item [UniRef50]  Contiene secuencias con una identidad del 50\% o más y cubriendo 80\% de la longitud de la proteína de mayor tamaño en el conjunto.
 \end{description}  
 
+\emph{Uniprot} ofrece una interface Rest para acceder a sus bases de datos. Con
+ella es posible, hacer búsquedas por texto y recuperar registros por código de 
+identificación. Además, \emph{Uniprot} ofrece un servicio que permite mapear
+identificadores entre las bases de datos propias (por ejemplo, entre 
+\emph{UniprotKB} y \emph{UniParc}), y entre bases de datos de propias y 
+enternas.
 
+\subsubsection{Búsqueda por identificador}
+La URL base para recuperar un registro por identificador es 
+\url{http://www.uniprot.org/base_de_datos/codigo.formato}. Cada base de datos
+utiliza códigos de identificación de diferente naturaleza. Una misma proteína,
+tiene un identificador diferente en \emph{Uniprot} y en \emph{UniParc}. Los
+formatos aceptados son `txt', `fasta', `tab', `xml' y `rdf'. El formato `tab' recupera 
+una tabla de texto que contiene el código y nombre del registro, el estado de 
+revisión, el nombre de los genes y proteínas, el organismo de origen y su 
+longitud.
 
+Ejemplos:
+\begin{itemize}
+  \item \url{http://www.uniprot.org/uniprot/Q16654.fasta}
+  \item \url{http://www.uniprot.org/uniprot/Q16654.xml}
+  \item \url{http://www.uniprot.org/uniprot/Q16654.tab}
+  \item \url{http://www.uniprot.org/uniparc/UPI000000D984.xml}
+  \item \url{http://www.uniprot.org/uniref/UniRef50\_Q16654.fasta} \\
+  Todos corresponden a la enzima piruvato deshidrogenasa.
+\end{itemize} 
 
+De esta forma es posible obtener registros de a uno a la vez. Si se quiere
+obtener varios registros en una sola consulta es necesario utilizar otro 
+servicio llamado \emph{batch}. La URL base de este servicio es 
+\url{http://www.uniprot.org/batch/}. Se requieren de dos parámetros. Uno de 
+ellos es \emph{format},
+que especifica el formato del registro, los valores aceptados son txt', `fasta' 
+y `xml'. El segundo parámetro es \emph{query} que acepta una lista de 
+indentificadores cuyos registro se desea obtener. Se pueden obtener registros
+de \emph{UniProtKB}, \emph{UniRef} y \emph{UniParc}, sin embargo en la lista de
+identificadores que se pasa todos deben corresponder a la misma base de datos.
+Este servicio requiere que los datos sean pasados por un pedido tipo POST.
+Por ello, no es posible probarlo en el navegador \textit{web}. Para hacer este
+tipo de consulta se puede escribir un pequeño programa en \emph{Perl}, 
+\emph{Python}, \emph{Ruby}, \emph{Java}, etc o usar el programa \emph{cURL}, u 
+otro similar. Aunque este servicio permite descargar muchos registros a la vez, 
+si se tiene un gran número de registros, conviene dividir la carga en varias
+consultas.
+ 
+Ejemplos para cURL:
+\begin{itemize}
+  \item \texttt{curl -L -d format=xml -d "query=P13368 Q16654"\ http://www.uniprot.org/batch/ -o out.xml} 
+  Permite recuperar los registros P13368 y Q16654, en formato `xml' y los guarda
+  en el archivo `out.xml'.
+  \item \texttt{curl -L -d format=txt -d "query=P13368 Q16654"\ http://www.uniprot.org/batch/ -o out.txt} 
+  Permite recuperar los registros P13368 y Q16654, en formato de texto plano y 
+  los guarda en el archivo `out.txt'.
+\end{itemize}
 
+\subsubsection{Búsqueda por texto}
+La URL base de este servicio es \url{http://www.uniprot.org/uniprot/}. 
+Requiere del parámetro \emph{query} que contiene el texto que se quiere buscar.
+El contenido de \emph{query} esta formado por varios campos unidos por operadores
+booleanos. Sino se especifica ningún campo, la búsqueda se hace sobre todos los 
+campos. En la tabla \ref{tab:uniprot_search_fields} se muestran algunos de los
+campos de búsqueda más usuales.
+
+\begin{table}
+\begin{center}
+\footnotesize
+\begin{tabular}{lp{7cm}}
+Formato & Descripción \\ \hline
+html    & Formato HTML para ver en un navegador. \\
+tab     & Muestra información parcial del registro en formato de texto tabular. \\
+xls     & Muestra el mismo contenido que la opción `tab', pero en formato de tabla de MS-Excel. \\
+fasta   & Muestra solo la secuencia de la proteína en formato fasta. \\
+gff     & Muestra anotaciones de secuencia. \\
+txt     & Muestra el registro completo en formato de texto plano. \\
+xml     & Muestra el registro completo en formato XML. \\
+rdf     & Muestra el registro completo en formato rdf (\textit{Resource Description Framework}). \\
+list    & Muestra una lista de identificadores. \\
+rss     & Devuelve un RSS Feed (\textit{Really Simple Syndication}. 
+\end{tabular}
+\normalsize{}
+\end{center}
+\caption{Formatos permitidos por \emph{UniProt}}
+\label{tab:uniprot_fmt}
+\end{table}
+
+\begin{table}
+\begin{center}
+\footnotesize
+\begin{tabular}{llp{7cm}}
+Campo      &                                   Ejemplo  & Descripción  \\ \hline                             
+ accession &                           accession:P62988 & Registros con número de acceso P62988. \\
+    active &                                  active:no & Registros obsoletos. \\
+    author &                           author:ashburner & Registros cuyo uno de los co-autores sea Ashburner. \\
+  citation & citation:(author:ashburner journal:nature) & Registros cuyo uno de los co-autores sea Ashburner y haya sido publicado en \emph{Nature}. \\
+   cluster &                   cluster:UniRef90\_A5YMT3 & Registros que pertenecen a \emph{UniRef90} y cuya secuencia secuencia representativa sea la del registro A5YMT3 de \emph{UniProtKB}. \\
+   created &                    created:[20121001 TO *] & Registros creados después del 01/10/2012. \\
+  database &                   database:(type:pdb 1aut) & Registros que hagan referencia al registro 1AUT de la base de dato externa PDB \\
+    domain &                              domain:3fe-4s & Registros que contengan un dominio 3Fe-4S (formado por trés atomos de hierro y cuatro de azufre). \\
+        ec &                                 ec:1.1.1.1 & Registros que pertenezcan a enzima con E.C. \textit{number} 1.1.1.1 (Alcohol deshidrogenasa). \\
+    family &                              family:serpin & Registros que pertenezcan a la familia de Serpinas. \\
+  fragment &                               fragment:yes & Lists all entries with an incomplete sequence. \\
+      gene &                                 gene:erbb1 & Registros de proteínas codificadas por el gen \emph{erbb1}. \\
+        go &                            go:cytoskeleton & Registros asociados con el término GO `cytoskeleton' \\
+      host &                                 host:mouse & Registros de las proteínas de organismos que infectan a ratones \\
+        id &                                  id:P00750 & Registros cuyo número de acceso primario es P00750. \\
+interactor &                          interactor:P00520 & Registros de proteínas para las que está descripta una interacción con la proteína del registro P00520. \\
+   keyword &                              keyword:toxin & Registros asociados con la palabra clave `toxin' \\
+    length &                        length:[100 TO 200] & Registros de proteínas cuyo tamaño está entre 100 y 200 residues. \\
+      mass &                         mass:[200000 TO *] & Registros de proteínas cuyo peso molecular es mayor a 200KDa \\
+  modified &            modified:[20140701 TO 20150701] & Registros que fueron actualizados entre el 01/07/2014 y el 01/07/2015 \\
+      name &                       name:"nucleoprotein" & Resgistros cuyo nombre coincida con `nucleoprotein' \\
+ organelle &                    organelle:Mitochondrion & Registros de proteínas codificadas por el cromosoma mitocondrial. \\
+  organism &                    organism:"mus musculus" & Registros de todas las proteínas codificadas por \emph{Mus musculus}. \\
+  reviewed &                               reviewed:yes & Registros de las proteínas revisadas (\emph{Swiss-Prot}). \\
+  taxonomy &                      taxonomy:arenaviridae & Registros de que pertenezcan al taxón \emph{Arenaviridae}. \\
+\end{tabular}
+\end{center}
+\normalsize{}
+\caption{Campos de búsqueda por texto más comunes en Uniprot.}
+\label{tab:uniprot_search_fields}
+\end{table}
+
+El parámetro \emph{format} permite especificar el formato que se desea para el
+registro. En la tabla \ref{tab:uniprot_fmt} se muestran los formatos permitidos.
+Cuando se usa el parámetro \emph{format} con el valor `tab', se tiene la opción 
+de especificar que datos se quieren obtener en la tabla. Para ello, se debe usar
+el parámatro \emph{columns} e indicar en su valor las columnas de datos. Para
+especificar más de un valor, solamente hay que separarlos con una coma. En la
+tabla \ref{tab:uniprot_column_values} se muestran algunos valores posibles.
+Para obtener una referencia completa, visitar la URL 
+\url{http://www.uniprot.org/help/uniprotkb_column_names}.
+
+El parámetro \emph{include} permite incluir información adicional para algunos
+formatos en particular. Cuando el formato es `fasta', se incluyen secuencias de
+las isoformas de la proteína. Cuando el formato es `rfd' se incluyen descripciones
+de los datos referenciados. Para los demás formatos no tiene efecto.
+
+Los parámetros \emph{limit} y \emph{offset} permiten especificar el tamaño 
+máximo de registros a recuperar y el índice en el cual se comienza. Por omisión,
+el valor de \emph{limit} no está definido, por lo que se descargan todos los 
+registros.
+
+Los parámetros \emph{sort} y \emph{desc} permiten modificar el orden en que se
+obtienen los resultados. El parámetro \emph{sort} permite especificar el campo
+del registro se utiliza como criterio para asignar el orden. El parámetros
+\emph{desc} permite establecer si el orden es ascendente (\emph{desc=no}) o 
+descendente (\emph{desc=yes}). Por omisición el orden es descendente.
+ 
+\begin{table}
+\begin{tabular}{ll}
+Campo         & Descripción \\ \hline
+           id & Código de identificación. \\
+   entry name & Nombre del registro. \\
+     comments & Comentarios agregados por el autor al registro. \\
+           ec & Número E.C. (Enzyme Catalog). \\
+    existence & Evidencia de la existencia de la proteína. \\
+     families & Familias a la que pertenece la proteína \\
+     features & Tabla de anotaciones. \\
+        genes & Genes relacionados con la proteína. \\
+           go & Término de Gene-Ontology relacionados con la proteína. \\
+     keywords & Palabras clave dadas por el autor.\\
+last-modified & Fecha de la última modificación. \\
+       length & Longitud de la secuencia de la proteína. \\
+     organism & Nombre del organismo de origen. \\
+  organism-id & Número de identificación taxonómica. \\
+     reviewed & Indica si la proteína fue revisada (Pertenece a Swiss-Prot) \\
+     sequence & Secuencia de aminoácidos de la proteína \\
+           3d & Muestra que resultados de estructura tridimensional existen para la proteína \\
+\end{tabular}
+\caption{Lista de algunos campos que se pueden recuperar en el formato de texto 
+tabular en \emph{UniProt}.}
+\label{tab:uniprot_column_values}
+\end{table}
+
+\subsubsection{Mapeo de identificadores}
+\emph{Uniprot} ofrece un servicio que permite mapear idenficador entre bases de
+datos internas y externas. La URL base es 
+\emph{http://www.uniprot.org/help/mapping/}. Para usar este sercicio es
+necesario espeficicar cuatro parámetros: \emph{from}, \emph{to}, \emph{format} y
+\emph{query}. Los parámetros \emph{from} y \emph{to} permiten especificar las 
+bases de datos de origen y de destino. Para ello, cada base de datos tiene un 
+código de identificación. En la tabla \ref{tab:unitprot_mapping_dbs_id} se muestran
+algunos de ellos. Para obtener una lista completa visitar la URL 
+\url{http://www.uniprot.org/help/programmatic_access#id_mapping_examples}. 
+
+El parámetro \emph{format} permite especificar el formato de los resultados. 
+El único valor aceptado es `tab', que muestra una tabla de texto de dos columnas,
+en la primera de ellas se encuentra el identificador de origen y en la segunda 
+el identificador de la base de datos de destino. Es posible que a un mismo 
+identificador en una base de datos le correspondan varios en otra base de datos.
+
+El parámetro \emph{query} permite indicar el identificador de la base de datos 
+de origen que se quiere mapear. Es posible especificar varios, separándolos con
+un espacio en blanco.
+
+Ejemplos:
+\begin{itemize}
+  \item \texttt{curl -L -d from=ACC -d to=ID -d format=tab -d "query=Q6IUF8 Q6IUF7 Q6IUF9 P26578"\ http://www.uniprot.org/mapping/} \\
+  Recupera el código de identificación de \emph{UniProt} a partir de su número 
+  acceso.
+  \item \texttt{curl -L -d from=ACC -d to=P\_GI -d format=tab -d "query=Q6IUF8 Q6IUF7 Q6IUF9 \\
+  P26578"\ http://www.uniprot.org/mapping/} \\ 
+  Recupera el código GI de las bases de datos de \emph{NCBI} a partir de su número 
+  acceso.
+  \item \texttt{curl -L -d from=ID -d to=PDB\_ID -d format=tab -d "query=THIO\_ECOLI"\ http://www.\ uniprot.org/mapping/} \\
+  Recupera el código de los registros de la bases de datos PDB asociados a la 
+  proteína tiorredoxina de \emph{Escherichia coli}.
+\end{itemize} 
+
+\begin{table}
+\begin{center}
+\begin{tabular}{ll}
+Base de datos         & Identificador  \\ \hline
+\multicolumn{2}{c}{Bases de datos de \emph{Uniprot}} \\
+      UniProtKB AC/ID &         ACC+ID \\ \arrayrulecolor[rgb]{.8,.8,.8}\hline
+         UniProtKB AC &            ACC \\
+         UniProtKB ID &             ID \\
+              UniParc &          UPARC \\
+             UniRef50 &           NF50 \\
+             UniRef90 &           NF90 \\
+            UniRef100 &          NF100 \\
+            Gene name &       GENENAME \\
+\multicolumn{2}{c}{Otras bases de datos} \\ \hline
+    EMBL/GenBank/DDBJ &       EMBL\_ID \\
+EMBL/GenBank/DDBJ CDS &           EMBL \\
+            GI number &          P\_GI \\
+       RefSeq Protein &  P\_REFSEQ\_AC \\
+    RefSeq Nucleotide & REFSEQ\_NT\_ID \\
+\multicolumn{2}{c}{Bases de datos de estructuras 3D} \\ \hline
+                  PDB &         PDB\_ID \\
+\end{tabular}
+\end{center}
+\caption{Identificadores de las bases de datos para el servicio de mapeo de bases de datos de \emph{UniProt}}
+\label{tab:unitprot_mapping_dbs_id}
+\end{table}
+
+\newpage
+\section{Ejercitación}
+\subsection*{Ejercicio 1}
+Utilice el servicio EInfo de Entrez para construir una tabla que contenga 
+el nombre de la base de datos, la descripción, el número de registros, y la
+fecha de la última modificación para todas las bases de datos disponibles.
+
+\subsection*{Ejercicio 2}
+Utilice el servicio EInfo de Entrez para construir una tabla que contenga 
+el nombre de la base de datos, la descripción, el número de registros, y la
+fecha de la última modificación para todas las bases de datos disponibles.
 
 \end{document}
