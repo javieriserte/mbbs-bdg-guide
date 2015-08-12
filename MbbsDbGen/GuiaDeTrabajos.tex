@@ -1406,8 +1406,79 @@ el nombre de la base de datos, la descripción, el número de registros, y la
 fecha de la última modificación para todas las bases de datos disponibles.
 
 \subsection*{Ejercicio 2}
-Utilice el servicio EInfo de Entrez para construir una tabla que contenga 
-el nombre de la base de datos, la descripción, el número de registros, y la
-fecha de la última modificación para todas las bases de datos disponibles.
+Obtenga de la base de datos `nuccore' de NCBI el número de registros que 
+corresponden con secuencias del virus HIV-1 que fueron publicadas en cada año 
+desde 1980 hasta 2015. Haga un gráfico de barras para mostrar estos resultados.
+Repita esta operación usando ENA y DDBJ. 
 
+\subsection*{Ejercicio 3}
+\begin{itemize}
+  \item Buscar información sobre la base de datos MESH (NCBI).
+  \item Buscar en esta base de datos el nombre del gen relacionado con la enfermedad Fibrosis Quística (\textit{Cystic fibrosis}). 
+  \item Buscar en la base de datos `gene' de NCBI, los registros de este gen en el ser humano (en formato XML).
+  \item Recuperar la lista de exones. ¿En qué locus está ubicado el gen?.
+  \item Buscar en Swiss-Prot los registros que están asociados a esta proteína. 
+  \item Recuperar las secuencias de la proteína.
+\end{itemize}
+
+\subsection*{Ejercicio 4}
+Recuperar los registros que corresponden a secuencias nucleotídicas de genomas
+completos de virus de la familia \textit{Flaviviridae}. 
+Generar un histograma de los tamaños de las secuencias.
+Obtener de cada registro el código del `TaxID'. 
+Buscar en la base de datos `Taxonomy' el nombre científico de cada uno y el 
+acrónimo (si corresponde).
+
+\subsection*{Ejercicio 5}
+Buscar en la ENA, los registros de secuencias de HIV-1 que fueron obtenidas en 
+el hemisferio sur del continente americano en ENA.
+
+\subsection*{Ejercicio 6}
+Recuperar todos los registros que corresponden a secuencias de `Amapari virus' en
+la base de datos `nuc_core'. Recuperar de ellos los identificadores de las 
+publicaciones relacionadas. Obtener de `pubmed' el título del artículo, los
+autores y el \textit{abstract}.
+
+\subsection*{Ejercicio 7}
+\begin{itemize}
+  \item Buscar en base de datos `SRA' (\textit{Sequence Read Archive}) de NCBI los 
+registros que corresponden a los proyectos de secuenciación de virus de la 
+familia \textit{Baculoviridae}.
+  \item Recuperar de cada ellos el nómbre del organismo secuenciado y su `TaxId', el 
+título del proyecto, el número de bases leidas, la longitud de la secuencia 
+obtenida.
+  \item generar histogramas de la calidad de la lectura.
+  \item determinar el porcentage de bases que no fueron determinadas (son `N' 
+  en la secuencia).
+\end{itemize}
+
+\subsection*{Ejercicio 8}
+Buscar en \emph{UniProtKB} las secuencias de la enzima Hipoxantina-guanina 
+fosforribosiltransferasa (\textit{Hypoxanthine-guanine phosphoribosyltransferase}, HGPRT)
+de eucariotas. 
+\begin{itemize}
+  \item Generar un alineamiento.
+  \item Distinguir cuales pertenecen a \emph{Swiss-Prot} y cuales a \emph{TrEMBL}.
+  \item Mostrar para cada una de ellas que evidencia hay de su existencia. 
+  \item Buscar si tienen referencia a la base de datos pFam (\textit{protein families}).
+\end{itemize}
+
+\subsection*{Ejercicio 8}
+Buscar en \emph{UniProtKB} las secuencias de la enzima Hipoxantina-guanina 
+fosforribosiltransferasa (\textit{Hypoxanthine-guanine phosphoribosyltransferase}, HGPRT)
+de eucariotas. 
+\begin{itemize}
+  \item Generar un alineamiento.
+  \item Distinguir cuales pertenecen a \emph{Swiss-Prot} y cuales a \emph{TrEMBL}.
+  \item Mostrar para cada una de ellas que evidencia hay de su existencia. 
+  \item Buscar si tienen referencia a la base de datos pFam (\textit{protein families}).
+\end{itemize}
+
+\subsection*{Ejercicio 9}
+Buscar en las bases de datos de KEGG (\textit{Kyoto Encyclopedia of Genes and Genomes}), 
+las enfermedades relacionadas con la vía metabólica de síntesis de Arginina. 
+Buscar para cada una de ellas, la proteína en \emph{Swiss-Prot} que le 
+corresponde y el nombre del gen asociado. Buscar los SNP disponibles en la base
+de datos `SNP' de NCBI. Recuparar la ubicación (cromosoma y posición de base y 
+la secuencia reportada).
 \end{document}
