@@ -269,8 +269,9 @@ Hay muchos programas que permiten hacer consultas REST.
 \subsection{National Center of Biotechnology Information - NCBI}
 El NCBI ofrece un conjunto de herramientas para el acceso programático a sus 
 bases de datos que se llama NCBI E-utilities y se basa en una interface REST.
-Se puede accede a ellas con el sistema Entrez (\textit{Global Query 
-Cross-Database Search System}). 
+Se puede acceder a ellas con el sistema Entrez (\textit{Global Query 
+Cross-Database Search System}).
+
 Cada una de estas herramientas, tiene una URL base particular y está destindada
 a ofrecer diferentes funciones. Es importante mencionar que Entrez, no solo ofrece acceso a
 base de datos de secuencias, sino de otro tipo, como por ejemplo bibliográfico, a 
@@ -336,16 +337,17 @@ ORIGIN
 \end{verbatim}
  
 \subsubsection{EInfo}
-La URL base de este servicio es `\url{http://eutils.ncbi.nlm.nih.gov/entrez/eutils/einfo.fcgi}'.
+La URL base de este servicio es \href{http://eutils.ncbi.nlm.nih.gov/entrez/eutils/einfo.fcgi}
+{\textbf{http://eutils.ncbi.nlm.nih.gov/entrez/eutils/einfo.fcgi}}.
 Su función es simplemente dar los nombres y estadísticas acerca de las bases de 
-datos disponibles. Si se consulta esta base de datos sin ningún parámetro 
-devuelve un listado de los nombres de las bases de datos disponibles en el 
-sistema. 
+datos disponibles. Si se consulta este servicio sin ningún parámetro 
+se devuelve un listado de los nombres de las bases de datos disponibles en el 
+sistema.
 
-El parámetro \emph{db} permite especficar una base de datos particular y obtener
+El parámetro \emph{db} permite especificar una base de datos particular y obtener
 información sobre ella. El formato de respuesta es por omisión XML, pero puede
 ser modificado con el parámetro \emph{retmode}. Este parámetro tiene dos valores
-posibles, `XML' y `json'. Adicionalmente, se puede usar el parámetro \emph{version}
+posibles, `xml' y `json'. Adicionalmente, se puede usar el parámetro \emph{version}
 que solo acepta un valor `2.0', para especificar que los datos se recuperen en
 la versión 2.0 Einfo XML. La diferencia entre la versión por omisión y la 2.0 
 es el agregado de dos términos, `IsTruncatable' y `IsRangeable', en los 
@@ -353,50 +355,49 @@ la descripción de los campos de los registros de la base de datos.
 
 Ejemplo:
 \begin{itemize}
-  \item \url{http://eutils.ncbi.nlm.nih.gov/entrez/eutils/einfo.fcgi?db=protein&version=2.0} \\
-  Recupera información sobre la base de datos \emph{protein} en la versión 2.0.
+  \item \href{einfo.fcgi?db=protein&version=2.0}
+  {\textbf{http://eutils.ncbi.nlm.nih.gov/entrez/eutils/einfo.fcgi?db=protein\&version=2.0}} \\
+  Recupera información sobre la base de datos \emph{protein} en el formato XML versión 2.0.
 \end{itemize}
 
 \subsubsection{ESearch}
-La URL base de este servicio es \url{http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi}.
+La URL base de este servicio es \href{http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi}
+{\textbf{http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi}}.
 Permite la búsqueda por texto en las bases de datos, como resultado devuelve
-una lista de número de identificación de cada registro. 
+una lista de números de identificación de cada registro. 
 
-Este servicio requiere que especificar la base de datos en la cual buscar, para 
-ello se utiliza el parámetro \emph{db}. 
+Este servicio requiere especificar la base de datos en la cual buscar, para 
+ello se utiliza el parámetro \emph{db}.
 
 Además, se requiere del parámetro 
-\emph{term} para detallar el texto que se desea buscar. La búsqueda por texto,
+\emph{term} para detallar el texto que se desea buscar. La búsqueda por texto
 recupera registros que coinciden con el texto ingresado en cualquier campo.
 Sin embargo, es posible ser más específico, y restringir la búsqueda a un 
 campo en particular. Para ello, luego del término de búsqueda se adiciona el 
 nombre del campo encerrado entre corchetes. Además, es posible construir 
 búsquedas más complejas usando los operadores `AND' , `OR' y `NOT'. Los campos 
 de búsqueda disponibles varian con cada base de datos y pueden obtenerse con el
-servicio EInfo. En la tabla \ref{tab:ncbi_nuccore_fields} se muesntran algunos 
+servicio EInfo. En la tabla \ref{tab:ncbi_nuccore_fields} se muestran algunos 
 de los campos de búsqueda para la base de datos \emph{nuccore}.
 
 Ejemplos:
 \begin{itemize}
   \item
-  \href{http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=nuccore&term="complete+genome"[title]+AND+"Escherichia+coli"[Organism]}{\textbf{esearch.fcgi?db=nuccore\&term="complete+genome"[title]+AND+"Escherichia+coli"[Organi\-sm]}}
-  \\
+  \href{http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=nuccore&term="complete+genome"[title]+AND+"Escherichia+coli"[Organism]}{\textbf{esearch.fcgi?db=nuccore\&term="complete+genome"[title]+AND+"Escherichia+coli"[Organi\-sm]}} \\
   Recupera los registros que corresponden al microrganismo 
-  \textit{Escherichia coli} y que contengan la frase ``complete genome'' en el
-  título.
-  \item
-  \href{http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=nuccore&term="complete+genome"[title]+"Escherichia"[Organism]+NOT+"Escherichia+coli"[Organism]}{\textbf{esearch.fcgi?db=nuccore\&term="complete+genome"[title]+"Escherichia"[Organism]+NOT+\-"Escherichia+coli\-"[Organism]}}
-  \\
+  \textit{Escherichia coli} y que contengan la frase ``complete genome'' en el 
+  título. Notar que los espacios son reemplazados por un símbolo `+'.
+  \item \href{http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=nuccore&term="complete+genome"[title]+"Escherichia"[Organism]+NOT+"Escherichia+coli"[Organism]}{\textbf{esearch.fcgi?db=nuccore\&term="complete+genome"[title]+"Escherichia"[Organism]+NOT+\-"Escherichia+coli\-"[Organism]}} \\
   Recupera los registros de la base de datos \emph{nuccore} que corresponden a
-  genomas completas de microrganismos del género \textit{Escherichia}, pero que
-  no sean \textit{Escherichia coli}.
+  genomas completos de microrganismos del género \textit{Escherichia}, pero que
+  no sean de \textit{Escherichia coli}.
   \item \href{http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=nuccore&term="Escherichia"[Organism]+OR+"Bacillus"[Organism]}{\textbf{esearch.fcgi?db=nuccore\&term="Escherichia"[Organism]+OR+"Bacillus"[Organism]}} \\
   Recupera los registros de la base de datos \emph{nuccore} que corresponden a
   los microrganismos del género \textit{Escherichia} o del género 
-  \textit{Bacillus}
+  \textit{Bacillus}.
 \end{itemize}
 
-\begin{table}
+\begin{table}[h!]
 \small
 \begin{center}
 \begin{tabular}{llp{9cm}}
@@ -432,11 +433,11 @@ omisión de \emph{retmax} es 20.
 Ejemplos:
 \begin{itemize}
   \item \href{http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=nuccore&term="Escherichia+coli"[Organism]&retstart=0&retmax=100}
-  {\footnotesize{\texttt{esearch.fcgi?db=nuccore\&term="Escherichia+coli"[Organism]\&retstart=0\&retmax=100}}} \\
+  {\textbf{esearch.fcgi?db=nuccore\&term="Escherichia+coli"[Organism]\&retstart=0\&retmax=100}} \\
   Recupera los cien primeros registros que corresponden al microrganismo 
   \textit{Escherichia coli}.
   \item \href{http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=nuccore&term="Escherichia+coli"[Organism]&retstart=100&retmax=100}
-  {\footnotesize{\texttt{esearch.fcgi?db=nuccore\&term="Escherichia+coli"[Organism]\&retstart=100\&retmax=100}}} \\
+  {\textbf{esearch.fcgi?db=nuccore\&term="Escherichia+coli"[Organism]\&retstart=100\&retmax=100}} \\
   Recupera los registros del 101 al 200, que corresponden al microrganismo 
   \textit{Escherichia coli}.
 \end{itemize}
@@ -449,13 +450,11 @@ registros. La segunda devuelve el recuento de los registros.
 Ejemplos:
 \begin{itemize}
   \item \href{http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=nuccore&term="Escherichia+coli"[Organism]&rettype=uilist}
-  {\footnotesize{\texttt{esearch.fcgi?db=nuccore\&term="Escherichia+coli"[Organism]\&rettype=uilist}}} \\
+  {\textbf{esearch.fcgi?db=nuccore\&term="Escherichia+coli"[Organism]\&rettype=uilist}} \\
   Recupera la lista de los identificadores de registros.
-  \textit{Escherichia coli}.
   \item \href{http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=nuccore&term="Escherichia+coli"[Organism]&rettype=count}
-  {\footnotesize{\texttt{esearch.fcgi?db=nuccore\&term="Escherichia+coli"[Organism]\&rettype=count}}} \\
+  {\textbf{esearch.fcgi?db=nuccore\&term="Escherichia+coli"[Organism]\&rettype=count}} \\
   Recupera el número de resgistro coincidentes con la búsqueda.
-  \textit{Escherichia coli}.
 \end{itemize}
 
 El parámetro \emph{retmode} especifíca el formato de respuesta: `xml'
@@ -467,28 +466,27 @@ especifica que tipo de fecha se está buscando (por ejemplo, fecha de publicación
 fecha de última actualización). Los tipos de fechas disponibles es dependiente
 de cada base de datos. Se pueden consultar con el sistema EInfo.
 
-Los parámetros \emph{mindata} y \emph{maxdate}, permite la búsqueda de registro
+Los parámetros \emph{mindata} y \emph{maxdate}, permiten la búsqueda de registros
 en un rango determinado de fechas. También requiere el uso del parámetro 
 \emph{datetype}.
 
 Ejemplos:
 \begin{itemize}
   \item \href{http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=protein&term=egfr&reldate=60&datetype=pdat&retmax=100}
-  {\footnotesize{\texttt{esearch.fcgi?db=protein\&term=egfr\&reldate=60\&datetype=pdat\&retmax=100}}} \\
+  {\textbf{esearch.fcgi?db=protein\&term=egfr\&reldate=60\&datetype=pdat\&retmax=100}} \\
   Recupera los identificadores de 100 registros de la base de datos \emph{protein}
-  que contienen el término `egfr' (de \emph{epidermal growth factor rececetor})
+  que contienen el término `egfr' (de \emph{epidermal growth factor receptor})
   en alguno de los campos y hayan sido publicadas en los últimos 60 días. 
   \item \href{http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=protein&term=egfr&datetype=mdat&mindate=2014&maxdate=2014}
-  {\footnotesize{\texttt{esearch.fcgi?db=protein\&term=egfr\&datetype=mdat\&mindate=2014\&maxdate=2014}}} \\
+  {\textbf{esearch.fcgi?db=protein\&term=egfr\&datetype=mdat\&mindate=2014\&maxdate=2014}} \\
   Recupera los identificadores de todos los registros de la base de datos 
   \emph{protein} que contienen el término `efgr' y cuya última actualización 
-  haya sido durante el añoo 2014. 
-  \textit{Escherichia coli}.
+  haya sido durante el año 2014. 
 \end{itemize}
 
 \subsubsection{ESummary}
 
-La URL base es \url{http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi}.
+La URL base es \href{http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi}{http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi}.
 La función de este servicio es la de proporcionar la información esencial de un
 registro a modo de resumen. Esto evita tener que descargar el registro completo.
 Usualmente, se lo utiliza como un paso secundario luego de usar el servicio 
@@ -501,24 +499,23 @@ pueden especificar hasta 100 registros separando los identificadores con una com
 Ejemplos:
 \begin{itemize}
   \item \href{http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=protein&id=894216091}
-  {\footnotesize{\texttt{esummary.fcgi?db=protein\&id=894216091}}} \\
+  {\textbf{esummary.fcgi?db=protein\&id=894216091}} \\
   Recupera el resumen del registro con el identificador 894216091 en la base de 
   datos \emph{protein}.
   \item \href{http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=protein&id=894216091,906849281,906849280}
-  {\footnotesize{\texttt{esummary.fcgi?db=protein\&id=894216091,906849281,906849280}}} \\
+  {\textbf{esummary.fcgi?db=protein\&id=894216091,906849281,906849280}} \\
   Recupera el resumen de los registros con los identificadores 894216091, 
   906849281 y 906849280, de la base de datos \emph{protein}.
-  \textit{Escherichia coli}.
 \end{itemize}
 
 ESummary acepta los parámetros \emph{retstart}, \emph{retmax} y \emph{retmode} 
 de la misma forma que ESearch.
 
 \subsubsection{EFetch}
-La URL base es \url{http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi}.
+La URL base es \href{http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi}{\textbf{http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi}}.
 La función de este servicio es la de descargar la información completa de un
-registro de una base de datos a partir de su número de identificación. También 
-suele usarse, luego de usar el servicio ESearch.
+registro de una base de datos a partir de su número de identificación. Suele 
+usarse, luego de usar el servicio ESearch.
 
 Al igual que ESummary requiere los parámetros \emph{db} y \emph{id} para 
 especificar que registros se quiere obtener y de que base de datos.
@@ -526,19 +523,18 @@ especificar que registros se quiere obtener y de que base de datos.
 Ejemplos:
 \begin{itemize}
   \item \href{http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=protein&id=894216091}
-  {\footnotesize{\texttt{efetch.fcgi?db=protein\&id=894216091}}} \\
+  {\textbf{efetch.fcgi?db=protein\&id=894216091}} \\
   Recupera el resumen del registro con el identificador 894216091 en la base de 
   datos \emph{protein}.
   \item \href{http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=protein&id=894216091,906849281,906849280}
-  {\footnotesize{\texttt{efetch.fcgi?db=protein\&id=894216091,906849281,906849280}}} \\
+  {\textbf{efetch.fcgi?db=protein\&id=894216091,906849281,906849280}} \\
   Recupera el resumen de los registros con los identificadores 894216091, 
   906849281 y 906849280, de la base de datos \emph{protein}.
-  \textit{Escherichia coli}.
 \end{itemize}
 
-Los parámtros \emph{rettype} y \emph{retmode} controlan que tipo de registro 
-se quiere descargar y en que formato respectivamente. Los tipos y modos 
-disponibles dependen de la base de datos en particular. En la tabla 
+Los parámetros \emph{rettype} y \emph{retmode} controlan el tipo de información 
+delregistro se quiere descargar y en que formato respectivamente. Los tipos y 
+modos disponibles dependen de la base de datos en particular. En la tabla 
 \ref{tab:NCBI_rettype_retmode_options} se muestran los tipos y modos 
 para algunas de las bases de datos.
 
@@ -546,11 +542,11 @@ Es posible utilizar los parámetros \emph{retstart} y \emph{retmax}, para
 especificar una fracción de los resultados, al igual que en ESearch y ESummary.
 
 El parámetro \emph{strand} permite recuperar, para registros que corresponden a
-secuencias de molecula de DNA, una cadena específica. Hay dos valores 
+secuencias de moléculas de DNA, una cadena específica. Hay dos valores 
 permitidos: `1' para la cadena positiva (o sentido) y `2' para la cadena 
 negativa (o antisentido). 
 
-Los parámetros \emph{seq\_start} y \emph{seq\_start} define la región de la secuencia
+Los parámetros \emph{seq\_start} y \emph{seq\_stop} define la región de la secuencia
 que se desea recuperar. La primer base de la secuencia es la número `1'.
 
 El parámetro \emph{complexity} permite recuperar los registros con diferentes
@@ -606,16 +602,17 @@ Abstract                                      & abstract      & text           \
 \caption{Opciones para los parámetros \emph{rettype} y \emph{retmode} para el
 servicio EFetch en NCBI. La lista que se muestra corresponde a un subconjunto
 seleccionado de las bases de datos disponibles. Para obtener la referencia
-completa se puede visitar \url{http://www.ncbi.nlm.nih.gov/books/NBK25499/table/chapter4.T._valid_values_of__retmode_and/?report=objectonly}}
+completa se puede visitar
+\href{http://www.ncbi.nlm.nih.gov/books/NBK25499/table/chapter4.T._valid_values_of__retmode_and/}{\textbf{http://www.ncbi.nlm.nih.gov/books/NBK25499/table/chapter4.T.\_valid\_values\_of\_\_retmode\_and/}}}
 \label{tab:NCBI_rettype_retmode_options}
 \end{table}
 
 \subsubsection{Acceso FTP}
-La dirección base para el acceso por \emph{FTP} es \url{ftp://ftp.ncbi.nlm.nih.gov/}.
+La dirección base para el acceso por \emph{FTP} es \href{ftp://ftp.ncbi.nlm.nih.gov/}{\textbf{ftp://ftp.ncbi.nlm.nih.gov/}}.
 En cuanto a secuencias de nucleótidos, las dos colecciones más importantes están 
-en \url{ftp://ftp.ncbi.nlm.nih.gov/refseq/release/}, para las secuencias de 
-referencia y \url{ftp://ftp.ncbi.nlm.nih.gov/genbank/} para todas las secuencias.
-Debido al gran tamaño, los datos en `GenBank' están organizados en divisiones
+en \href{ftp://ftp.ncbi.nlm.nih.gov/refseq/release/}{\textbf{ftp://ftp.ncbi.nlm.nih.gov/refseq/release/}}, para las secuencias de 
+referencia y \href{ftp://ftp.ncbi.nlm.nih.gov/genbank/}{\textbf{ftp://ftp.ncbi.nlm.nih.gov/genbank/}} para todas las secuencias.
+Debido a su gran tamaño, los datos en `GenBank' están organizados en divisiones
 de acuerdo al origen de la secuencia. A su vez, dentro de cada división hay 
 muchos archivos, todos ellos siguen una nomenclatura racional para que sea 
 sencillo identificarlos. El nombre de cada archivo dentro de una división está
@@ -623,17 +620,17 @@ formado por un prefijo que identifica a la división, un número y una extensión
 de archivo. En la tabla \ref{ncbi_gb_ftp_categories} se muestran las divisiones
 existentes.
 
-\begin{table}[h!tp]
+\begin{table}[h!]
 \begin{center}
 \begin{tabular}{llp{11cm}}
 Categoría  & Prefijo & Descripción \\ \hline
 PRI        & gbpri & Primates \\
 ROD        & gbrod & Roedores \\
 MAM        & gbmam & Mamiferos (no primates, ni roedores) \\
-VRT        & gbvrt & Vertebrados (no mamíferos) \\datos
+VRT        & gbvrt & Vertebrados (no mamíferos) \\
 INV        & gbinv & Invertebrados \\
 PLN        & gbpln & Plantas, hongos, plastidos y otros eukariotas \\
-BCT        & gbbct & Bacterias y archaeas \\datos
+BCT        & gbbct & Bacterias y archaeas \\
 VRL        & gbvrl & Viruses \\
 PHG        & gbphg & Bacteriofagos \\
 ENV        & gbenv & Secuencias de muestras ambientales \\
@@ -654,241 +651,23 @@ HTG        & gbhtg & Secuencias genómicas por métodos de alto rendimiento
 STS        & gbsts & \emph{Sequence tagged sites} \\
 PAT        & gbpat & Secuencias relacionadas con aplicaciones patentadas \\
 UNA        & gbuna & Secuencias no anotadas. \\
-CON        & gbcon & Rearmados en proyectos de secuenciación (Contigs) \\
-
+CON        & gbcon & Rearmados en proyectos de secuenciación (\textit{Contigs}) \\
 \end{tabular}
 \end{center}
 \caption{Categorías de las bases de datos de GenBank}
 \label{ncbi_gb_ftp_categories}
 \end{table}
 
+\cleardoublepage
 \newpage
 \subsection{European Nucleotide Archive - ENA}
 La base de datos ENA ofrece varios servicios para la búsqueda y descarga de 
 registros programaticamente usando una interface REST. Además da acceso FTP para
-descargar sus datos.
-
-De todos los servicios que ofrece, se discutirán el servicio de recuperación de
-datos, el de búsqueda por texto y el acceso por FTP.
-
-\subsubsection{Recuperación de datos - \textit{Data retrieval}}
-La URL base de este servicio es '\url{http://www.ebi.ac.uk/ena/data/view/}'.
-El uso más sencillo es la búsqueda por el código de identificación del
-registro que se quiere recuperar. Por ejemplo, la búsqueda
-'\url{http://www.ebi.ac.uk/ena/data/view/KP718916}, recupera el registrodatos
-`KP718916'. Es posible, la búsqueda por rango separando dos códigos de
-identificación con el símbolo `-'.
-
-Otra opción, es la búsqueda por nombre taxonómico. Este tipo de búsqueda acepta
-nombres comunes, nombres científicos y números de identificación de taxa.
-En este tipo de búsqueda la URL base es
-'\url{http://www.ebi.ac.uk/ena/data/view/Taxon:}' Por ejemplo, la búsquedas que
-se muestra debajo recuperan los registros asociados a una especie de laucha.
-\begin{itemize}
-  \item \url{http://www.ebi.ac.uk/ena/data/view/Taxon:calomys laucha}
-  \item \url{http://www.ebi.ac.uk/ena/data/view/Taxon:small vesper mouse}
-  \item \url{http://www.ebi.ac.uk/ena/data/view/Taxon:56211}
-\end{itemize}
-
-Además, es posible obtener información acerca de proyectos de secuenciación.
-Para ello, se necesita el número de identificación del proyecto (project\_id) o
-el código de acceso del estudio (study\_accession). La URL para estas búsquedas
-se muestran debajo.
-\begin{itemize}
-  \item http://www.ebi.ac.uk/ena/data/view/study\_accession
-  \item Ejemplo: \url{http://www.ebi.ac.uk/ena/data/view/PRJDB1793}
-  \item http://www.ebi.ac.uk/ena/data/view/Project:project\_id
-  \item Ejemplo: \url{http://www.ebi.ac.uk/ena/data/view/Project:254551}
-\end{itemize}
-
-El formato de descarga de los datos es por omisión HTML, sin embargo, esta no 
-es la mejor opción si se desea hacer consulta programáticas. ENA ofrece otros
-formatos para descargar los datos. Para ello, se utiliza la opción 
-\emph{display} en el URL de búsqueda. En la tabla \ref{tab:ena_fmt} se muestran
-los formatos aceptados.
-
-\begin{table}[!h]
-\begin{center}
-\small{}
-\begin{tabular}{lp{5cm}p{7cm}}
-Opción & Descripción & Ejemplo \\ \hline
-html   & Valor por omisión. Muestra los resultados en formato html. Disponible
-para todos los tipos de datos &
-\url{http://www.ebi.ac.uk/ena/data/view/KP718916&display=html} \\
-xml    & Muestra los resultados en formato Xml. Disponible para todos los tipos
-de datos & \url{http://www.ebi.ac.uk/ena/data/view/KP718916&display=xml} \\
-text   & Muestra los datos en formato de texto plano. Disponible solo para
-secuencias con anotación y ensambladas &
-\url{http://www.ebi.ac.uk/ena/data/view/KP718916&display=text} \\
-fasta  & Muestra los datos en formato fasta. Disponible solo para
-secuencias con anotación, ensambladas y \textit{trace} & 
-\url{http://www.ebi.ac.uk/ena/data/view/KP718916&display=fasta} \\ 
-fastq  & Muestra los datos en formato fastq. Solo disponible para \textit{trace}
-& \url{http://www.ebi.ac.uk/ena/data/view/TI1&display=fastq} \\
-\end{tabular}
-\normalsize{}
-\end{center}
-\caption{Formatos disponibles en ENA}
-\label{tab:ena_fmt}
-\end{table}
-
-Además de poder especificar el formato del contenido, se puede definir si se
-desea que la descarga sea un archivo de texto plano o un archivo comprimido.
-Para ello, se usa la opción \emph{download}. Los valores permitidos son
-\emph{txt} y \emph{gzip}.
-
-Este sistema de descarga limita la cantidad de descargas a 100 000 registros por
-consulta. Este límite es para evitar la descarga no intencional de un gran
-cantidad de datos. Si, es necesario descargar más registros se utiliza la 
-opción \emph{lentgh}, cuyo valor es el nuevo número de límite que se desea. Otra
-opción importante es \emph{offset} que establece cual es el primer registro que
-se descargará. Esto es útil para hacer descargar fragmentadas.
-
-\subsubsection{Búsqueda por texto}
-La búsqueda por texto en ENA usa la URL base \url{http://www.ebi.ac.uk/ena/data/warehouse/search}.
-La búsqueda se realiza en particiones de las bases de datos denominadas \emph{domain} 
-y \emph{result}. La partición \emph{domain} es de mayor nivel de abstracción y 
-divide el contenido según su naturaleza. La partición \emph{result} es un 
-refinamiento de \emph{domain} que divide la información con algún criteriodatos
-adiocional. Por ejemplo, el \emph{domain} `sequence' agrupa los registros que 
-contiene información de secuencias nucleotídicas. Para este \emph{domain} hay
-dos \emph{result} disponibles: `sequence\_release'  y `sequence\_update'. El 
-primero contiene todas las secuencias de la última versión publicada de la
-base de datos y el segundo tiene las secuencias que se agregaron o actualizaron
-desde esa última publicación. Este último conjunto suele ser mucho más pequeño.
-En la tabla \ref{tab:ena_domains_and_results} se muestran todos los \emph{domain} 
-y \emph{result} disponibles. 
-
-\begin{table}
-\begin{center}
-\begin{tabular}{llp{7cm}}
-       Domain &             Result &                                                Descripción \\ \hline
-     assembly &           assembly &                                        Genomas ensamblados \\
-     sequence &  sequence\_release &                        Secuencias de nucleótidos (release) \\
-     sequence &   sequence\_update &                         Secuencias de nucleótidos (Update) \\
-       coding &    coding\_release &                          Secuencias codificantes (Release) \\
-       coding &     coding\_update &                           Secuencias codificantes (Update) \\
-    noncoding & noncoding\_release &                       Secuencias no codificantes (Release) \\
-    noncoding &  noncoding\_update &                        Secuencias no codificantes (Update) \\
-         read &   read\_experiment &                  Lecturas crudas agrupadas por experimento \\
-         read &          read\_run &                                            Lecturas crudas \\
-         read &        read\_study &            Lecturas crudas agrupadas agrupadas por estudio \\
-     analysis &           analysis & Análisis de secuencias de nucleótidos a partir de lecturas \\
-     analysis &    analysis\_study & Análisis de secuencias de nucleótidos a partir de lecturas, agrupados por estudio \\
-        trace &        read\_trace &                                        Trazas de capilares \\
-        study &              study &                                                   Estudios \\
-        taxon &              taxon &                                   Clasificación taxonómica \\
-       sample &             sample &                                                   Muestras \\
-environmental &      environmental &                                       Muestras ambientales \\
-\end{tabular}
-\end{center}
-\caption{Particiones \emph{domain} y \emph{result} disponibles en ENA.}
-\label{tab:ena_domains_and_results}
-\end{table}
-
-Las búsqueda programáticas por texto, además del parámetro URL \emph{query},
-requieren de los parámetros \emph{domain} y \emph{result}. El contenido del 
-parámetro \emph{query} no es libre, es decir no es posible hacer una búsqueda 
-arbitraria de texto. El contenido del parámetro se construye por opciones de 
-filtrado unidos por operadores lógicos (\emph{AND}, \emph{OR}, \emph{NOT})). 
-Si se tienen varias opciones de filtrado, se pueden agrupar entre paréntesis.
-
-Las opciones de filtrado se aplican a los distintos campos que posee cada 
-registro. Los campos disponibles varian en cada \emph{domain} y \emph{result}.
-También, cada campo de búsqueda tienen valores de un tipo particular: \emph{booleano},
-\emph{Vocabulario restringido}, \emph{fecha}, \emph{númerico}, \emph{textual},
-\emph{geo-espacial} y \emph{taxonómico}. En la tabla \ref{tab:ena_search_fields}
-se muestran algunos de los campos de búsqueda más comunes para el \emph{domain=sequence}
-y \emph{result=sequence\_release}. Estos campos se comparan con operadores de 
-igualdad (`='), diferencia (`!='), mayor y menor (`>', `>=', `<=' y `<'), excepto
-los campos de ubicación geográfica y taxonomía. La búsqueda por estos campos
-requiere el uso de funciones particulares. En la tabla \ref{tab:ena_search_loc_and_taxon}
-se muestran algunas funciones que provee ENA para este tipo de búsqueda.
-
-\begin{table}[h!]
-\begin{center}
-\small
-\begin{tabular}{lp{5cm}p{4cm}l}
-Función   & Descripción & Parámetros & Ejemplo \\ \hline
-geo\_box1 & La ubicación se encuentra dentro de un cuadrado definido por la 
-            esquina superior derecha y la esquina inferior izquierda                              
-          & latitud suroeste, longitud suroeste, latitud noreste y longitud 
-            noreste
-          & geo\_box1(-20,10,20,50)\\
-geo\_circ & La unicación se encuentra dentro de un circulo definido por el 
-            centro y el radio 
-          & Latitud, longitud y radio (km) 
-          & geo\_circ(44,00,00) \\
-tax\_eq    & Registros que coinciden con un identificador de taxonomía del NCBI 
-          & Identificador de taxonomía de NCBI(numérico) 
-          & tax\_eq(9606) \\
-tax\_tree  & Registros que coinciden con un identificador de taxonomía del NCBI y
-            todos sus descendientes. 
-          & Identificador de taxonomía de NCBI(numérico) datos
-          & tax\_tree(2759) \\
-\end{tabular}
-\normalsize{}
-\end{center}
-\caption{Funciones para la búsqueda por geolocalización y por taxonomía}
-\label{tab:ena_search_loc_and_taxon}
-\end{table}
-
-\begin{table}[h!]
-\begin{center}
-\small{}
-\begin{tabular}{lp{3cm}p{7cm}}
-            accession &                   Texto &                                         Número de acceso \\ \hline
-          base\_count &                  Número &                                Longitud de la secuencias \\
-           cell\_line &                   Texto &              línea celular de donde se obtuvo la muestra \\
-              country &                   Texto &        Ubicación de la muestra: País, región y localidad \\
-          description &                   Texto &                        Breve descripción de la secuencia \\
-environmental\_sample &                Booleano &  Especifíca si el material pertenece a muestra ambiental \\
-             keywords &                   Texto &                  Palabras clave asociadas a la secuencia \\
-        last\_updated &                   Fecha &                         Fecha de la última actualización \\
-%             location &      Latitud y longitud &  Ubicación geográfica de punto aislamiento de la muestra \\
-            mol\_type & Vocabulario restringido &           Tipo molecular de la molécula \textit{in vivo} \\
-\end{tabular}
-\normalsize{}
-\end{center}
-\caption{Lista de algunos de los campos de búsqueda ofrecidos por ENA.}
-\label{tab:ena_search_fields}
-\end{table}
-
-La búsqueda por texto ofrece las mismas opciones para manipular el formato de 
-los datos a recibir que la búsqueda por identificador que se discutió en la 
-primer sección. Se usan los parámetros \emph{display}, \emph{download}, \emph{length}
-y \emph{offset} ya vistos (ver la tabla \ref{tab:ena_fmt}). Este tipo de búsqueda
-ofrece una opción más para el parámetro \emph{display}, el valor `report'. Esta 
-opción permite descargar algunos campos de los registros y no el registro completo.
-Es útil para tener en un resumen de los registros que se desea descargar. Cuandodatos
-se usa esta opción se requiere el uso del parámetro \emph{fields} para indicar 
-los campos que se desea obtener. Debajo se muestran 
-algunos de los campo más usuales para el \emph{domain} `sequence' y \emph{result}
-`sequence\_release'.
-
-\begin{multicols}{3}
-\begin{itemize}
-  \item accession
-  \item base\_count
-  \item cell\_line
-  \item description
-  \item environmental\_sample
-  \item host 
-  \item keywords 
-  \item last\_updated 
-  \item location 
-  \item mol\_type 
-  \item tax\_division
-  \item tax\_id 
-  \item scientific\_name
-\end{itemize}
-\end{multicols}
-
-La referencia completa de los campos de búsqueda y los campos disponibles para 
-los reportes se puede consultar en \url{http://www.ebi.ac.uk/ena/data/warehouse/usage}.
-
+descargar sus datos. De todos los servicios que ofrece, se discutirán el 
+servicio de recuperación de datos y el de búsqueda por texto.
 \subsubsection{Formato del registro}
-\scriptsize{}
+El formato del registro en texto plano se muestra debajo. Su estructura es muy 
+similar al formato de texto plano de NCBI.
 \begin{verbatim}
 ID   AJ131281; SV 1; linear; genomic RNA; STD; VRL; 348 BP.
 XX
@@ -941,10 +720,228 @@ XX
 SQ   Sequence 348 BP; 95 A; 100 C; 77 G; 76 T; 0 other;
      cgtttagttg cgctgtttgg ttgaacagcc ttttcctgtg agagtacaga gacaaaccta        60
 ...
-     gatatcaaca gccccaagcc caccacctcc ctacgaagag taacaccg                    348
 //
 \end{verbatim}
+
+\subsubsection{Recuperación de datos}
+La URL base de este servicio es \href{http://www.ebi.ac.uk/ena/data/view/}{\textbf{http://www.ebi.ac.uk/ena/data/view/}}'.
+El uso más sencillo es la búsqueda por el código de identificación del
+registro que se quiere recuperar. Es posible, la búsqueda por rango separando 
+dos códigos de identificación con el símbolo `-'. \\
+Ejemplo: \\
+\begin{itemize}
+  \item \href{http://www.ebi.ac.uk/ena/data/view/KP718916}{\textbf{http://www.ebi.ac.uk/ena/data/view/KP718916}} \\
+  Recupera el registro 'KP718916' que corresponde a una secuencia de HIV-1.
+\end{itemize}
+
+Otra opción, es la búsqueda por nombre taxonómico. Este tipo de búsqueda acepta
+nombres comunes, nombres científicos y números de identificación de taxa.
+En este tipo de búsqueda la URL base es
+\href{http://www.ebi.ac.uk/ena/data/view/Taxon:}{\textbf{http://www.ebi.ac.uk/ena/data/view/Taxon:}} Por ejemplo, la búsquedas que
+se muestra debajo recuperan los registros asociados a una especie de laucha.
+\begin{itemize}
+  \item \href{http://www.ebi.ac.uk/ena/data/view/Taxon:calomys laucha}{\textbf{http://www.ebi.ac.uk/ena/data/view/Taxon:calomys laucha}}
+  \item \href{http://www.ebi.ac.uk/ena/data/view/Taxon:small vesper mouse}{\textbf{http://www.ebi.ac.uk/ena/data/view/Taxon:small vesper mouse}}
+  \item \href{http://www.ebi.ac.uk/ena/data/view/Taxon:56211}{\textbf{http://www.ebi.ac.uk/ena/data/view/Taxon:56211}}
+\end{itemize}
+
+Además, es posible obtener información acerca de proyectos de secuenciación.
+Para ello, se necesita el número de identificación del proyecto (\emph{project\_id}) o
+el código de acceso del estudio (\emph{study\_accession}). La URL para estas búsquedas
+se muestran debajo.
+\begin{itemize}
+  \item \textbf{http://www.ebi.ac.uk/ena/data/view/study\_accession} \\
+  Ejemplo: 
+  \href{http://www.ebi.ac.uk/ena/data/view/PRJDB1793}{\textbf{http://www.ebi.ac.uk/ena/data/view/PRJDB1793}} 
+  \item \textbf{http://www.ebi.ac.uk/ena/data/view/Project:project\_id} \\
+  Ejemplo: 
+  \href{http://www.ebi.ac.uk/ena/data/view/Project:254551}{\textbf{http://www.ebi.ac.uk/ena/data/view/Project:254551}} 
+\end{itemize}
+
+El formato de descarga de los datos es por omisión HTML, sin embargo, esta no 
+es la mejor opción si se desea hacer consulta programáticas. ENA ofrece otros
+formatos para descargar los datos. Para ello, se utiliza la opción 
+\emph{display} en el URL de búsqueda. En la tabla \ref{tab:ena_fmt} se muestran
+los formatos aceptados.
+
+\begin{table}[!h]
+\begin{center}
+\small{}
+\begin{tabular}{lp{8cm}p{4cm}}
+Opción & Descripción & Ejemplo \\ \hline
+html   & Valor por omisión. Muestra los resultados en formato html. Disponible
+para todos los tipos de datos & \href{http://www.ebi.ac.uk/ena/data/view/KP718916&display=html}{\textbf{view/KP718916\&display=html}} \\
+xml    & Muestra los resultados en formato Xml. Disponible para todos los tipos
+de datos & \href{http://www.ebi.ac.uk/ena/data/view/KP718916&display=xml}{\textbf{view/KP718916\&display=xml}} \\
+text   & Muestra los datos en formato de texto plano. Disponible solo para
+secuencias con anotación y ensambladas &
+\href{http://www.ebi.ac.uk/ena/data/view/KP718916&display=text}{\textbf{view/KP718916\&display=text}} \\
+fasta  & Muestra los datos en formato fasta. Disponible solo para
+secuencias con anotación, ensambladas y \textit{trace} & 
+\href{http://www.ebi.ac.uk/ena/data/view/KP718916&display=fasta}{\textbf{{view/KP718916\&display=fasta}}} \\ 
+fastq  & Muestra los datos en formato fastq. Solo disponible para \textit{trace}
+& \href{http://www.ebi.ac.uk/ena/data/view/TI1&display=fastq}{\textbf{view/TI1\&display=fastq}} \\
+\end{tabular}
 \normalsize{}
+\end{center}
+\caption{Formatos disponibles en ENA}
+\label{tab:ena_fmt}
+\end{table}
+
+Además de poder especificar el formato del contenido, se puede definir si se
+desea que la descarga sea un archivo de texto plano o un archivo comprimido.
+Para ello, se usa el parámetro \emph{download}. Los valores permitidos son
+\emph{txt} y \emph{gzip}.
+
+Este sistema de descarga limita la cantidad de descargas a 100 000 registros por
+consulta. Este límite es para evitar la descarga no intencional de un gran
+cantidad de datos. Si, es necesario descargar más registros se utiliza la 
+opción \emph{lentgh}, cuyo valor es el nuevo número de límite que se desea. Otro
+parámetro importante es \emph{offset} que establece cual es el primer registro que
+se descargará. Esto es útil para hacer descargar fragmentadas.
+
+\subsubsection{Búsqueda por texto}
+La búsqueda por texto en ENA usa la URL base \href{http://www.ebi.ac.uk/ena/data/warehouse/search}{\textbf{http://www.ebi.ac.uk/ena/data/warehouse/search}}.
+La búsqueda se realiza en particiones de las bases de datos denominadas \emph{domain} 
+y \emph{result}. La partición \emph{domain} es de mayor nivel de abstracción y 
+divide el contenido según su naturaleza. La partición \emph{result} es un 
+refinamiento de \emph{domain} que divide la información con algún criterio
+adiocional. Por ejemplo, el \emph{domain} `sequence' agrupa los registros que 
+contiene información de secuencias nucleotídicas. Para este \emph{domain} hay
+dos \emph{result} disponibles: `sequence\_release'  y `sequence\_update'. El 
+primero contiene todas las secuencias de la última versión publicada de la
+base de datos y el segundo tiene las secuencias que se agregaron o actualizaron
+desde esa última publicación. Este último conjunto suele ser mucho más pequeño.
+En la tabla \ref{tab:ena_domains_and_results} se muestran todos los \emph{domain} 
+y \emph{result} disponibles. 
+
+\begin{table}
+\begin{center}
+\begin{tabular}{llp{7cm}}
+       Domain &             Result &                                                 Descripción \\ \hline
+     assembly &           assembly &                                        Genomas ensamblados. \\
+     sequence &  sequence\_release &                        Secuencias de nucleótidos (Release). \\
+     sequence &   sequence\_update &                         Secuencias de nucleótidos (Update). \\
+       coding &    coding\_release &                          Secuencias codificantes (Release). \\
+       coding &     coding\_update &                           Secuencias codificantes (Update). \\
+    noncoding & noncoding\_release &                       Secuencias no codificantes (Release). \\
+    noncoding &  noncoding\_update &                        Secuencias no codificantes (Update). \\
+         read &   read\_experiment &                  Lecturas crudas agrupadas por experimento. \\
+         read &          read\_run &                                            Lecturas crudas. \\
+         read &        read\_study &            Lecturas crudas agrupadas agrupadas por estudio. \\
+     analysis &           analysis & Análisis de secuencias de nucleótidos a partir de lecturas. \\
+     analysis &    analysis\_study & Análisis de secuencias de nucleótidos a partir de lecturas, agrupados por estudio. \\
+        trace &        read\_trace &                                        Trazas de capilares. \\
+        study &              study &                                                   Estudios. \\
+        taxon &              taxon &                                   Clasificación taxonómica. \\
+       sample &             sample &                                                   Muestras. \\
+environmental &      environmental &                                       Muestras ambientales. \\
+\end{tabular}
+\end{center}
+\caption{Particiones \emph{domain} y \emph{result} disponibles en ENA.}
+\label{tab:ena_domains_and_results}
+\end{table}
+
+Las búsquedas programáticas por texto, además de los parámetros \emph{domain} y
+\emph{result}, requieren del parámetro URL \emph{query}. El contenido del 
+parámetro \emph{query} no es libre, es decir no es posible hacer una búsqueda 
+arbitraria de texto. El contenido del parámetro se construye por opciones de 
+filtrado unidos por operadores lógicos (\emph{AND}, \emph{OR}, \emph{NOT}). 
+Si se tienen varias opciones de filtrado, se pueden agrupar entre paréntesis.
+
+Las opciones de filtrado se aplican a los distintos campos que posee cada 
+registro. Los campos disponibles varian en cada \emph{domain} y \emph{result}.
+También, cada campo de búsqueda tienen valores de un tipo particular: \emph{Booleano},
+\emph{Vocabulario restringido}, \emph{Fecha}, \emph{Númerico}, \emph{Textual},
+\emph{Geo-espacial} y \emph{Taxonómico}. En la tabla \ref{tab:ena_search_fields}
+se muestran algunos de los campos de búsqueda más comunes para el \emph{domain=sequence}
+y \emph{result=sequence\_release}. Estos campos se comparan con operadores de 
+igualdad (`='), diferencia (`!='), mayor y menor (`>', `>=', `<=' y `<'), excepto
+los campos de ubicación geográfica y taxonomía. La búsqueda en estos campos
+requiere el uso de funciones particulares. En la tabla \ref{tab:ena_search_loc_and_taxon}
+se muestran algunas funciones que provee ENA para este tipo de búsqueda.
+
+\begin{table}[h!]
+\begin{center}
+\small
+\begin{tabular}{lp{5cm}p{4cm}l}
+Función   & Descripción & Parámetros & Ejemplo \\ \hline
+geo\_box1 & La ubicación se encuentra dentro de un cuadrado definido por la 
+            esquina superior derecha y la esquina inferior izquierda.                              
+          & latitud suroeste, longitud suroeste, latitud noreste y longitud 
+            noreste.
+          & geo\_box1(-20,10,20,50)\\
+geo\_circ & La unicación se encuentra dentro de un circulo definido por el 
+            centro y el radio.
+          & Latitud, longitud y radio (km). 
+          & geo\_circ(44,00,00) \\
+tax\_eq   & Registros que coinciden con un identificador de taxonomía del NCBI 
+          & Identificador de taxonomía de NCBI(numérico).
+          & tax\_eq(9606) \\
+tax\_tree & Registros que coinciden con un identificador de taxonomía del NCBI y
+            todos sus descendientes. 
+          & Identificador de taxonomía de NCBI(numérico).
+          & tax\_tree(2759) \\
+\end{tabular}
+\normalsize{}
+\end{center}
+\caption{Funciones para la búsqueda por geolocalización y por taxonomía}
+\label{tab:ena_search_loc_and_taxon}
+\end{table}
+
+\begin{table}[h!]
+\begin{center}
+\small{}
+\begin{tabular}{lp{3cm}p{7cm}}
+            accession &                   Texto &                                        Número de acceso. \\ \hline
+          base\_count &                  Número &                               Longitud de la secuencias. \\
+           cell\_line &                   Texto &             línea celular de donde se obtuvo la muestra. \\
+              country &                   Texto &       Ubicación de la muestra: País, región y localidad. \\
+          description &                   Texto &                       Breve descripción de la secuencia. \\
+environmental\_sample &                Booleano & Especifíca si el material pertenece a muestra ambiental. \\
+             keywords &                   Texto &                 Palabras clave asociadas a la secuencia. \\
+        last\_updated &                   Fecha &                        Fecha de la última actualización. \\
+%             location &      Latitud y longitud & Ubicación geográfica de punto aislamiento de la muestra. \\
+            mol\_type & Vocabulario restringido &          Tipo molecular de la molécula \textit{in vivo}.\\
+\end{tabular}
+\normalsize{}
+\end{center}
+\caption{Lista de algunos de los campos de búsqueda ofrecidos por ENA.}
+\label{tab:ena_search_fields}
+\end{table}
+
+La búsqueda por texto ofrece las mismas opciones para manipular el formato de 
+los datos a recibir que la búsqueda por identificador que se discutió en la 
+primer sección. Se usan los parámetros \emph{display}, \emph{download}, \emph{length}
+y \emph{offset} ya vistos (ver la tabla \ref{tab:ena_fmt}). Este tipo de búsqueda
+ofrece una opción más para el parámetro \emph{display}, el valor `report'. Esta 
+opción permite descargar algunos campos de los registros y no el registro completo.
+Es útil para tener en un resumen de los registros que se desea descargar. Cuando
+se usa esta opción se requiere el uso del parámetro \emph{fields} para indicar 
+los campos que se desea obtener. Debajo se muestran 
+algunos de los campo más usuales para el \emph{domain} `sequence' y \emph{result}
+`sequence\_release'.
+\begin{multicols}{3}
+\begin{itemize}
+  \item accession
+  \item base\_count
+  \item cell\_line
+  \item description
+  \item environmental\_sample
+  \item host 
+  \item keywords 
+  \item last\_updated 
+  \item location 
+  \item mol\_type 
+  \item tax\_division
+  \item tax\_id 
+  \item scientific\_name
+\end{itemize}
+\end{multicols}
+La referencia completa de los campos de búsqueda y los campos disponibles para 
+los reportes se puede consultar en \href{http://www.ebi.ac.uk/ena/data/warehouse/usage}{\textbf{http://www.ebi.ac.uk/ena/data/warehouse/usage}}.
+
+\cleardoublepage
 \newpage
 \subsection{DNA Data Bank of Japan - DDBJ}
 La base de datos DDBJ ofrece, además de la interfaz web, el acceso por FTP y
@@ -952,7 +949,8 @@ una API web llamada WABI (Web API for Biology). Estos dos son los recursos que
 permiten el acceso programático a esta base de datos.
 
 \subsubsection{Formato del registro}
-\scriptsize{}
+El formato del registro en texto plano se muestra debajo. Su estructura es casi
+idéntica al registro de texto plano de NCBI.
 \begin{verbatim} 
 LOCUS       AJ131281                 348 bp    RNA     linear   VRL 10-DEC-1999
 DEFINITION  Lymphocytic choriomeningitis virus z gene, partial, strain MX.
@@ -969,7 +967,7 @@ REFERENCE   1
   TITLE     Sequence and characterisation of the Z gene encoding ring finger
             protein of the lymphocytic choriomeningitis virus MX strain
   JOURNAL   Acta Virol. 42 (6), 369-374 (1998)
-   PUBMED   10358742datos
+   PUBMED   10358742
 REFERENCE   2  (bases 1 to 348)
   AUTHORS   Pastorek,J.
   TITLE     Direct Submission
@@ -993,7 +991,7 @@ FEATURES             Location/Qualifiers
                      /product="ring finger protein"
                      /protein_id="CAA10342.1"
                      /db_xref="GI:3970752"
-                     /translation="MGQGKSKEKKDTNTGDRAEILPDTTYLGPLNCKSCWQKFDSLVRdatos
+                     /translation="MGQGKSKEKKDTNTGDRAEILPDTTYLGPLNCKSCWQKFDSLVR
                      CHDHYLCRHCLNLLLSVSDRCPLCKCPLPTKLKISTAPSPPPPYEE"
      mat_peptide     <70..338
                      /gene="z"
@@ -1004,120 +1002,54 @@ ORIGIN
       301 gatatcaaca gccccaagcc caccacctcc ctacgaagag taacaccg
 //
 \end{verbatim}
-\normalsize{}
-\subsubsection{Acceso FTP}
-DDBJ permite descargas varias bases de datos. Nos enfocaremos en \emph{DDBJ}
-(nucleotidos), \emph{DAD} (aminoácidos) y \emph{wgs} (secuenciación de genomas
-completos). 
-La URL base para ellas son:
-\begin{description}
-  \item[ddbj] \url{ftp://ftp.ddbj.nig.ac.jp/ddbj_database/ddbj}
-  \item[ddbj - release notes]
-  \url{ftp://ftp.ddbj.nig.ac.jp/ddbj_database/release_note_archive/ddbj}
-  \item[dad]  \url{ftp://ftp.ddbj.nig.ac.jp/ddbj_database/dad}
-  \item[dad - release notes] 
-  \url{ftp://ftp.ddbj.nig.ac.jp/ddbj_database/release_note_archive/dad}
-  \item[wgs]  \url{ftp://ftp.ddbj.nig.ac.jp/ddbj_database/wgs}
-  \item[wgs - Lista de organismos]
-  \url{ftp://ftp.ddbj.nig.ac.jp/ddbj_database/wgs/WGS_ORGANISM_LIST.txt}
-\end{description}
-
-La información en las bases de datos \emph{ddbj} y \emph{dad} está organizada
-en diferentes categorías, según el origen de las secuencias. Los archivos de 
-datos que pueden ser descargados se corresponden con estas categorías y siguen
-una nomenclatura racional. En la tabla \ref{ddbj_ftp_categories} se detallan las
-categorías. El nombre de cada archivo está formado por un prefijo que 
-corresponde con alguna de las categorías, después un número de orden creciente y
-finalmente la extensión. El formato de los archivos es texto plano, comprimido.
-Para las bases de datos \emph{ddbj} y \emph{dad}, posible descargar archivos en 
-formato \texttt{fasta} y \texttt{XML}. Estos se encuentran en las
-subcarpetas \texttt{fasta/} y \texttt{xml/insdxml/v1.4} respectivamente.
-
-\begin{table}[h!tp]
-\begin{center}
-\begin{tabular}{llp{11cm}}
-Categoría  & Prefijo & Descripción \\ \hline
-HUM        & ddbjhum & Humano \\
-PRI        & ddbjpri & Primates (no humano) \\
-ROD        & ddbjrod & Roedores \\
-MAM        & ddbjmam & Mamiferos (no primates, ni roedores) \\
-VRT        & ddbjvrt & Vertebrados (no mamíferos) \\datos
-INV        & ddbjinv & Invertebrados \\
-PLN        & ddbjpln & Plantas, hongos, plastidos y otros eukariotas \\
-BCT        & ddbjbct & Bacterias y archaeas \\datos
-VRL        & ddbjvrl & Viruses \\
-PHG        & ddbjphg & Bacteriofagos \\
-ENV        & ddbjenv & Secuencias de muestras ambientales \\
-SYN        & ddbjsyn & Secuencias de cosntrucciones sintéticas \\
-EST        & ddbjest & \textit{Expressed sequence tags}. Secuencias cortas
-                       de cDNA \\
-GSS        & ddbjgss & \textit{Genome survey sequences}. Secuencias
-                       genómicas cortas \\
-TSA        & ddbjtsa & Ensamblados de transcriptómica (\textit{Transcriptome
-                       shhotgun assemblies}) \\
-HTC        & ddbjhtc & Secuencias de cDNA por métodos de alto rendimiento
-                       (\emph{high throughput} .
-                       Esta categoría incluye secuencias de cDNA no terminadas.
-                       Cuando la secuenciación se completa se mueve a la 
-                       categoría taxonómica que le corresponde \\
-HTG        & ddbjhtg & Secuencias genómicas por métodos de alto rendimiento
-                       (\emph{high throughput}) \\
-STS        & ddbjsts & \emph{Sequence tagged sites} \\
-PAT        & ddbjpat & Secuencias relacionadas con aplicaciones patentadas \\
-UNA        & ddbjuna & Secuencias no anotadas. \\
-CON        & ddbjcon & Rearmados en proyectos de secuenciación (Contigs) \\
-\end{tabular}
-\end{center}
-\caption{Categorías de las bases de datos de DDBJ}
-\label{ddbj_ftp_categories}
-\end{table}
-
 
 \subsubsection{Acceso por Web API}
-DDBJ ofrece API para tres servicios diferentes. El servicio WABI BLAST, que 
-permite la búsqueda usando Blast. El servicio 'getentry WebAPI' que permite la
-recuperar registros de la base de dato por número de acceso y el servicio ARSA 
-WebAPI, que permite la búsqueda de registros por su contenido textual (no de 
-secuencia. Los tres servicios usan una arquitectura REST 
-(\textit{Representational state transfer}) sobre http para las consultas. 
-
-
+DDBJ ofrece API para dos servicios diferentes. El servicio `getentry WebAPI' 
+que permite la recuperar registros de la base de dato por número de acceso y el 
+servicio ARSA WebAPI, que permite la búsqueda de registros por su contenido 
+textual (no de secuencia. los dos servicios usan una arquitectura REST para 
+las consultas.
 
 \subsubsection{Getentry WebAPI}
-El servicio getentry permite recuperar registro de una de las bases de data de 
+El servicio getentry permite recuperar registro de una de las bases de datos de 
 DDBJ por su número de acceso. Las consultas se pueden hacer mediante el método
-HTML GET o usando una URL semántica. En ambos casos, la URL base es la misma:
-'\url{http://getentry.ddbj.nig.ac.jp/getentry}'. La síntaxis para especificar 
-una consulta usando el método GET es '\url{http://getentry.ddbj.nig.ac.jp/getentry?database=nombre_de_la_base_de_datos&accession_number=número_de_acceso}' \\
-por ejemplo, la consulta '\url{http://getentry.ddbj.nig.ac.jp/getentry?database=ddbj&accession_number=KP177965}' \\
-recupera el registro con el número de acceso KP177965. 
-La síntaxis para hacer una consulta mediante una URL semántica
-La misma consulta, usando
-una URL semántica es
-'\url{http://getentry.ddbj.nig.ac.jp/getentry/nombre_de_la_base_de_datos/número_de_acceso/revision},
-donde 'revisión' es opcional. Los registros pueden ser actualizados en el 
+GET o usando una URL semántica. En ambos casos, la URL base es la misma:
+\href{http://getentry.ddbj.nig.ac.jp/getentry}{\textbf{http://getentry.ddbj.nig.ac.jp/getentry}}.
+
+La síntaxis para especificar una consulta usando el método GET es \textbf{http://getentry.ddbj.nig.ac.jp/\ getentry?database=nombre\_de\_la\_base\_de\_datos\&accession\_number=número\_de\_acceso}. \\
+Ejemplo: 
+\begin{itemize}
+  \item \href{http://getentry.ddbj.nig.ac.jp/getentry?database=ddbj&accession_number=KP177965}{\textbf{http://getentry.ddbj.nig.ac.jp/getentry?database=ddbj\&accession\_number=KP177965}}
+  Recupera el registro con número de identificación `KP177965'.
+\end{itemize}
+La misma consulta, usando una URL semántica es
+\textbf{http://getentry.ddbj.nig.ac.jp/getentry/nombre\_de\_la\ \_base\_de\_datos/número\_de\_acceso/revisión},
+donde `revisión' es opcional. Los registros pueden ser actualizados en el 
 tiempo, cada nueva versión de un registro se carateriza por la fecha y hora de
-la actualización. Por ejemplo, la
-'\url{http://getentry.ddbj.nig.ac.jp/getentry/ddbj/AY646354/2010-02-26+14:07:01}'
-\\ recupera la revisión 2010-02-26 14:07:01 del registro. Para saber que 
-revisiones están disponibles para un registro particular se puese hacer una
-consulta a la '\url{http://getentry.ddbj.nig.ac.jp/gethistory}', con un formato
-similar a la de 'getentry'.
+la actualización. \\
+Ejemplo:
+\begin{itemize}
+  \item \href{http://getentry.ddbj.nig.ac.jp/getentry/ddbj/AY646354/2010-02-26+14:07:01}{\textbf{http://getentry.ddbj.nig.ac.jp/getentry/ddbj/AY646354/2010-02-26+14:07:01}}' \\ 
+  Recupera la revisión 2010-02-26 14:07:01 del registro
+\end{itemize}
+Para saber que revisiones están disponibles para un registro particular se puede
+hacer una consulta a la \href{http://getentry.ddbj.nig.ac.jp/gethistory}{\textbf{http://getentry.ddbj.nig.ac.jp/gethistory}}, con un formato
+similar a la de `getentry'.
 
 Los parámetros disponibles para las consultas son el \emph{número de acceso},
 \emph{base de datos}, \emph{revisión}, \emph{formato}, \emph{tipo de archivo},
 \emph{mostrar eliminados} y \emph{limite}.
 
-
-Para especificar el número se acceso se utiliza la palabla clave
-\emph{accession\_number}. Se puede indicar el número de acceso solo (ej.
-AY646354), o el número de versión (AY646354.1). Se puede especificar varios 
+El parámetro \emph{accession\_number} se utiliza para especificar el número. Se 
+puede indicar el número de acceso solo (ej. AY646354), o el número de versión 
+(AY646354.1). Es posible especificar varios 
 número de acceso en un sola consulta, separándolos con una coma. También se 
 puede indicar un rango de números de acceso, conectando dos número de accesos
-con un símbolo '-'. Este parámetros es el único obligatorio.
+con un símbolo '-'. Este parámetro es el único obligatorio.
 
-Para especificar una base de datos se usa la palabra clave \emph{database}.
-Las báses de datos disponibles se muestran en la tabla \ref{tab:getentry_dbs}
+El parámetro \emph{database} permite especificar la  base de datos sobre la cual
+se realiza la búsqueda. Las báses de datos disponibles se muestran en la tabla
+\ref{tab:getentry_dbs}.
 
 \begin{table}
 \begin{center}
@@ -1134,138 +1066,151 @@ Protein & aa            & Busca en todas las bases de datos disponibles. \\
         & uniprot       & Base de datos Uniprot.\\
         & dad           & Secuencias de aminoácidos de DDBJ. \\
         & patent\_aa    & Secuencias derivadas de patentes. 
-
-El código de revisión se especifica con la palabra clave \emph{revision} y 
-consiste en la fecha y la hora con el formato \ttfamily{yyyy-MM-dd hh:mm:ss} o
-\ttfamily{yyyy-MM-dd hh:mm:ss release}.
-
 \end{tabular}
 \end{center}
 \caption{Bases de datos disponibles en \emph{gententry}}
 \label{tab:getentry_dbs}
 \end{table}
 
-Para especificar el formato de retorno de los datos se utiliza la palabra clave
-\emph{format}. En la tabla \ref{tab:getentry_fmts} se muestran los posibles 
+El parámetro \emph{revision} permite indicar el código de revisión del registro
+que se quiere obtener. Consiste en la fecha y la hora con el formato 
+\textbf{yyyy-MM-dd hh:mm:ss} o \textbf{yyyy-MM-dd hh:mm:ss release}.
+
+El parámetro \emph{format} permite especificar el formato de retorno de los 
+datos. En la tabla \ref{tab:getentry_fmts} se muestran los posibles 
 valores que puede tomar.
 
 \begin{table}
 \begin{center}
 \begin{tabular}{ll}
 Formato  & Descripción             \\ \hline
-flatfile & Formato de texto plano \\
-xml      & Formato INSDSeq-XML     \\
-fasta    & Secuencias de DNA o proteína en formato fasta \\
-trans    & Secuencia codificante traducida a proteínas (fasta) \\
-cds      & Secuencia codificante en nucleótidos (fasta)
+flatfile & Formato de texto plano. \\
+xml      & Formato INSDSeq-XML.    \\
+fasta    & Secuencias de DNA o proteína en formato fasta. \\
+trans    & Secuencia codificante traducida a proteínas (fasta). \\
+cds      & Secuencia codificante en nucleótidos (fasta). \\
 \end{tabular}
 \end{center}
 \caption{Formatos de retorno de \emph{getentry}.}
 \label{tab:getentry_fmts}
 \end{table}
 
-Para especificar que tipo de archivo en que se quiere recuperar los datos se 
-usa la palabra clave \emph{filetype}. Los valores posibles son \emph{html}, 
+El parámetro \emph{filetype} permite especificar que tipo de archivo es el que 
+se quiere recuperar los datos. Los valores posibles son \emph{html}, 
 \emph{text} y \emph{gz} (texto plano comprimido).
 
 Es posible recuperar información de registro viejos y que fueron eliminados de
-las versiones más recientes de las bases de datos. Para ello, se debe usar la
-palabra clave \emph{show\_suppressed}. Los valores posibles son \emph{true} y 
+las versiones más recientes de las bases de datos. Para ello, se debe usar el 
+parámetro \emph{show\_suppressed}. Los valores posibles son \emph{true} y 
 \emph{false}. El valor por defecto es \emph{false}.
 
 Para limitar la cantidad de resultados que se desea recuperar se utiliza el
-parámetros \emph{limit}. Cuyo valor es el número máximo de registro que se 
+parámetro \emph{limit}. Cuyo valor es el número máximo de registro que se 
 puede recuperar. El valor por defecto es 10. Si se especifica 0, se repueran
 todos los registros disponibles.
 
-
-\subsubsection{ARSA WebAPI.} Está diseñada para ser usada con un navegador web. Los
-navegadores compatibles son Firefox y Chrome, IE versiones 9 y 10; y Safari
-version 5 y posteriores.
-
-Arsa recupera información de las siguientes bases de datos:
-\begin{itemize}
-  \item DDBJ Release
-  \item DDBJ New (daily updates)
-  \item Amino Acid Patent Sequence data submitted from JPO
-  \item Amino Acid Patent Sequence data submitted from KIPO.
-\end{itemize}
-
-La URL base para la búsqueda es '\url{http://ddbj.nig.ac.jp/arsa/search}'. Los 
+\subsubsection{ARSA WebAPI.}
+% 
+% Está diseñada para ser usada con un navegador web. Los
+% navegadores compatibles son Firefox y Chrome, IE versiones 9 y 10; y Safari
+% version 5 y posteriores.
+% 
+% Arsa recupera información de las siguientes bases de datos:
+% \begin{itemize}
+%   \item DDBJ Release
+%   \item DDBJ New (daily updates)
+%   \item Amino Acid Patent Sequence data submitted from JPO
+%   \item Amino Acid Patent Sequence data submitted from KIPO.
+% \end{itemize}
+La URL base para la búsqueda es \href{http://ddbj.nig.ac.jp/arsa/search}{\textbf{http://ddbj.nig.ac.jp/arsa/search}}. Los 
 resultados pueden ser recuperados en idioma inglés o japonés. Para definir el
-idioma es necesario agregar a la dirección base el el capo 'lang' con valor 
+idioma es necesario agregar a la dirección base el el capo \emph{lang} con valor 
 'en'. De esta forma la URL se convierte en: 
-\url{http://ddbj.nig.ac.jp/arsa/search?lang=en}. El formato de respuesta es HTML,
+\href{http://ddbj.nig.ac.jp/arsa/search?lang=en}{\textbf{http://ddbj.nig.ac.jp/arsa/search?lang=en}}. El formato de respuesta es HTML,
 porque está pensado para ser mostrado en un navegador como una página web.
 Si se desea, obtener esta información en un formato que pueda ser fácilmente 
 manipulado se tienen dos opciones. Ambas implican usar una URL base diferente. 
+
 Una de las opciones es descargar el contenido de todos los registros en formato
-plano, para ello, hay que cambiar a la URL '\url{http://ddbj.nig.ac.jp/arsa/downloadAll?lang=en}'.
+plano, para ello, hay que cambiar a la URL \href{http://ddbj.nig.ac.jp/arsa/downloadAll?lang=en}{\textbf{http://ddbj.nig.ac.jp/arsa/downloadAll?lang=en}}.
+
 La otra opción es recuperar los identificadores de cada registro y luego 
-descargar cada uno de ellos, invididualmente con el servicio 'getentry', para 
-ello, se debe cambiar la URL base a '\url{http://ddbj.nig.ac.jp/arsa/searchAllIds?lang=en}'. 
+descargar cada uno de ellos invididualmente con el servicio `getentry', para 
+ello, se debe cambiar la URL base a \href{http://ddbj.nig.ac.jp/arsa/searchAllIds?lang=en}{\textbf{http://ddbj.nig.ac.jp/arsa/\ searchAllIds?lang=en}}. 
 
 Hay dos condiciones de búsqueda, la búsqueda rápida (\textit{Quick Search}) y la
 búsqueda avanzada (\textit{Advanced Search}). La condición de búsqueda se define
-en el campo 'cond', sus posibles valores son: 'quick\_search' y 'advanced\_search'.
+con el parámetro \emph{cond}, sus posibles valores son: `quick\_search' y `advanced\_search'.
 Sin embargo, en esta guía se trabajará solamente con la condición de búsqueda 
-simple. El campo 'query' define el texto que se desea buscar. Existen varios opciones
-para refinar la búsqueda. Los valores que corresponden a valores booleanos
-('AND', 'OR', 'NOT') deben ser escritos en mayúsculas. Para separar dos o más
-palabras, en lugar de usar un espacio, se debe usar el signo '+'. 
+simple. 
 
-Las opciones de la búsqueda rápida son las siguientes:
+El parámetro \emph{query} define el texto que se desea buscar. Existen varias
+opciones que permiten refinar la búsqueda:
+
+% Los valores que corresponden a valores booleanos
+% ('AND', 'OR', 'NOT') deben ser escritos en mayúsculas. Para separar dos o más
+% palabras, en lugar de usar un espacio, se debe usar el signo '+'. 
+% 
+% Las opciones de la búsqueda rápida son las siguientes:
 \begin{description}
   \item[Coincidencia por conjunción] Búsquedas que contienen todas las palabras clave 
-  dadas. Se debe usar el campo 'operator' con el valor 'AND'. Por ejemplo, la
-  búsqueda '\url{http://ddbj.nig.ac.jp/arsa/search?lang=en&cond=quick_search&query=brain+phosphatidylethanolamine&operator=AND}'\\  
-  recupera todos los registros que contienen las palabras 'brain' y
-  'phosphatidylethanolamine', aunque se encuentren en lugares diferentes en el
+  dadas. Se debe usar el parámetro \emph{operator} con el valor `AND'. \\
+  Ejemplo: \\
+  \href{http://ddbj.nig.ac.jp/arsa/search?lang=en&cond=quick_search&query=brain+phosphatidylethanolamine&operator=AND}{\textbf{search?lang=en\&cond=quick\_search\&query=brain+phosphatidylethanolamine\&operator=AND}} \\   
+  Recupera todos los registros que contienen las palabras `brain' y
+  `phosphatidylethanolamine', aunque se encuentren en lugares diferentes en el
   registro. El primer resultado de la búsqueda del ejemplo es un registro que
   contiene la palabra 'brain' en la definición del registro (título principal)
   y la palabra 'phosphatidylethanolamine' en el título de una de las referencias
   bibliográficas que aparecen en ese registro.
   \item[Coincidencia por disyunción] Búsquedas que contienen al menos una de 
-  las palabras clave dadas. Se indican en el campo 'operator' y con el valor 
-  'OR'. Por ejemplo, la búsqueda '\url{http://ddbj.nig.ac.jp/arsa/search?lang=en&cond=quick_search&query=tinea+versicolor&operator=OR}'\\
-  recupera registros de 'Tinea versicolor', 'Trametes versicolor' y 'Tinea pellionella'.
+  las palabras clave dadas. Se indican en el parámetro \emph{operator}' y con el valor 
+  'OR'. \\
+  Ejemplo:\\
+  \href{http://ddbj.nig.ac.jp/arsa/search?lang=en&cond=quick_search&query=tinea+versicolor&operator=OR}{search?lang=en\&cond=quick\_search\&query=tinea+versicolor\&operator=OR}\\
+  Recupera registros de `Tinea versicolor', `Trametes versicolor' y `Tinea pellionella'.
   \item[Negación] Búsquedas que contienen una o más palabras clave y que carecen
   de otras que son dadas explicitamente. Se indican con la palabra clave 'NOT'
-  dentro del campo 'query', la palabra clave que se encuentra  a su derecha es 
-  la que debe estar ausente. Por ejemplo, la búsqueda
-  '\url{http://ddbj.nig.ac.jp/arsa/search?lang=en&cond=quick_search&query=homo+NOT+sapiens&operator=AND}'\\
-  recupera los registros que contiene la palabros 'homo' pero no 'sapiens'.
+  dentro del valor del parámetro \emph{query}, la palabra clave que se encuentra a su derecha es 
+  la que debe estar ausente. \\
+  Ejemplo: \\
+  \href{http://ddbj.nig.ac.jp/arsa/search?lang=en&cond=quick_search&query=homo+NOT+sapiens&operator=AND}{search?lang=en\&cond=quick\_search\&query=homo+NOT+sapiens\&operator=AND}'\\ 
+  Recupera los registros que contiene la palabras  `homo' pero no `sapiens'.
   \item[Coincidencia parcial] Búsquedas que contienen parte de una palabra. Se
-  indica en el campo 'query'. Al final del término buscado se agrega el
-  símbolo '*'. Por ejemplo, la búsqueda '\url{http://ddbj.nig.ac.jp/arsa/search?lang=en&cond=quick_search&query=candid*}'\\
-  recupera registros de '\textit{Candida dubliniensis}', '\textit{Candidatus Phytoplasma}',
+  indican dentro del valor del parámetro \emph{query}. Al final del término buscado se agrega el
+  símbolo `*'. \\
+  Ejemplo: \\
+  \href{http://ddbj.nig.ac.jp/arsa/search?lang=en&cond=quick_search&query=candid*}{\textbf{search?lang=en\&cond=quick\_search\&query=candid*}}\\
+  Recupera registros de '\textit{Candida dubliniensis}', '\textit{Candidatus Phytoplasma}',
   'Junin virus strain candid1', entre otros.
   \item[Coincidencia de frases] Búsquedas que contienen varios términos en el orden
-  dado. Se indican encerrando entre comillas los términos. Dependiendo de la 
-  herramienta que se utilice, puede ser necesario reemplazar
-  las comillas por '\%22'. Por ejemplo, la búsqueda 
-  '\url{http://ddbj.nig.ac.jp/arsa/search?lang=en&cond=quick_search&query=%22mouse+brain%22&operator=AND
-  }'\\
-  recupera los registro que contengan la frase 'mouse brain'.
+  dado. Se indican encerrando entre comillas los términos. \\
+  Ejemplo: \\
+  \href{http://ddbj.nig.ac.jp/arsa/search?lang=en&cond=quick_search&query="mouse+brain"&operator=AND}{\textbf{search?lang=en\&cond=quick\_search\&query="mouse+brain"\&operator=AND}} \\
+  Recupera los registro que contengan la frase `mouse brain'.
   \item[Búsquedas en campos] Búsquedas que deben coincidir en un campo 
-  particular del registro. Se indican nombrando el campo en el que se debe 
-  hacer la búsqueda antes de la palabra clave buscada y separados por el 
-  símbolo ':' (o su código de escape '\%3A'). Por ejemplo, la búsqueda
-  '\url{http://ddbj.nig.ac.jp/arsa/search?lang=en&cond=quick_search&query=df:``homo+sapiens"&operator=AND}' \\
-  recupera registros que tienen la frase 'homo sapiens' en su definición (título principal).
-  \item[Búsqueda por expresiones regulares] Algúnas búsquedas en campos permiten
-  usar expresiones regulares. Deben encerrarse con el símbolo '/' (o '\%2F'). 
+  particular del registro. Se indican dentro del valor del parámetro \emph{query}
+  nombrando el campo en el que se debe hacer la búsqueda antes de la palabra
+  clave buscada y separados por el símbolo ':'. 
+  La tabla \ref{tab:DDBJ_fields} muestra los campos de búsqueda disponibles. \\
+  Ejemplo: \\
+  \href{http://ddbj.nig.ac.jp/arsa/search?lang=en&cond=quick_search&query=df:"homo+sapiens"&operator=AND}{\textbf{search?lang=en\&cond=quick\_search\&query=df:"homo+sapiens"\&operator=AND}} \\ 
+  Recupera registros que tienen la frase `homo sapiens' en su definición (título principal).
+  \item[Búsqueda por expresiones regulares] Algunas búsquedas en campos permiten
+  usar expresiones regulares. Deben encerrarse con el símbolo '/'.
   En la tabla \ref{DDBJ_ARSA_regex} se muestran las expresiones regulares 
   permitidas.
   \item[Búsqueda por rango de valores] Algunas búsquedas en campos permiten 
   indicar un rango de valores para la coincidencia. Deben encerrarse entre 
   corchetes. La palabra clave 'TO' debe estar presente entre el valor
   mínimo y el máximo del rango. Se puede usar el símbolo '*' para indicar un 
-  valor de inicio o final del rango desconocido. Por ejemplo, la búsqueda 
-  '\url{http://ddbj.nig.ac.jp/arsa/search?lang=en&cond=quick_search&query=pa:[GL000000+TO+GL000010]&operator=AND}' \\
-  recupera los registros existentes cuyo número de acceso primario sea 
-  'GL000001', 'GL000002',  \ldots y 'GL000010'. Otro ejemplo,  '\url{http://ddbj.nig.ac.jp/arsa/search?lang=en&cond=quick_search&query=sl:[0+TO+100]&operator=AND}' \\
-  recupera todos los registros cuya longitud de secuencia sea 100 o menos.
+  valor de inicio o final del rango desconocido.\\
+  Ejemplos: \\ 
+  \href{http://ddbj.nig.ac.jp/arsa/search?lang=en&cond=quick_search&query=pa:[GL000000+TO+GL000010]&operator=AND}{\textbf{search?lang=en\&cond=quick\_search\&query=pa:[GL000000+TO+GL000010]\&operator=AND}} \\
+  Recupera los registros existentes cuyo número de acceso primario sea 
+  'GL000001', 'GL000002',  \ldots y 'GL000010'. 
+  \href{http://ddbj.nig.ac.jp/arsa/search?lang=en&cond=quick_search&query=sl:[0+TO+100]&operator=AND}{\textbf{search?lang=en\&cond=quick\_search\&query=sl:[0+TO+100]\&operator=AND}} \\
+  Recupera todos los registros cuya longitud de secuencia sea 100 o menos.
 \end{description}
 
 
@@ -1302,7 +1247,7 @@ Feature                 & fe   & Texto en FEATURES \\
 \begin{center}
 \small
 \begin{tabular}{p{4cm}lp{8cm}}
-Significado                             & Simbolo   & Ejemplo \\ \hline
+Significado                             & Símbolo   & Ejemplo \\ \hline
 Cualquier caracter individual           & .         & /ho.o/ coincide con 'homo' y con 'Rhodococcus'. \\
 Cualquier caracter cero o más veces     & *         & /XX1*/ coincide con 'XX', 'XX1', 'XX11', etc \\
 Cualquier caracter cero o una vez       & ?         & /XY?123/ coincide con 'XY123' and 'X123' \\
@@ -1316,17 +1261,80 @@ Cualquier caracter n hasta m veces      & \{n,m\}   & /XY1{2,3}/ coincide con 'X
 \end{tabular}
 \normalsize{}
 \end{center}
-\caption{tablecaption}
-\label{tablelabel}
+\caption{Expresiones regulares permitidas en las búsquedas por texto en ARSA.}
+\label{DDBJ_ARSA_regex}
+\end{table}
+% \subsubsection{WABI BLAST}
+% DDBJ ofrece una API web, e interface para hacer consultas con Java, perl y Ruby.
+% Sin embargo, la documentación solo está disponible en japonés, por ello lo 
+% dejaremos fuera de la discusión. Si se desea ver en detalle la documentación 
+% disponible, visite la página
+% '\url{http://www.ddbj.nig.ac.jp/search/help/wabi/wabi_blast_example-j.html}'.
+\subsubsection{Acceso FTP}
+DDBJ permite descargas varias bases de datos. Nos enfocaremos en \emph{DDBJ}
+(nucleotidos), \emph{DAD} (aminoácidos) y \emph{wgs} (secuenciación de genomas
+completos). 
+La URL base para ellas son:
+\begin{description}
+  \item[ddbj:] \href{ftp://ftp.ddbj.nig.ac.jp/ddbj_database/ddbj}{\textbf{ftp://ftp.ddbj.nig.ac.jp/ddbj\_database/ddbj}}
+  \item[ddbj - release notes:] \href{ftp://ftp.ddbj.nig.ac.jp/ddbj_database/release_note_archive/ddbj}{\textbf{ftp://ftp.ddbj.nig.ac.jp/ddbj\_database/release\_note\_archive/ddbj}}
+  \item[dad:]  \href{ftp://ftp.ddbj.nig.ac.jp/ddbj_database/dad}{\textbf{ftp://ftp.ddbj.nig.ac.jp/ddbj\_database/dad}}
+  \item[dad - release notes:] \href{ftp://ftp.ddbj.nig.ac.jp/ddbj_database/release_note_archive/dad}{\textbf{ftp://ftp.ddbj.nig.ac.jp/ddbj\_database/release\_note\_archive/dad}}
+  \item[wgs:]  \href{ftp://ftp.ddbj.nig.ac.jp/ddbj_database/wgs}{\textbf{ftp://ftp.ddbj.nig.ac.jp/ddbj\_database/wgs}}
+  \item[wgs - Lista de organismos:] \href{ftp://ftp.ddbj.nig.ac.jp/ddbj_database/wgs/WGS_ORGANISM_LIST.txt}{\textbf{ftp://ftp.ddbj.nig.ac.jp/ddbj\_database/wgs/WGS\_ORGANISM\_LIST.txt}}
+\end{description}
+
+La información en las bases de datos \emph{ddbj} y \emph{dad} está organizada
+en diferentes categorías, según el origen de las secuencias. Los archivos de 
+datos que pueden ser descargados se corresponden con estas categorías y siguen
+una nomenclatura racional. En la tabla \ref{ddbj_ftp_categories} se detallan las
+categorías. El nombre de cada archivo está formado por un prefijo que 
+corresponde con alguna de las categorías, después un número de orden creciente y
+finalmente la extensión. El formato de los archivos es texto plano, comprimido.
+Para las bases de datos \emph{ddbj} y \emph{dad}, posible descargar archivos en 
+formato \texttt{fasta} y \texttt{XML}. Estos se encuentran en las
+subcarpetas \texttt{fasta/} y \texttt{xml/insdxml/v1.4} respectivamente.
+
+\begin{table}[h!tp]
+\begin{center}
+\begin{tabular}{llp{11cm}}
+Categoría  & Prefijo & Descripción \\ \hline
+HUM        & ddbjhum & Humano \\
+PRI        & ddbjpri & Primates (no humano) \\
+ROD        & ddbjrod & Roedores \\
+MAM        & ddbjmam & Mamiferos (no primates, ni roedores) \\
+VRT        & ddbjvrt & Vertebrados (no mamíferos) \\
+INV        & ddbjinv & Invertebrados \\
+PLN        & ddbjpln & Plantas, hongos, plastidos y otros eukariotas \\
+BCT        & ddbjbct & Bacterias y archaeas \\
+VRL        & ddbjvrl & Viruses \\
+PHG        & ddbjphg & Bacteriofagos \\
+ENV        & ddbjenv & Secuencias de muestras ambientales \\
+SYN        & ddbjsyn & Secuencias de cosntrucciones sintéticas \\
+EST        & ddbjest & \textit{Expressed sequence tags}. Secuencias cortas
+                       de cDNA \\
+GSS        & ddbjgss & \textit{Genome survey sequences}. Secuencias
+                       genómicas cortas \\
+TSA        & ddbjtsa & Ensamblados de transcriptómica (\textit{Transcriptome
+                       shhotgun assemblies}) \\
+HTC        & ddbjhtc & Secuencias de cDNA por métodos de alto rendimiento
+                       (\emph{high throughput} .
+                       Esta categoría incluye secuencias de cDNA no terminadas.
+                       Cuando la secuenciación se completa se mueve a la 
+                       categoría taxonómica que le corresponde \\
+HTG        & ddbjhtg & Secuencias genómicas por métodos de alto rendimiento
+                       (\emph{high throughput}) \\
+STS        & ddbjsts & \emph{Sequence tagged sites} \\
+PAT        & ddbjpat & Secuencias relacionadas con aplicaciones patentadas \\
+UNA        & ddbjuna & Secuencias no anotadas. \\
+CON        & ddbjcon & Rearmados en proyectos de secuenciación (Contigs) \\
+\end{tabular}
+\end{center}
+\caption{Categorías de las bases de datos de DDBJ}
+\label{ddbj_ftp_categories}
 \end{table}
 
-\subsubsection{WABI BLAST}
-DDBJ ofrece una API web, e interface para hacer consultas con Java, perl y Ruby.
-Sin embargo, la documentación solo está disponible en japonés, por ello lo 
-dejaremos fuera de la discusión. Si se desea ver en detalle la documentación 
-disponible, visite la página
-'\url{http://www.ddbj.nig.ac.jp/search/help/wabi/wabi_blast_example-j.html}'.
-
+\cleardoublepage
 \newpage
 \section{Bases de datos secundarias}
 
@@ -1371,18 +1379,18 @@ longitud.
 
 Ejemplos:
 \begin{itemize}
-  \item \url{http://www.uniprot.org/uniprot/Q16654.fasta}
-  \item \url{http://www.uniprot.org/uniprot/Q16654.xml}
-  \item \url{http://www.uniprot.org/uniprot/Q16654.tab}
-  \item \url{http://www.uniprot.org/uniparc/UPI000000D984.xml}
-  \item \url{http://www.uniprot.org/uniref/UniRef50\_Q16654.fasta} \\
-  Todos corresponden a la enzima piruvato deshidrogenasa.
-\end{itemize} 
+  \item \href{http://www.uniprot.org/uniprot/Q16654.fasta}{\textbf{http://www.uniprot.org/uniprot/Q16654.fasta}}
+  \item \href{http://www.uniprot.org/uniprot/Q16654.xml}{\textbf{http://www.uniprot.org/uniprot/Q16654.xml}}
+  \item \href{http://www.uniprot.org/uniprot/Q16654.tab}{\textbf{http://www.uniprot.org/uniprot/Q16654.tab}}
+  \item \href{http://www.uniprot.org/uniparc/UPI000000D984.xml}{\textbf{http://www.uniprot.org/uniparc/UPI000000D984.xml}}
+  \item \href{http://www.uniprot.org/uniref/UniRef50_Q16654.fasta}{\textbf{http://www.uniprot.org/uniref/UniRef50\_Q16654.fasta}}
+\end{itemize}
+Todos corresponden a la enzima piruvato deshidrogenasa.
 
 De esta forma es posible obtener registros de a uno a la vez. Si se quiere
 obtener varios registros en una sola consulta es necesario utilizar otro 
 servicio llamado \emph{batch}. La URL base de este servicio es 
-\url{http://www.uniprot.org/batch/}. Se requieren de dos parámetros. Uno de 
+\href{http://www.uniprot.org/batch/}{\textbf{http://www.uniprot.org/batch/}}. Se requieren de dos parámetros. Uno de 
 ellos es \emph{format},
 que especifica el formato del registro, los valores aceptados son txt', `fasta' 
 y `xml'. El segundo parámetro es \emph{query} que acepta una lista de 
@@ -1399,16 +1407,16 @@ consultas.
  
 Ejemplos para cURL:
 \begin{itemize}
-  \item \texttt{curl -L -d format=xml -d "query=P13368 Q16654"\ http://www.uniprot.org/batch/ -o out.xml} 
+  \item \textbf{curl -L -d format=xml -d "query=P13368 Q16654"\ http://www.uniprot.org/batch/ -o out.xml} 
   Permite recuperar los registros P13368 y Q16654, en formato `xml' y los guarda
   en el archivo `out.xml'.
-  \item \texttt{curl -L -d format=txt -d "query=P13368 Q16654"\ http://www.uniprot.org/batch/ -o out.txt} 
+  \item \textbf{curl -L -d format=txt -d "query=P13368 Q16654"\ http://www.uniprot.org/batch/ -o out.txt} 
   Permite recuperar los registros P13368 y Q16654, en formato de texto plano y 
   los guarda en el archivo `out.txt'.
 \end{itemize}
 
 \subsubsection{Búsqueda por texto}
-La URL base de este servicio es \url{http://www.uniprot.org/uniprot/}. 
+La URL base de este servicio es \href{http://www.uniprot.org/uniprot/}{\textbf{http://www.uniprot.org/uniprot/}}. 
 Requiere del parámetro \emph{query} que contiene el texto que se quiere buscar.
 El contenido de \emph{query} esta formado por varios campos unidos por operadores
 booleanos. Sino se especifica ningún campo, la búsqueda se hace sobre todos los 
@@ -1535,7 +1543,7 @@ necesario espeficicar cuatro parámetros: \emph{from}, \emph{to}, \emph{format} y
 bases de datos de origen y de destino. Para ello, cada base de datos tiene un 
 código de identificación. En la tabla \ref{tab:unitprot_mapping_dbs_id} se muestran
 algunos de ellos. Para obtener una lista completa visitar la URL 
-\url{http://www.uniprot.org/help/programmatic_access#id_mapping_examples}. 
+\href{http://www.uniprot.org/help/programmatic_access#id_mapping_examples}{\textbf{http://www.uniprot.org/help/programmatic\ \_access\#id\_mapping\_examples}}. 
 
 El parámetro \emph{format} permite especificar el formato de los resultados. 
 El único valor aceptado es `tab', que muestra una tabla de texto de dos columnas,
@@ -1549,14 +1557,14 @@ un espacio en blanco.
 
 Ejemplos:
 \begin{itemize}
-  \item \texttt{curl -L -d from=ACC -d to=ID -d format=tab -d "query=Q6IUF8 Q6IUF7 Q6IUF9 P26578"\ http://www.uniprot.org/mapping/} \\
+  \item \textbf{curl -L -d from=ACC -d to=ID -d format=tab -d "query=Q6IUF8 Q6IUF7 Q6IUF9 P26578"\ http://www.uniprot.org/mapping/} \\
   Recupera el código de identificación de \emph{UniProt} a partir de su número 
   acceso.
-  \item \texttt{curl -L -d from=ACC -d to=P\_GI -d format=tab -d "query=Q6IUF8 Q6IUF7 Q6IUF9 \\
+  \item \textbf{curl -L -d from=ACC -d to=P\_GI -d format=tab -d "query=Q6IUF8 Q6IUF7 Q6IUF9 \\
   P26578"\ http://www.uniprot.org/mapping/} \\ 
   Recupera el código GI de las bases de datos de \emph{NCBI} a partir de su número 
   acceso.
-  \item \texttt{curl -L -d from=ID -d to=PDB\_ID -d format=tab -d "query=THIO\_ECOLI"\ http://www.\ uniprot.org/mapping/} \\
+  \item \textbf{curl -L -d from=ID -d to=PDB\_ID -d format=tab -d "query=THIO\_ECOLI"\ http://www.\ uniprot.org/mapping/} \\
   Recupera el código de los registros de la bases de datos PDB asociados a la 
   proteína tiorredoxina de \emph{Escherichia coli}.
 \end{itemize} 
