@@ -115,19 +115,157 @@
 
 \section{Conceptos generales}
 \subsection{Formatos de archivo}
+Las bases de datos de secuencias biológicas permiten recuperar los datos
+que tienen almacenadas en archivos de diferentes formatos. En general, estos
+formatos son de texto para que puedan ser fácilmente procesados por el usuario.
+A continuación se detallan algunos de los formatos de archivos más comunes. 
 \subsubsection{Fasta}
+Es, probablemente, el formato más común para almacenar secuencias biológicas.
+Tiene la ventaja de ser muy sencillo de manipular. La principal desventaja que 
+presenta es que no almacena anotaciones sobre la secuencia.
+Ejemplo:
+\begin{verbatim}
+>gi|845635415|ref|NR_132280.1| Mus musculus polymerase (DNA-directed), delta 4
+AGGGCAAAGGCCTGGATGTGCCTGAGGAGCCACCACATGTTATTGCAGGGGAAGACACCCAGTCCCTCAG
+CCAGGAGGAAACAGAGCTGGAGCTGCTGAGGCAGTTT ...
+\end{verbatim} 
 \subsubsection{Texto plano}
+Muchas bases de datos tienen ofrecen un formato propio para almacenar la 
+información de los registros. Estos contiene además de la secuencia en si, 
+anotaciones sobre ella. El formato propio de cada base de datos se verá más
+adelante.
+
+La estructura de este formato está diseñada para que pueda ser fácilmente leido
+por el per humano, pero al mismo tiempo que pueda ser manipulado computacionalmente. 
 \subsubsection{Tabular}
+Algunos servicios en las bases de datos dan como resultado datos sobre las 
+secuencias en un formato de tabla de texto. Cada fila de la tabla corresponde
+con una línea de texto y las columnas se separan ususalmente con el carácter 
+\emph{TAB} (ASCII 09). 
+\begin{verbatim}
+Entry   Entry name   Length  Gene names  Organism
+P26313  GLYC_JUNIN   485     GPC GP-C    Junin arenavirus (JUNV)
+P14239  NCAP_JUNIN   564     N           Junin arenavirus (JUNV)
+Q6XQI4  L_JUNIN      2210    L           Junin arenavirus (JUNV)
+Q6IVU5  Z_JUNIN      94      Z           Junin arenavirus (JUNV)
+\end{verbatim}
 \subsubsection{XML y similares}
+El formato XML (\textit{eXtensible Markup Language}) es un formato de texto diseñado
+para almacenar y comunicar datos a través de Internet. Es fácilmente manipulable
+computacionalmente, y permite ser leido por el humano (aunque puede no resultar 
+menos sencillo que otros formatos). La información está organizada como un 
+árbol jerárquico. Un documento XML contiene un nodo raíz, que contiene otros 
+nodos (en un nivel jerárquico inferior), estos nodos puede contiene otros a su 
+vez, etc. Los nodos tiene nombres que los identifican (puede haber nodos con el 
+mismo nombre), un contenido y atributos. 
+Ejemplo:
+\begin{verbatim}
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<padron_electoral>
+  <provincia nombre="Buenos Aires">
+    <persona>
+      <nombre>Juan</nombre>
+      <apellido>Pérez</apellido>
+      <dni>98.765.432</dni>
+    </persona>
+    <persona>
+      <nombre>Robero</nombre>
+      <apellido>Pérez</apellido>
+      <dni>89.567.234</dni>
+    </persona>
+  </provincia>
+  <provincia nombre="La Pampa">
+  ...
+  </provincia>
+</padron_electoral>
+\end{verbatim}
+
+En el ejemplo, la primer línea es un encabezado que indica que comienza un 
+documento XML. El nodo raíz es `padron\_electoral', este contiene nodos 
+`provincia'. Los nodos `provincia' tiene un atributos que se llama `nombre' y 
+contiene nodos `persona'. Es importante notar que los nodos se encierran entre
+los símbolos mayor y menor, y que para indicar el final del contenido de un 
+nodo se agrega un símbolo de barra de división inmediatamente antes del nombre.  
+
+Las bases de datos biológicas que ofrecen obtener su información en formato XML,
+pero en ocasiones es posible hacerlo en otros formatos, que cumplen una función
+más o menos similar que el XML. Por ejemplo, JSON (\textit{JavaScript Object Notation})
+y RDF (\textit{Resource Description Framework}).
 
 \subsection{Acceso programático}
+Todas las bases de datos biológicas ofrecen una acceso su información a través
+de internet por medio de un navegador y usualmente los resultados son mostrados
+en páginas interactivas con gran cantidad de recursos y enlaces a los que es 
+posible acceder. Esto permite a un usuario poder acceder a una gran variedad de 
+información de forma intuitiva. Esta interfaz \emph{web}  es muy útil para hacer
+análisis exploratorios pero no lo es sí se quiere automatizar un trabajo, o 
+analizar un gran número de datos.
+
+Las bases de datos más importantes suelen ofrencer otras formas de acceder a 
+su contenido, que permiten la automatización y el trabajo con grandes volúmenes
+de datos. La opción más sencilla es el acceso directo a los datos crudos por 
+\emph{FTP} (\emph{File transfer protocol}). Otra opción es proveer una interfaz
+REST (\emph{Representational State Transfer}), para interactuar con la base de
+datos.  
+
 \subsubsection{Acceso REST}
+El acceso REST es un estilo de diseño de \emph{software} para sistemas 
+distribuidos, como lo es internet. No es el objetivo de esta guía entrar en los 
+detalles técnicos, sin embargo es importante saber que usando esta tecnología
+las bases de datos pueden ofrecer al usuarios capacidades similares de trabajo
+a las que tendrían si estuvieran usando un navegador, pero además, permite la
+automatización de tareas.
+
+Para hacer una consulta REST a una base de datos, es necesario saber la URL base 
+del servicio (que puede ser la misma dirección que la página web de la base de 
+datos o no) y poder enviar datos al servidor. Para hacer esto último, hay dos 
+métodos: GET y POST. Para algunos servicios se deberá usar el primero, en otros
+el segundo y depende de la decisión de quien haya diseñado el servicio.
+
+Los datos que se transfieren al servidor son del tipo clave/valor. Los datos que
+se le pasan al servidor (valores) están identificados con una palabra clave. 
+
+Para hacer una consulta REST necesitamos un programa que nos permita hacer esto 
+o escribir un pequeño programa en algún lenguage de programación que ofrezca 
+esto.
+
 \subsubsection{Programas}
+Hay muchos programas que permiten hacer consultas REST.
+
+\begin{description}
+  \item[Navegadores \emph{web}] Todos los navegadores pueden hacer consultas 
+  REST, sin embargo se pierde la capacidad de automatización.  
+  \item[wget] Es un programa que funciona por línea de comandos. No permite usar
+   el método POST para transferir datos al servidor. Está disponible para \href{http://www.gnu.org/software/wget/}{\textbf{Linux}}
+   y \href{http://gnuwin32.sourceforge.net/packages/wget.htm}{\textbf{Windows}}. \\
+   Ejemplo: \\
+   \texttt{wget "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=nuccore\&term=\ coli"\ --O result.xml} \\
+   Donde, `http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi' es la URL 
+   base. `db=nuccore\&term=\ coli' son los datos que se le pasan al servidor, `db' 
+   es una clave y está asociada al valor `nuccore', `term' es otra clave y está 
+   asociada al valor `coli'. El resulado de la consulta que devuelve el servidor
+   se guarda en el archivo `result.xml'.
+\item[curl] Es un programa que funciona por línea de comandos. Permite hacer
+  tanto consultas tipo GET como POST. Está disponible para \href{http://curl.haxx.se/download.html}{Linux}
+   y \href{http://curl.haxx.se/download.html}{\textbf{Windows}}.
+   Ejemplos: \\
+   \texttt{curl "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=nuccore\&term=\ coli"\ --o result.xml} \\
+   \texttt{curl -d db=nuccore -d term=coli "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/es\-earch.fcgi"\ --o result.xml} \\
+   Donde, `http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi' es la URL 
+   base. `db=nuccore\&term=\ coli' son los datos que se le pasan al servidor, `db' 
+   es una clave y está asociada al valor `nuccore', `term' es otra clave y está 
+   asociada al valor `coli'. El resulado de la consulta que devuelve el servidor
+   se guarda en el archivo `result.xml'. 
+\end{description}
+
 \subsubsection{Lenguages de programación}
-
-\section{Bases de datos primarias de nucleótidos}
-
+  Es posible hacer consultas REST con prácticmente cualquier lenguage de 
+  programación moderno. Sin embargo, los más comunmente usados en el ámbito de
+  la bioinformática son Perl, Python, Ruby y Java. Varias bases de datos ofrecen
+  ejemplos particulares para estos lenguajes.
 \newpage
+
+\section{Bases de datos primarias}
 \subsection{National Center of Biotechnology Information - NCBI}
 El NCBI ofrece un conjunto de herramientas para el acceso programático a sus 
 bases de datos que se llama NCBI E-utilities y se basa en una interface REST.
@@ -470,6 +608,58 @@ servicio EFetch en NCBI. La lista que se muestra corresponde a un subconjunto
 seleccionado de las bases de datos disponibles. Para obtener la referencia
 completa se puede visitar \url{http://www.ncbi.nlm.nih.gov/books/NBK25499/table/chapter4.T._valid_values_of__retmode_and/?report=objectonly}}
 \label{tab:NCBI_rettype_retmode_options}
+\end{table}
+
+\subsubsection{Acceso FTP}
+La dirección base para el acceso por \emph{FTP} es \url{ftp://ftp.ncbi.nlm.nih.gov/}.
+En cuanto a secuencias de nucleótidos, las dos colecciones más importantes están 
+en \url{ftp://ftp.ncbi.nlm.nih.gov/refseq/release/}, para las secuencias de 
+referencia y \url{ftp://ftp.ncbi.nlm.nih.gov/genbank/} para todas las secuencias.
+Debido al gran tamaño, los datos en `GenBank' están organizados en divisiones
+de acuerdo al origen de la secuencia. A su vez, dentro de cada división hay 
+muchos archivos, todos ellos siguen una nomenclatura racional para que sea 
+sencillo identificarlos. El nombre de cada archivo dentro de una división está
+formado por un prefijo que identifica a la división, un número y una extensión 
+de archivo. En la tabla \ref{ncbi_gb_ftp_categories} se muestran las divisiones
+existentes.
+
+\begin{table}[h!tp]
+\begin{center}
+\begin{tabular}{llp{11cm}}
+Categoría  & Prefijo & Descripción \\ \hline
+PRI        & gbpri & Primates \\
+ROD        & gbrod & Roedores \\
+MAM        & gbmam & Mamiferos (no primates, ni roedores) \\
+VRT        & gbvrt & Vertebrados (no mamíferos) \\datos
+INV        & gbinv & Invertebrados \\
+PLN        & gbpln & Plantas, hongos, plastidos y otros eukariotas \\
+BCT        & gbbct & Bacterias y archaeas \\datos
+VRL        & gbvrl & Viruses \\
+PHG        & gbphg & Bacteriofagos \\
+ENV        & gbenv & Secuencias de muestras ambientales \\
+SYN        & gbsyn & Secuencias de cosntrucciones sintéticas \\
+EST        & gbest & \textit{Expressed sequence tags}. Secuencias cortas
+                     de cDNA \\
+GSS        & gbgss & \textit{Genome survey sequences}. Secuencias
+                     genómicas cortas \\
+TSA        & gbtsa & Ensamblados de transcriptómica (\textit{Transcriptome
+                     shhotgun assemblies}) \\
+HTC        & gbhtc & Secuencias de cDNA por métodos de alto rendimiento
+                     (\emph{high throughput} .
+                     Esta categoría incluye secuencias de cDNA no terminadas.
+                     Cuando la secuenciación se completa se mueve a la 
+                     categoría taxonómica que le corresponde \\
+HTG        & gbhtg & Secuencias genómicas por métodos de alto rendimiento
+                     (\emph{high throughput}) \\
+STS        & gbsts & \emph{Sequence tagged sites} \\
+PAT        & gbpat & Secuencias relacionadas con aplicaciones patentadas \\
+UNA        & gbuna & Secuencias no anotadas. \\
+CON        & gbcon & Rearmados en proyectos de secuenciación (Contigs) \\
+
+\end{tabular}
+\end{center}
+\caption{Categorías de las bases de datos de GenBank}
+\label{ncbi_gb_ftp_categories}
 \end{table}
 
 \newpage
@@ -1435,7 +1625,7 @@ el hemisferio sur del continente americano en ENA.
 
 \subsection*{Ejercicio 6}
 Recuperar todos los registros que corresponden a secuencias de `Amapari virus' en
-la base de datos `nuc_core'. Recuperar de ellos los identificadores de las 
+la base de datos `nuc\_core'. Recuperar de ellos los identificadores de las 
 publicaciones relacionadas. Obtener de `pubmed' el título del artículo, los
 autores y el \textit{abstract}.
 
@@ -1454,18 +1644,7 @@ obtenida.
 
 \subsection*{Ejercicio 8}
 Buscar en \emph{UniProtKB} las secuencias de la enzima Hipoxantina-guanina 
-fosforribosiltransferasa (\textit{Hypoxanthine-guanine phosphoribosyltransferase}, HGPRT)
-de eucariotas. 
-\begin{itemize}
-  \item Generar un alineamiento.
-  \item Distinguir cuales pertenecen a \emph{Swiss-Prot} y cuales a \emph{TrEMBL}.
-  \item Mostrar para cada una de ellas que evidencia hay de su existencia. 
-  \item Buscar si tienen referencia a la base de datos pFam (\textit{protein families}).
-\end{itemize}
-
-\subsection*{Ejercicio 8}
-Buscar en \emph{UniProtKB} las secuencias de la enzima Hipoxantina-guanina 
-fosforribosiltransferasa (\textit{Hypoxanthine-guanine phosphoribosyltransferase}, HGPRT)
+fosforribosil\-transferasa (\textit{Hypo\-xanthine-guanine phosphoribosyltransferase}, HGPRT)
 de eucariotas. 
 \begin{itemize}
   \item Generar un alineamiento.
@@ -1479,6 +1658,6 @@ Buscar en las bases de datos de KEGG (\textit{Kyoto Encyclopedia of Genes and Ge
 las enfermedades relacionadas con la vía metabólica de síntesis de Arginina. 
 Buscar para cada una de ellas, la proteína en \emph{Swiss-Prot} que le 
 corresponde y el nombre del gen asociado. Buscar los SNP disponibles en la base
-de datos `SNP' de NCBI. Recuparar la ubicación (cromosoma y posición de base y 
-la secuencia reportada).
+de datos `SNP' de NCBI. Recuparar la ubicación (cromosoma y posición de base) y 
+la secuencia reportada.
 \end{document}
